@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.VDM_stock_GUI_controller">
+<top><HBox prefHeight="67.0" prefWidth="800.0" spacing="5.0" BorderPane.alignment="CENTER">
+<children><Button fx:id="nouvelle_op_button" mnemonicParsing="false" prefHeight="44.0" prefWidth="155.0" text="Opérations" textAlignment="CENTER" /><Button fx:id="rechercher_button" mnemonicParsing="false" prefHeight="45.0" prefWidth="141.0" text="Rechercher" /><Button fx:id="ajouter_button" mnemonicParsing="false" prefHeight="45.0" prefWidth="141.0" text="Ajouter&#10;une entrée" textAlignment="CENTER" />
+</children>
+<padding>
+<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+</padding></HBox>
+</top>
+<center><HBox fx:id="centre_hbox" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+</center></BorderPane>
