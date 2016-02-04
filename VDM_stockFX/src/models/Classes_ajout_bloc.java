@@ -25,7 +25,4 @@ public enum Classes_ajout_bloc {
 	public Class<?> getClasse() {
 		return classe;
 	}
-	
-	
-
 }

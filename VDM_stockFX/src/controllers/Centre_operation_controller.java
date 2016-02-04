@@ -11,10 +11,15 @@ import models.Operation_bloc;
 
 public class Centre_operation_controller{
 
-	
-	static VBox form;
+	private static boolean aff_flag;
+	private static VBox form;
+	private static HBox centre;
 
 	public static HBox init(HBox centre_hbox) {
+		
+		centre = centre_hbox;
+		
+		aff_flag = false;
 
 		centre_hbox.getChildren().clear();
 		
@@ -48,6 +53,11 @@ public class Centre_operation_controller{
 			});
 			
 			liste.getChildren().add(tg1);
+			if (! aff_flag){
+				tg1.fire();
+				tg1.setSelected(true);
+				aff_flag = true;
+			}
 		}
 		
 		centre_hbox.getChildren().add(liste);
@@ -58,5 +68,10 @@ public class Centre_operation_controller{
 		return centre_hbox;
 	}
 
+	public static HBox getCentre() {
+		return centre;
+	}
+	
+	
 
 }

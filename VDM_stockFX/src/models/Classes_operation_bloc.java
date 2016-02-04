@@ -4,8 +4,8 @@ import controllers.*;
 
 public enum Classes_operation_bloc {
 	
-	NOUVELLE("nouvelle", Operation_nouvelle_controller.class);
-	//CHERCHER("chercher", Operation_chercher_controller.class);
+	NOUVELLE("nouvelle", Operation_nouvelle_controller.class),
+	DERNIERES("dernieres", Operation_dernieres_controller.class);
 	
 	private String nom;
 	private Class<?> classe;

@@ -11,10 +11,12 @@ import models.Classes_ajout_bloc;
 
 public class Centre_ajout_controller{
     
-	
-	static VBox form;
+	private static boolean aff_flag;
+	private static VBox form;
 
 	public static HBox init(HBox centre_hbox) {
+		
+		aff_flag = false;
 
 		centre_hbox.getChildren().clear();
 		
@@ -48,6 +50,14 @@ public class Centre_ajout_controller{
 			});
 			
 			liste.getChildren().add(tg1);
+			if (! aff_flag){
+				tg1.fire();
+				tg1.setSelected(true);
+				aff_flag = true;
+			}
+			else {
+				tg1.setSelected(false);
+			}
 		}
 		
 		centre_hbox.getChildren().add(liste);

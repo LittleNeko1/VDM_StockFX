@@ -9,13 +9,14 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Operation_bloc;
 
-public class Operation_nouvelle_controller implements Operation_bloc{
+public class Operation_dernieres_controller implements Operation_bloc{
 	
 	
 public VBox init(VBox form){
@@ -28,10 +29,10 @@ public VBox init(VBox form){
 		
 		Map<String, String> choiceboxes = new LinkedHashMap<String, String>();
 		
-		choiceboxes.put("expediteur", "Expéditeur : ");
-		choiceboxes.put("destinataire", "Destinataire : ");
-		choiceboxes.put("materiel", "Matériel : ");
-		choiceboxes.put("complement", "Complément : ");
+		choiceboxes.put("expediteur", "Filtrer par expéditeur : ");
+		choiceboxes.put("destinataire", "Filtrer par destinataire : ");
+		choiceboxes.put("materiel", "Filtrer par matériel : ");
+		choiceboxes.put("complement", "Filtrer par complément : ");
 		
 		for (String s : choiceboxes.keySet()){
 			
@@ -42,8 +43,8 @@ public VBox init(VBox form){
 			
 			
 			Label l1 = new Label(choiceboxes.get(s));
-			l1.maxWidth(75);
-			l1.setMaxSize(120.0, Control.USE_PREF_SIZE);
+			l1.maxWidth(200);
+			l1.setMaxSize(200.0, Control.USE_PREF_SIZE);
 			
 			//l1.setStyle("-fx-background-color: rgb(160,160,160)");
 			
@@ -64,15 +65,10 @@ public VBox init(VBox form){
 		
 		form.getChildren().add(h1);	
 		
-		HBox h5 = new HBox();
-		h5.setSpacing(20);
-		h5.setPadding(new Insets(30, 0, 0, 0));
-		Label l5 = new Label("Commentaire : ");
-		TextArea ta5 = new TextArea();
-		h5.getChildren().add(l5);
-		h5.getChildren().add(ta5);
+		TableView<?> tv5 = new TableView();
 
-		form.getChildren().add(h5);	
+
+		form.getChildren().add(tv5);	
 		
 		return form;
 	}

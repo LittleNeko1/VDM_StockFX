@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import utils.MongoAccess;
 
 public class VDM_stock_GUI_controller implements Initializable {
 	
@@ -30,13 +31,23 @@ public class VDM_stock_GUI_controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		MongoAccess.connect();
+		
 		centre_hbox.setSpacing(10);
 
-		ajouter_button.setOnAction(a -> centre_hbox = Centre_ajout_controller.init(centre_hbox));
+		ajouter_button.setOnAction(a -> {
+			centre_hbox = Centre_ajout_controller.init(centre_hbox);
+		});
 		
-		nouvelle_op_button.setOnAction(a -> centre_hbox = Centre_operation_controller.init(centre_hbox));
+		nouvelle_op_button.setOnAction(a -> {
+			centre_hbox = Centre_operation_controller.init(centre_hbox);
+		});
 		
-		rechercher_button.setOnAction(a -> centre_hbox = Centre_chercher_controller.init(centre_hbox));
+		rechercher_button.setOnAction(a -> {
+			centre_hbox = Centre_chercher_controller.init(centre_hbox);
+		});
+		
+		nouvelle_op_button.fire();
 		
 		
 	}
