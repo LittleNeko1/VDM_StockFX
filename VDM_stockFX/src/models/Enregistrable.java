@@ -1,10 +1,13 @@
 package models;
 
+import javafx.scene.layout.VBox;
+
 public interface Enregistrable {
 	
-	public static void save() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void save();
+
+	public void setForm(VBox form);
+	
+	
 
 }

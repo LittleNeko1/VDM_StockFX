@@ -40,7 +40,7 @@ public class Centre_ajout_controller{
 					b = cl.getClasse();
 					Ajout_bloc b_instance = (Ajout_bloc) b.newInstance();
 					form = b_instance.init(form);
-					form.getChildren().add(Ajout_enregistrer_controller.init());
+					form.getChildren().add(Ajout_enregistrer_controller.init(cl.getModel(), form));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

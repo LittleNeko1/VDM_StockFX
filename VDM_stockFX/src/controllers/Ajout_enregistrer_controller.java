@@ -1,7 +1,7 @@
 package controllers;
 
-import application.VDM_stock_GUI_controller;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -9,7 +9,9 @@ import models.Enregistrable;
 
 public class Ajout_enregistrer_controller{
 	
-	private static String type;
+	private static Enregistrable type;
+	private static Class<Enregistrable> classe_attendue;
+	private static VBox form;
 	
 	public static void abandon(){
 		Centre_operation_controller.init(Centre_operation_controller.getCentre());
@@ -18,15 +20,24 @@ public class Ajout_enregistrer_controller{
 	
 	public static void enregistrer(){
 		
-        Enregistrable.save();
+		try {
+			type = classe_attendue.newInstance();
+			type.setForm(form);
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        type.save();
 		
 	}
 	
 	
-	public static HBox init(String type_){
+	public static HBox init(Class<Enregistrable> classe_attendue_, VBox form_){
 		
-		type = type_;
-        
+		classe_attendue = classe_attendue_;
+		form = form_;
+
 		HBox hb = new HBox();
 		hb.setSpacing(50);
 		hb.setAlignment(Pos.CENTER);
@@ -42,5 +53,14 @@ public class Ajout_enregistrer_controller{
 		return hb;
 	
 	}
+
+	public static Class<Enregistrable> getClasse_attendue() {
+		return classe_attendue;
+	}
+
+	public static void setClasse_attendue(Class<Enregistrable> classe_attendue) {
+		Ajout_enregistrer_controller.classe_attendue = classe_attendue;
+	}
+
 
 }

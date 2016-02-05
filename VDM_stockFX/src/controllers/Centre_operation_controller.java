@@ -14,6 +14,7 @@ public class Centre_operation_controller{
 	private static boolean aff_flag;
 	private static VBox form;
 	private static HBox centre;
+	private static String type;
 
 	public static HBox init(HBox centre_hbox) {
 		
@@ -43,7 +44,7 @@ public class Centre_operation_controller{
 					b = cl.getClasse();
 					Operation_bloc b_instance = (Operation_bloc) b.newInstance();
 					form = b_instance.init(form);
-					form.getChildren().add(Ajout_enregistrer_controller.init());
+					form.getChildren().add(Ajout_enregistrer_controller.init(cl.getOperation(), form));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -71,7 +72,5 @@ public class Centre_operation_controller{
 	public static HBox getCentre() {
 		return centre;
 	}
-	
-	
 
 }
