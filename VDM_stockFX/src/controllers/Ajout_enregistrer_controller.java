@@ -28,7 +28,14 @@ public class Ajout_enregistrer_controller{
 			e.printStackTrace();
 		}
 		
-        type.save();
+		if (type.isUpdate()){
+			type.update();
+		}
+		else {
+			type.save();
+		}
+		
+        
 		
 	}
 	

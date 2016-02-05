@@ -31,6 +31,9 @@ import utils.MongoAccess;
 public class Ajout_expediteur_controller implements Ajout_bloc{
 	 
 	private ObservableList<String> liste_autocompletion;
+	private Expediteur expediteur;
+	private TextArea ta5;
+	private ComboBox<String> tf1;
 	
      public VBox init(VBox form){
     	 
@@ -55,7 +58,7 @@ public class Ajout_expediteur_controller implements Ajout_bloc{
 			l1.setMaxSize(75.0, Control.USE_PREF_SIZE);
 			HBox.setHgrow(l1, Priority.ALWAYS);
 			
-			ComboBox<String> tf1 = new ComboBox<String>();
+			tf1 = new ComboBox<String>();
 			tf1.setEditable(true);
 			tf1.prefWidth(400);
 			tf1.setMaxSize(400.0, Control.USE_PREF_SIZE);
@@ -84,6 +87,10 @@ public class Ajout_expediteur_controller implements Ajout_bloc{
 					tf1.setVisibleRowCount(liste_autocompletion.size());
 					tf1.show();
 					
+					Expediteur.setAutoCompletion(liste_autocompletion);
+					
+					
+					
 				}
 				
 			};
@@ -94,7 +101,9 @@ public class Ajout_expediteur_controller implements Ajout_bloc{
             tf1.setOnKeyReleased(a-> {
             	tf1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
 			});
-			
+            
+            tf1.setOnAction(a -> mise_a_jour());
+
 			h1.getChildren().add(l1);
 			h1.getChildren().add(tf1);
 			form.getChildren().add(h1);	
@@ -104,7 +113,7 @@ public class Ajout_expediteur_controller implements Ajout_bloc{
 		h5.setSpacing(20);
 		h5.setPadding(new Insets(30, 0, 0, 0));
 		Label l5 = new Label("Commentaire : ");
-		TextArea ta5 = new TextArea();
+		ta5 = new TextArea();
 		h5.getChildren().add(l5);
 		h5.getChildren().add(ta5);
 
@@ -112,5 +121,27 @@ public class Ajout_expediteur_controller implements Ajout_bloc{
 		
 		return form;
 	}
+     
+     public void mise_a_jour(){
+     	if(liste_autocompletion.contains(tf1.getSelectionModel().getSelectedItem())){
+				expediteur = MongoAccess.request("expediteur", "nom", tf1.getSelectionModel().getSelectedItem()).as(Expediteur.class);
+				ta5.setText(expediteur.getCommentaire());
+				Expediteur.setExpediteur(expediteur);	
+			}
+     	else {
+     		ta5.setText("");
+     		Expediteur.setExpediteur(null);
+     	}
+     }
+
+	public ObservableList<String> getListe_autocompletion() {
+		return liste_autocompletion;
+	}
+
+	public void setListe_autocompletion(ObservableList<String> liste_autocompletion) {
+		this.liste_autocompletion = liste_autocompletion;
+	}
+     
+     
 
 }
