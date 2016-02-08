@@ -16,10 +16,4 @@ public class Complement implements Enregistrable {
 		
 	}
 
-	@Override
-	public boolean isUpdate() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

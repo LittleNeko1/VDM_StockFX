@@ -23,6 +23,7 @@ public class Ajout_enregistrer_controller{
 	public static void enregistrer(){
 		
 		Enregistrable enregistrable =  controller.getEnregistrable();
+		
 		enregistrable.setForm(form);
 		enregistrable.save();  
 		

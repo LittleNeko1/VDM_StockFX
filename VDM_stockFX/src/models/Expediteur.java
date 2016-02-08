@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javafx.scene.control.ComboBox;
@@ -15,28 +14,12 @@ public class Expediteur extends Commun implements Enregistrable {
 	private String nom;
 	private String commentaire;
 	
-	@JsonIgnore
-	private VBox form;
 	
-	public String getNom() {
-		return nom;
+	@Override
+	public void save() {	
+		MongoAccess.save("expediteur",this);	
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-    
-	@Override
-	public void save() {
-		
-		MongoAccess.save("expediteur",this);
-		
-	}
-    
-	public VBox getForm() {
-		return form;
-	}
-    
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setForm(VBox form) {
@@ -59,13 +42,12 @@ public class Expediteur extends Commun implements Enregistrable {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-   
-	@Override
-	public boolean isUpdate() {
-		
-		System.out.println("isUpdate() -> "  + this.get_id());
-		
-		return this.get_id() != null;
+	
+	public String getNom() {
+		return nom;
 	}
 
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 }

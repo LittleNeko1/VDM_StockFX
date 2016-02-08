@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Enregistrable;
-import models.Expediteur;
 import models.Materiel;
 import utils.MongoAccess;
 
@@ -92,8 +90,6 @@ public class Ajout_materiel_controller  implements SuperController{
         h1.getChildren().add(l1);
 		h1.getChildren().add(cb1);
 		form.getChildren().add(h1);		
-		
-		
 
 		Map<String, String> champs_textField = new LinkedHashMap<String, String>();
 		champs_textField.put("marque", "Marque : ");
@@ -113,14 +109,12 @@ public class Ajout_materiel_controller  implements SuperController{
 			Label l2 = new Label(champs_textField.get(s));
 			l2.maxWidth(75);
 			l2.setMaxSize(75.0, Control.USE_PREF_SIZE);
-			h2.setHgrow(l2, Priority.ALWAYS);
-			
-			//l1.setStyle("-fx-background-color: rgb(160,160,160)");
+			HBox.setHgrow(l2, Priority.ALWAYS);
 			
 			TextField tf1 = new TextField();
 			tf1.prefWidth(400);
 			tf1.setMaxSize(400.0, Control.USE_PREF_SIZE);
-			h2.setHgrow(tf1, Priority.ALWAYS);
+			HBox.setHgrow(tf1, Priority.ALWAYS);
 			
 			h2.getChildren().add(l2);
 			h2.getChildren().add(tf1);

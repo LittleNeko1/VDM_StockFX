@@ -13,7 +13,6 @@ public class Centre_operation_controller{
 	private static boolean aff_flag;
 	private static VBox form;
 	private static HBox centre;
-	private static String type;
 
 	public static HBox init(HBox centre_hbox) {
 		
@@ -38,7 +37,7 @@ public class Centre_operation_controller{
 			tg1.setToggleGroup(tg);
 
 			tg1.setOnAction(a -> {
-				Class b;
+				Class<?> b;
 				try {
 					b = cl.getClasse();
 					SuperController b_instance = (SuperController) b.newInstance();

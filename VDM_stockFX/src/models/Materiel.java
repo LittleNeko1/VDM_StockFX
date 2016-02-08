@@ -1,6 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -17,13 +16,10 @@ public class Materiel extends Commun implements Enregistrable {
 	private String marque;
 	private String modele;
 	private String capacite;
-	
-	@JsonIgnore
-	private VBox form;
 
 	@Override
 	public void save() {
-		MongoAccess.insert("materiel",this);
+		MongoAccess.save("materiel",this);
 		
 	}
 
@@ -56,12 +52,6 @@ public class Materiel extends Commun implements Enregistrable {
                              .getChildren().get(1))
                              .getText();
 		
-	}
-
-	@Override
-	public boolean isUpdate() {
-		
-		return this.get_id() != null;
 	}
 
 	public String getNom() {
@@ -103,10 +93,5 @@ public class Materiel extends Commun implements Enregistrable {
 	public void setCapacite(String capacite) {
 		this.capacite = capacite;
 	}
-
-	public VBox getForm() {
-		return form;
-	}
-
     
 }
