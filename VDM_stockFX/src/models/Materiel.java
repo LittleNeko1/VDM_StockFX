@@ -10,8 +10,7 @@ import utils.MongoAccess;
 
 
 public class Materiel extends Commun implements Enregistrable {
-	
-	private String nom;
+
 	private String commentaire;
 	private String marque;
 	private String modele;
@@ -52,14 +51,6 @@ public class Materiel extends Commun implements Enregistrable {
                              .getChildren().get(1))
                              .getText();
 		
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 
 	public String getCommentaire() {

@@ -3,6 +3,11 @@ package controllers;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jongo.MongoCursor;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
@@ -13,12 +18,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import models.Classes_ajout_bloc;
+import models.Commun;
 import models.Enregistrable;
+import utils.MongoAccess;
 
 public class Operation_nouvelle_controller implements SuperController{
 	
 	
-public VBox init(VBox form){
+	
+	
+    public VBox init(VBox form){
 		
 		form.getChildren().clear();
 		
@@ -35,6 +45,12 @@ public VBox init(VBox form){
 		
 		for (String s : choiceboxes.keySet()){
 			
+			ObservableList<String> liste = FXCollections.observableArrayList();
+			
+			MongoCursor<Commun> enregistrable_cursor = MongoAccess.request(s).as(Commun.class);
+			
+			enregistrable_cursor.forEach(a -> liste.add(a.getNom()));
+ 			
 			VBox v1 = new VBox();
 			v1.setMaxWidth(Double.MAX_VALUE);
 			v1.setAlignment(Pos.CENTER);
@@ -45,12 +61,12 @@ public VBox init(VBox form){
 			l1.maxWidth(75);
 			l1.setMaxSize(120.0, Control.USE_PREF_SIZE);
 			
-			//l1.setStyle("-fx-background-color: rgb(160,160,160)");
-			
 			ComboBox<String> cb1 = new ComboBox<String>();
 			cb1.prefWidth(400);
 			cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
 			cb1.setEditable(true);
+			
+			cb1.setItems(liste);
 			
 			
 			v1.getChildren().add(l1);
@@ -60,6 +76,8 @@ public VBox init(VBox form){
 			HBox.setHgrow(cb1, Priority.ALWAYS);
 			HBox.setHgrow(l1, Priority.ALWAYS);
 			HBox.setHgrow(v1, Priority.ALWAYS);
+			
+			
 		}
 		
 		form.getChildren().add(h1);	

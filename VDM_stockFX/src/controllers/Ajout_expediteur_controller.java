@@ -34,65 +34,58 @@ public class Ajout_expediteur_controller implements SuperController{
     	 liste_autocompletion = FXCollections.observableArrayList();
 		
 		form.getChildren().clear();
+	
+		HBox h1 = new HBox();
+		h1.setMaxWidth(Double.MAX_VALUE);
+		h1.setAlignment(Pos.CENTER_LEFT);
+		h1.setSpacing(5);
+					
+		Label l1 = new Label("Nom : ");
+		l1.maxWidth(75);
+		l1.setMaxSize(75.0, Control.USE_PREF_SIZE);
+		HBox.setHgrow(l1, Priority.ALWAYS);
 		
-		Map<String, String> champs_textField = new LinkedHashMap<String, String>();
+		cb1 = new ComboBox<String>();
+		cb1.setEditable(true);
+		cb1.prefWidth(400);
+		cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
+		HBox.setHgrow(cb1, Priority.ALWAYS);
 		
-		champs_textField.put("nom", "Nom : ");
-		
-		for (String s : champs_textField.keySet()){
-			
-			HBox h1 = new HBox();
-			h1.setMaxWidth(Double.MAX_VALUE);
-			h1.setAlignment(Pos.CENTER_LEFT);
-			h1.setSpacing(5);
-						
-			Label l1 = new Label(champs_textField.get(s));
-			l1.maxWidth(75);
-			l1.setMaxSize(75.0, Control.USE_PREF_SIZE);
-			HBox.setHgrow(l1, Priority.ALWAYS);
-			
-			cb1 = new ComboBox<String>();
-			cb1.setEditable(true);
-			cb1.prefWidth(400);
-			cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
-			HBox.setHgrow(cb1, Priority.ALWAYS);
-			
-			ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
+		ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
 
-				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				
+				liste_autocompletion.clear();
+				
+				MongoCursor<Expediteur> expediteur_cursor = MongoAccess.request("expediteur", "nom", newValue, true).as(Expediteur.class);
+				
+				while(expediteur_cursor.hasNext()){
 					
-					liste_autocompletion.clear();
+					Expediteur expediteur = expediteur_cursor.next();
 					
-					MongoCursor<Expediteur> expediteur_cursor = MongoAccess.request("expediteur", "nom", newValue, true).as(Expediteur.class);
-					
-					while(expediteur_cursor.hasNext()){
-						
-						Expediteur expediteur = expediteur_cursor.next();
-						
-						liste_autocompletion.add(expediteur.getNom());
-					}
-					
-					cb1.setItems(liste_autocompletion);
-					cb1.hide();
-					cb1.setVisibleRowCount(liste_autocompletion.size());
-					cb1.show();
-				}			
-			};
-			
-			cb1.setOnKeyPressed(a-> {
-				cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
-			});
-            cb1.setOnKeyReleased(a-> {
-            	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
-			});
-            
-            cb1.setOnAction(a -> mise_a_jour());
+					liste_autocompletion.add(expediteur.getNom());
+				}
+				
+				cb1.setItems(liste_autocompletion);
+				cb1.hide();
+				cb1.setVisibleRowCount(liste_autocompletion.size());
+				cb1.show();
+			}			
+		};
+		
+		cb1.setOnKeyPressed(a-> {
+			cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
+		});
+        cb1.setOnKeyReleased(a-> {
+        	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
+		});
+        
+        cb1.setOnAction(a -> mise_a_jour());
 
-			h1.getChildren().add(l1);
-			h1.getChildren().add(cb1);
-			form.getChildren().add(h1);	
-		}
+		h1.getChildren().add(l1);
+		h1.getChildren().add(cb1);
+		form.getChildren().add(h1);	
 		
 		HBox h5 = new HBox();
 		h5.setSpacing(20);

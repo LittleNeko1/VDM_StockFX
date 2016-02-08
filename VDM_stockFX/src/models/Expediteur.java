@@ -10,8 +10,7 @@ import utils.MongoAccess;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Expediteur extends Commun implements Enregistrable {
-	
-	private String nom;
+
 	private String commentaire;
 	
 	
@@ -42,12 +41,5 @@ public class Expediteur extends Commun implements Enregistrable {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-	
-	public String getNom() {
-		return nom;
-	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 }

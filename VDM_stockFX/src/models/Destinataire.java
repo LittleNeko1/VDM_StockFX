@@ -7,9 +7,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.MongoAccess;
 
-public class Destinataire implements Enregistrable {
-	
-	private String nom;
+public class Destinataire extends Commun implements Enregistrable {
+
 	private String prenom;
 	private String fonction;
 	private String societe;
@@ -50,14 +49,6 @@ public class Destinataire implements Enregistrable {
                         .getChildren().get(1))
                       .getText();
 		
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 
 	public String getPrenom() {
