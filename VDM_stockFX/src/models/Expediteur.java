@@ -3,7 +3,6 @@ package models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -15,12 +14,6 @@ public class Expediteur extends Commun implements Enregistrable {
 	
 	private String nom;
 	private String commentaire;
-	@JsonIgnore
-	private static ObservableList<String> autoCompletion;
-	@JsonIgnore
-	private static Expediteur expediteur;
-	@JsonIgnore
-	private boolean update = false;
 	
 	@JsonIgnore
 	private VBox form;
@@ -42,7 +35,7 @@ public class Expediteur extends Commun implements Enregistrable {
 	@Override
     public void update() {
 		
-		MongoAccess.save("expediteur", expediteur);
+		MongoAccess.save("expediteur", this);
 		
 	}
     
@@ -63,19 +56,6 @@ public class Expediteur extends Commun implements Enregistrable {
                              .getChildren().get(1))
                            .getText()) ;
 		
-		if (autoCompletion.contains(this.nom)){
-			
-			System.out.println("update");
-			expediteur.setNom(((ComboBox<String>) 
-                    ((HBox) form.getChildren().get(0))
-                    .getChildren().get(1))
-                  .editorProperty().get().getText()) ;
-			expediteur.setCommentaire(((TextArea) 
-                    ((HBox) form.getChildren().get(1))
-                    .getChildren().get(1))
-                  .getText()) ;
-		}
-		
 	}
 
 	public String getCommentaire() {
@@ -85,26 +65,13 @@ public class Expediteur extends Commun implements Enregistrable {
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
 	}
-
-	public static ObservableList<String> getAutoCompletion() {
-		return autoCompletion;
-	}
-
-	public static void setAutoCompletion(ObservableList<String> autoCompletion_) {
-		autoCompletion = autoCompletion_;
-	}
-
-	public static Expediteur getExpediteur() {
-		return expediteur;
-	}
-
-	public static void setExpediteur(Expediteur expediteur) {
-		Expediteur.expediteur = expediteur;
-	}
-    
+   
 	@Override
 	public boolean isUpdate() {
-		return Expediteur.expediteur != null;
+		
+		System.out.println("isUpdate() -> "  + this.get_id());
+		
+		return this.get_id() != null;
 	}
 
 }

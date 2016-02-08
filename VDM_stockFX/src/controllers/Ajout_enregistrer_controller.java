@@ -5,13 +5,17 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import models.Ajout_bloc;
+import models.Bloc;
 import models.Enregistrable;
+import models.Expediteur;
+import models.Materiel;
 
 public class Ajout_enregistrer_controller{
-	
-	private static Enregistrable type;
+
 	private static Class<Enregistrable> classe_attendue;
 	private static VBox form;
+	private static Object controller;
 	
 	public static void abandon(){
 		Centre_operation_controller.init(Centre_operation_controller.getCentre());
@@ -20,30 +24,52 @@ public class Ajout_enregistrer_controller{
 	
 	public static void enregistrer(){
 		
-		try {
-			type = classe_attendue.newInstance();
-			type.setForm(form);
-		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		switch (classe_attendue.getName()) {
+		case "models.Expediteur" : 
+			
+			Expediteur expediteur = ((Ajout_expediteur_controller) controller).getExpediteur();
+			expediteur.setForm(form);
+
+			if (expediteur.isUpdate()){
+				expediteur.update();
+			}
+			else {
+				expediteur.save();
+			}
+			
+			break;
+			
+      case "models.Materiel" : 
+			
+			Materiel materiel = ((Ajout_materiel_controller) controller).getMateriel();
+			materiel.setForm(form);
+
+			if (materiel.isUpdate()){
+				materiel.update();
+			}
+			else {
+				materiel.save();
+			}
+			
+			break;
+
+		default:
+			System.out.println(classe_attendue.getName());
+			break;
 		}
 		
-		if (type.isUpdate()){
-			type.update();
-		}
-		else {
-			type.save();
-		}
+		
 		
         
 		
 	}
 	
 	
-	public static HBox init(Class<Enregistrable> classe_attendue_, VBox form_){
+	public static HBox init(Class<Enregistrable> classe_attendue_, VBox form_, Bloc controller_){
 		
 		classe_attendue = classe_attendue_;
 		form = form_;
+		controller = controller_;
 
 		HBox hb = new HBox();
 		hb.setSpacing(50);
