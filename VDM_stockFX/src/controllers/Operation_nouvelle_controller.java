@@ -13,9 +13,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Operation_bloc;
+import models.Enregistrable;
 
-public class Operation_nouvelle_controller implements Operation_bloc{
+public class Operation_nouvelle_controller implements SuperController{
 	
 	
 public VBox init(VBox form){
@@ -76,5 +76,11 @@ public VBox init(VBox form){
 		
 		return form;
 	}
+
+@Override
+public Enregistrable getEnregistrable() {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 }

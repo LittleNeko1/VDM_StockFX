@@ -13,9 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
+import models.Enregistrable;
 
-public class Ajout_destinataire_controller implements Ajout_bloc{
+public class Ajout_destinataire_controller implements SuperController{
 	
 	
      public VBox init(VBox form){
@@ -66,6 +66,12 @@ public class Ajout_destinataire_controller implements Ajout_bloc{
 		form.getChildren().add(h5);	
 		
 		return form;
+	}
+
+	@Override
+	public Enregistrable getEnregistrable() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -6,8 +6,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
-import models.Bloc;
 import models.Classes_ajout_bloc;
 
 public class Centre_ajout_controller{
@@ -39,7 +37,7 @@ public class Centre_ajout_controller{
 				Class b;
 				try {
 					b = cl.getClasse();
-					Bloc b_instance = (Bloc) b.newInstance();
+					SuperController b_instance = (SuperController) b.newInstance();
 					form = b_instance.init(form);
 					form.getChildren().add(Ajout_enregistrer_controller.init(cl.getModel(), form, b_instance));
 				} catch (Exception e) {

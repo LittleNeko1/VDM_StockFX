@@ -10,7 +10,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
 import models.Classes_ajout_bloc;
 
 public class Centre_chercher_controller{
@@ -40,7 +39,7 @@ public class Centre_chercher_controller{
 				Class b;
 				try {
 					b = cl.getClasse();
-					Ajout_bloc b_instance = (Ajout_bloc) b.newInstance();
+					SuperController b_instance = (SuperController) b.newInstance();
 					form = b_instance.init(form);
 					form.getChildren().add(Ajout_enregistrer_controller.init(cl.getModel(), form, b_instance));
 				} catch (Exception e) {

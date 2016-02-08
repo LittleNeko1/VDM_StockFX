@@ -5,8 +5,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
-import models.Bloc;
 import models.Enregistrable;
 import models.Expediteur;
 import models.Materiel;
@@ -15,7 +13,7 @@ public class Ajout_enregistrer_controller{
 
 	private static Class<Enregistrable> classe_attendue;
 	private static VBox form;
-	private static Object controller;
+	private static SuperController controller;
 	
 	public static void abandon(){
 		Centre_operation_controller.init(Centre_operation_controller.getCentre());
@@ -24,48 +22,14 @@ public class Ajout_enregistrer_controller{
 	
 	public static void enregistrer(){
 		
-		switch (classe_attendue.getName()) {
-		case "models.Expediteur" : 
-			
-			Expediteur expediteur = ((Ajout_expediteur_controller) controller).getExpediteur();
-			expediteur.setForm(form);
-
-			if (expediteur.isUpdate()){
-				expediteur.update();
-			}
-			else {
-				expediteur.save();
-			}
-			
-			break;
-			
-      case "models.Materiel" : 
-			
-			Materiel materiel = ((Ajout_materiel_controller) controller).getMateriel();
-			materiel.setForm(form);
-
-			if (materiel.isUpdate()){
-				materiel.update();
-			}
-			else {
-				materiel.save();
-			}
-			
-			break;
-
-		default:
-			System.out.println(classe_attendue.getName());
-			break;
-		}
-		
-		
-		
-        
+		Enregistrable enregistrable =  controller.getEnregistrable();
+		enregistrable.setForm(form);
+		enregistrable.save();  
 		
 	}
 	
 	
-	public static HBox init(Class<Enregistrable> classe_attendue_, VBox form_, Bloc controller_){
+	public static HBox init(Class<Enregistrable> classe_attendue_, VBox form_, SuperController controller_){
 		
 		classe_attendue = classe_attendue_;
 		form = form_;

@@ -13,9 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
+import models.Enregistrable;
 
-public class Ajout_complement_controller implements Ajout_bloc{
+public class Ajout_complement_controller implements SuperController{
 	
 public VBox init(VBox form){
 		
@@ -63,5 +63,11 @@ public VBox init(VBox form){
 		
 		return form;
 	}
+
+@Override
+public Enregistrable getEnregistrable() {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 }

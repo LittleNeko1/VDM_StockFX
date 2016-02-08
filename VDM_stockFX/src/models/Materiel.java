@@ -59,12 +59,6 @@ public class Materiel extends Commun implements Enregistrable {
 	}
 
 	@Override
-	public void update() {
-		MongoAccess.insert("materiel",this);
-		
-	}
-
-	@Override
 	public boolean isUpdate() {
 		
 		return this.get_id() != null;

@@ -18,12 +18,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
-import models.Bloc;
+import models.Enregistrable;
 import models.Expediteur;
 import utils.MongoAccess;
 
-public class Ajout_expediteur_controller implements Bloc{
+public class Ajout_expediteur_controller implements SuperController{
 	 
 	private ObservableList<String> liste_autocompletion;
 	private Expediteur expediteur;
@@ -132,6 +131,11 @@ public class Ajout_expediteur_controller implements Bloc{
 
 	public void setExpediteur(Expediteur expediteur) {
 		this.expediteur = expediteur;
+	}
+
+	@Override
+	public Enregistrable getEnregistrable() {
+		return expediteur;
 	}
      
      

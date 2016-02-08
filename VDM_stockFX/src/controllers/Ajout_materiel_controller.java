@@ -23,13 +23,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Ajout_bloc;
-import models.Bloc;
+import models.Enregistrable;
 import models.Expediteur;
 import models.Materiel;
 import utils.MongoAccess;
 
-public class Ajout_materiel_controller  implements Bloc{
+public class Ajout_materiel_controller  implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
 	private Materiel materiel;
@@ -194,6 +193,11 @@ public class Ajout_materiel_controller  implements Bloc{
 
 	public void setCb1(ComboBox<String> cb1) {
 		this.cb1 = cb1;
+	}
+
+	@Override
+	public Enregistrable getEnregistrable() {
+		return materiel;
 	}
 	
 	

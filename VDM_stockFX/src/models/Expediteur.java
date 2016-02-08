@@ -29,13 +29,7 @@ public class Expediteur extends Commun implements Enregistrable {
 	@Override
 	public void save() {
 		
-		MongoAccess.insert("expediteur",this);
-		
-	}
-	@Override
-    public void update() {
-		
-		MongoAccess.save("expediteur", this);
+		MongoAccess.save("expediteur",this);
 		
 	}
     
