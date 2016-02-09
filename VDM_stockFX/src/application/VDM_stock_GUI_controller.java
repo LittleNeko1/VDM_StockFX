@@ -34,6 +34,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 		MongoAccess.connect();
 		
 		centre_hbox.setSpacing(10);
+		centre_hbox.getStyleClass().add("centre");
 
 		ajouter_button.setOnAction(a -> {
 			centre_hbox = Centre_ajout_controller.init(centre_hbox);

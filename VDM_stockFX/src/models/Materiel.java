@@ -11,7 +11,6 @@ import utils.MongoAccess;
 
 public class Materiel extends Commun implements Enregistrable {
 
-	private String commentaire;
 	private String marque;
 	private String modele;
 	private String capacite;
@@ -26,10 +25,10 @@ public class Materiel extends Commun implements Enregistrable {
 	@Override
 	public void setForm(VBox form) {
 		
-		this.nom = ((ComboBox<String>) 
+		this.setNom(((ComboBox<String>) 
                      ((HBox) form.getChildren().get(0))
                      .getChildren().get(1))
-                     .editorProperty().get().getText() ;
+                     .editorProperty().get().getText());
 		
 		this.marque = ((TextField) 
                 ((HBox) form.getChildren().get(1))
@@ -46,19 +45,11 @@ public class Materiel extends Commun implements Enregistrable {
                 .getChildren().get(1))
                 .getText() ;
 
-		this.commentaire = ((TextArea) 
+		this.setCommentaire(((TextArea) 
                              ((HBox) form.getChildren().get(4))
                              .getChildren().get(1))
-                             .getText();
+                             .getText());
 		
-	}
-
-	public String getCommentaire() {
-		return commentaire;
-	}
-
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
 	}
 
 	public String getMarque() {

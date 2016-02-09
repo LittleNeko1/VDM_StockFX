@@ -24,10 +24,7 @@ import models.Enregistrable;
 import utils.MongoAccess;
 
 public class Operation_nouvelle_controller implements SuperController{
-	
-	
-	
-	
+
     public VBox init(VBox form){
 		
 		form.getChildren().clear();
@@ -56,7 +53,6 @@ public class Operation_nouvelle_controller implements SuperController{
 			v1.setAlignment(Pos.CENTER);
 			v1.setSpacing(5);
 			
-			
 			Label l1 = new Label(choiceboxes.get(s));
 			l1.maxWidth(75);
 			l1.setMaxSize(120.0, Control.USE_PREF_SIZE);
@@ -66,8 +62,7 @@ public class Operation_nouvelle_controller implements SuperController{
 			cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
 			cb1.setEditable(true);
 			
-			cb1.setItems(liste);
-			
+			cb1.setItems(liste);		
 			
 			v1.getChildren().add(l1);
 			v1.getChildren().add(cb1);
@@ -76,8 +71,6 @@ public class Operation_nouvelle_controller implements SuperController{
 			HBox.setHgrow(cb1, Priority.ALWAYS);
 			HBox.setHgrow(l1, Priority.ALWAYS);
 			HBox.setHgrow(v1, Priority.ALWAYS);
-			
-			
 		}
 		
 		form.getChildren().add(h1);	

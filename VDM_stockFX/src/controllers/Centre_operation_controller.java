@@ -30,6 +30,7 @@ public class Centre_operation_controller{
 		form = new VBox();
 		form.setSpacing(25);
 		form.setPrefWidth(800);
+		form.getStyleClass().add("centre_vbox");
 		
 		for (Classes_operation_bloc cl : Classes_operation_bloc.values()){
 			ToggleButton tg1 = new ToggleButton(cl.getNom());

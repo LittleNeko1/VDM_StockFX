@@ -7,9 +7,7 @@ import javafx.scene.layout.VBox;
 import utils.MongoAccess;
 
 public class Complement extends Commun implements Enregistrable {
-
-	private String commentaire;
-
+	
 	@Override
 	public void save() {
 		MongoAccess.save("complement",this);
@@ -20,28 +18,17 @@ public class Complement extends Commun implements Enregistrable {
 	@Override
 	public void setForm(VBox form) {
 		
-		this.nom = ((ComboBox<String>) 
+		this.setNom(((ComboBox<String>) 
                 ((HBox) form.getChildren().get(0))
                 .getChildren().get(1))
-              .editorProperty().get().getText() ;
+              .editorProperty().get().getText());
 		
 
 
-	    this.commentaire = ((TextArea) 
+	    this.setCommentaire(((TextArea) 
                         ((HBox) form.getChildren().get(1))
                         .getChildren().get(1))
-                      .getText();
+                      .getText());
 		
 	}
-
-	public String getCommentaire() {
-		return commentaire;
-	}
-
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
-	}
-	
-	
-
 }

@@ -11,7 +11,7 @@ import utils.MongoAccess;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Expediteur extends Commun implements Enregistrable {
 
-	private String commentaire;
+	
 	
 	
 	@Override
@@ -22,10 +22,10 @@ public class Expediteur extends Commun implements Enregistrable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setForm(VBox form) {
-		this.nom = ((ComboBox<String>) 
+		this.setNom(((ComboBox<String>) 
                      ((HBox) form.getChildren().get(0))
                      .getChildren().get(1))
-                   .editorProperty().get().getText() ;
+                   .editorProperty().get().getText());
 
 		this.setCommentaire(((TextArea) 
                              ((HBox) form.getChildren().get(1))
@@ -33,13 +33,4 @@ public class Expediteur extends Commun implements Enregistrable {
                            .getText()) ;
 		
 	}
-
-	public String getCommentaire() {
-		return commentaire;
-	}
-
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
-	}
-
 }

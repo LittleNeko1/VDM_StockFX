@@ -24,6 +24,9 @@ public class Ajout_enregistrer_controller{
 		
 		Enregistrable enregistrable =  controller.getEnregistrable();
 		
+		System.out.println("form : " + form);
+		System.out.println("enregistrable : " + enregistrable);
+		
 		enregistrable.setForm(form);
 		enregistrable.save();  
 		

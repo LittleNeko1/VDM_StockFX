@@ -4,8 +4,9 @@ import org.bson.types.ObjectId;
 
 public class Commun {
 
-	ObjectId _id;
-	String nom;
+	private ObjectId _id;
+	private String nom;
+	private String commentaire;
 
 	public ObjectId get_id() {
 		return _id;
@@ -21,6 +22,14 @@ public class Commun {
 	
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
 	}
 
 }
