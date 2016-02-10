@@ -126,8 +126,11 @@ public class MongoAccess {
 		Find all = null;
 		collec = jongo.getCollection(table);
 		
-		String query = String.format("{%s : #}", field);
-		String reg = String.format("^%s", valeur);		
+		//String query = String.format("{%s : #}", field);
+		//String reg = String.format("^%s", valeur);	
+		
+		String query = String.format("{%s : #}", field); 
+		String reg = String.format("(?i)^%s", valeur);
 		
 		all = collec.find(query, Pattern.compile(reg));
 

@@ -33,6 +33,8 @@ public class Ajout_destinataire_controller implements SuperController{
 	private TextArea ta5;
 	private ComboBox<String> cb1;
 	
+	private static TextField saisie; 
+	
 	
      public VBox init(VBox form){
 		
@@ -55,11 +57,13 @@ public class Ajout_destinataire_controller implements SuperController{
  		cb1.prefWidth(400);
  		cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
  		HBox.setHgrow(cb1, Priority.ALWAYS);
- 		
+	
  		ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
 
  			@Override
  			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+ 				
+ 				cb1.editorProperty().get().textProperty().unbind();
  				
  				liste_autocompletion.clear();
  				
@@ -76,19 +80,19 @@ public class Ajout_destinataire_controller implements SuperController{
  				cb1.hide();
  				cb1.setVisibleRowCount(liste_autocompletion.size());
  				cb1.show();
- 				mise_a_jour();
+ 				//mise_a_jour_autocompletion();
  			}			
  		};
- 		
+
  		cb1.setOnKeyPressed(a-> {
  			cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
  		});
          cb1.setOnKeyReleased(a-> {
          	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
  		});
-         
-         cb1.setOnAction(a -> mise_a_jour());
-         h1.getChildren().add(l1);
+        cb1.setOnAction(a -> mise_a_jour());
+        
+        h1.getChildren().add(l1);
  		h1.getChildren().add(cb1);
  		form.getChildren().add(h1);		
 
@@ -108,8 +112,7 @@ public class Ajout_destinataire_controller implements SuperController{
 			h2.setMaxWidth(Double.MAX_VALUE);
 			h2.setAlignment(Pos.CENTER_LEFT);
 			h2.setSpacing(5);
-			
-			
+
 			Label l2 = new Label(champs_textField.get(s));
 			l2.maxWidth(75);
 			l2.setMaxSize(75.0, Control.USE_PREF_SIZE);
@@ -119,43 +122,63 @@ public class Ajout_destinataire_controller implements SuperController{
 			tf1.prefWidth(400);
 			tf1.setMaxSize(400.0, Control.USE_PREF_SIZE);
 			HBox.setHgrow(tf1, Priority.ALWAYS);
-			
-			tf1.setOnMouseEntered(a -> {
-				if (s.equals("nom")){
-					cb1.editorProperty().get().textProperty().bind(textFields.get(0).textProperty());
-					
-				}
-				else if (s.equals("societe") && textFields.get(0).getText().equals("")){
-					cb1.editorProperty().get().textProperty().bind(textFields.get(3).textProperty());
 
-				}
-				
-				
-			});
-			tf1.setOnMouseExited(a -> {
-				if (s.equals("nom") && textFields.get(0).getText().equals("") && !textFields.get(3).getText().equals("")){
-					cb1.editorProperty().get().textProperty().unbind();
-					cb1.editorProperty().get().textProperty().bind(textFields.get(3).textProperty());
-				}
-				else if (s.equals("nom") && textFields.get(0).getText().equals("")){
-					cb1.editorProperty().get().textProperty().unbind();
-				}
-				else if (s.equals("societe") && textFields.get(3).getText().equals("")){
-					cb1.editorProperty().get().textProperty().unbind();
-				}
-				mise_a_jour();
-
-			});
-			
 			h2.getChildren().add(l2);
 			h2.getChildren().add(tf1);
 			textFields.add(tf1);
 			form.getChildren().add(h2);	
-			
-
-
 		}
 		
+		
+		textFields.get(0).setOnMouseEntered(a -> {
+				cb1.editorProperty().get().textProperty().unbind();
+				cb1.editorProperty().get().textProperty().bind(textFields.get(0).textProperty());
+				textFields.get(0).textProperty().addListener(auto_completion_listener);
+				saisie = textFields.get(0);
+				
+			});
+		
+		
+		textFields.get(3).setOnMouseEntered(a -> {
+			if (textFields.get(0).getText() == null || "".equals(textFields.get(0).getText())){
+				cb1.editorProperty().get().textProperty().unbind();
+				cb1.editorProperty().get().textProperty().bind(textFields.get(3).textProperty());
+				textFields.get(3).textProperty().addListener(auto_completion_listener);
+				saisie = textFields.get(3);
+			}
+
+		});
+
+		textFields.get(0).setOnMouseExited(a -> {
+			
+			textFields.get(0).textProperty().removeListener(auto_completion_listener);
+			cb1.editorProperty().get().textProperty().unbind();
+			
+			if (textFields.get(0).getText() == null || "".equals(textFields.get(0).getText() )&& !"".equals(textFields.get(3).getText())){
+				cb1.editorProperty().get().textProperty().bind(textFields.get(3).textProperty());
+				cb1.editorProperty().get().textProperty().unbind();
+
+				// si pas de re-bind effacement en passant sur textFields.get(0).getText()
+				// si bind : bound value cannot be set quand on clique sur un élement de la liste.
+				
+				saisie = textFields.get(3);
+			}
+			else if ("".equals(textFields.get(0).getText())){
+				saisie = null;
+			}
+		});
+		
+		textFields.get(3).setOnMouseExited(a -> {
+			
+			textFields.get(0).textProperty().removeListener(auto_completion_listener);
+			cb1.editorProperty().get().textProperty().unbind();
+			
+			if (textFields.get(3).getText() == null || "".equals(textFields.get(3).getText())){
+				saisie = null;
+			}
+
+		});
+
 		HBox h5 = new HBox();
 		h5.setSpacing(20);
 		h5.setPadding(new Insets(30, 0, 0, 0));
@@ -165,6 +188,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		h5.getChildren().add(ta5);
 
 		form.getChildren().add(h5);	
+		
+		//mise_a_jour_autocompletion();
 		
 		return form;
 	}
@@ -177,21 +202,62 @@ public class Ajout_destinataire_controller implements SuperController{
 		return destinataire;
 	}
 	
-	public void mise_a_jour(){
-		
-		destinataire = MongoAccess.request("destinataire", "nom", cb1.getSelectionModel().getSelectedItem()).as(Destinataire.class);
+    public void mise_a_jour(){
+    	
+    	cb1.editorProperty().get().textProperty().unbind();
+    	
+    	if (cb1.getSelectionModel().getSelectedIndex() >= 0){
+    		
+    		destinataire = MongoAccess.request("destinataire", "nom", cb1.getSelectionModel().getSelectedItem()).as(Destinataire.class);
 
-		if (destinataire == null){
-			destinataire = new Destinataire();				
+    		textFields.get(0).setText(destinataire.getPatronyme());
+    		textFields.get(1).setText(destinataire.getPrenom());
+    		textFields.get(2).setText(destinataire.getFonction());
+    		textFields.get(3).setText(destinataire.getSociete());
+
+    		ta5.setText(destinataire.getCommentaire());
+    		
+    		System.out.println("getPatronyme() : " + destinataire.getPatronyme());
+    		System.out.println("getSociete() : " + destinataire.getSociete());
+    		System.out.println("getCommentaire() : " + destinataire.getCommentaire() );  		
+    	}
+  	}
+	
+	public void mise_a_jour_autocompletion(){
+		
+		cb1.editorProperty().get().textProperty().unbind();
+		
+		if (cb1.getSelectionModel().getSelectedIndex() >= 0){
+			
+			destinataire = MongoAccess.request("destinataire", "nom", cb1.getSelectionModel().getSelectedItem()).as(Destinataire.class);
 		}
 		
-        textFields.get(0).setText(destinataire.getPrenom());
-        textFields.get(1).setText(destinataire.getFonction());
-        textFields.get(2).setText(destinataire.getSociete());
+		if (destinataire == null){
+			destinataire = new Destinataire();			
+		}
+		
+		if (saisie == null){
+			textFields.get(0).setText(destinataire.getPatronyme());
+			textFields.get(1).setText(destinataire.getPrenom());
+			textFields.get(2).setText(destinataire.getFonction());
+			textFields.get(3).setText(destinataire.getSociete());
+		}
+		
+		else if(! saisie.equals(textFields.get(0))){
+			textFields.get(0).setText(destinataire.getPatronyme());
+		}
+		else if(! saisie.equals(textFields.get(1))){
+			textFields.get(1).setText(destinataire.getPrenom());
+		}
+		else if(! saisie.equals(textFields.get(2))){
+			textFields.get(2).setText(destinataire.getFonction());
+		}
+		else if(! saisie.equals(textFields.get(3))){
+			textFields.get(3).setText(destinataire.getSociete());
+		}
 
 		ta5.setText(destinataire.getCommentaire());
 		
-		System.out.println("destinataire mis a jour : " + destinataire);
   	}
 
 }

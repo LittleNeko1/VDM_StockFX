@@ -57,7 +57,7 @@ public class Destinataire extends Commun implements Enregistrable {
 	}
 
 	public String getPrenom() {
-		return prenom;
+		return prenom == null || prenom.trim().equals("" ) ? null : prenom;
 	}
 
 	public void setPrenom(String prenom) {
@@ -65,7 +65,7 @@ public class Destinataire extends Commun implements Enregistrable {
 	}
 
 	public String getFonction() {
-		return fonction;
+		return fonction == null || fonction.trim().equals("" ) ? null : fonction;
 	}
 
 	public void setFonction(String fonction) {
@@ -73,7 +73,7 @@ public class Destinataire extends Commun implements Enregistrable {
 	}
 
 	public String getSociete() {
-		return societe;
+		return societe == null || societe.trim().equals("") ? null : societe;
 	}
 
 	public void setSociete(String societe) {
@@ -81,7 +81,7 @@ public class Destinataire extends Commun implements Enregistrable {
 	}
 
 	public String getPatronyme() {
-		return patronyme;
+		return patronyme == null || patronyme.trim().equals("") ? null : patronyme ;
 	}
 	
 	public void setPatronyme(String patronyme) {
@@ -90,7 +90,9 @@ public class Destinataire extends Commun implements Enregistrable {
     
 	@Override
 	public String getNom() {
-		return patronyme != null ? patronyme : societe != null ? societe : prenom != null ? prenom : "sans nom";
+		return getPatronyme() != null ? patronyme :
+				 getSociete() != null ? societe :
+				  getPrenom() != null ? prenom : "";
 	}
 
 }
