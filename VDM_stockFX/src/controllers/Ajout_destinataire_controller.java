@@ -35,6 +35,31 @@ public class Ajout_destinataire_controller implements SuperController{
 	
 	private static TextField saisie; 
 	
+	ChangeListener<String> auto_completion_listener;
+	
+	@Override
+	public void reinit(){
+		
+		textFields.get(0).textProperty().removeListener(auto_completion_listener);
+		cb1.editorProperty().get().textProperty().unbind();
+		textFields.get(0).textProperty().unbind();
+		textFields.get(3).textProperty().unbind();
+		
+		destinataire = new Destinataire();
+		cb1.setItems(null);
+		cb1.getSelectionModel().select(null);
+		cb1.getEditor().setText(null);
+		
+		textFields.get(0).setText(null);
+		textFields.get(1).setText(null);
+		textFields.get(2).setText(null);
+		textFields.get(3).setText(null);
+		ta5.setText(null);
+		
+		cb1.hide();
+		
+	}
+	
 	
      public VBox init(VBox form){
 		
@@ -58,7 +83,7 @@ public class Ajout_destinataire_controller implements SuperController{
  		cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
  		HBox.setHgrow(cb1, Priority.ALWAYS);
 	
- 		ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
+ 		auto_completion_listener = new ChangeListener<String>(){
 
  			@Override
  			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -75,6 +100,8 @@ public class Ajout_destinataire_controller implements SuperController{
  					
  					liste_autocompletion.add(destinataire.getNom());
  				}
+ 				
+ 				System.out.println(liste_autocompletion.toString());
  				
  				cb1.setItems(liste_autocompletion);
  				cb1.hide();
@@ -130,45 +157,36 @@ public class Ajout_destinataire_controller implements SuperController{
 		}
 		
 		
-		textFields.get(0).setOnMouseEntered(a -> {
+		textFields.get(0).setOnKeyPressed(a -> {
 				cb1.editorProperty().get().textProperty().unbind();
 				cb1.editorProperty().get().textProperty().bind(textFields.get(0).textProperty());
 				textFields.get(0).textProperty().addListener(auto_completion_listener);
-				saisie = textFields.get(0);
+				//saisie = textFields.get(0);
 				
 			});
 		
 		
-		textFields.get(3).setOnMouseEntered(a -> {
+		textFields.get(3).setOnKeyPressed(a -> {
+			cb1.editorProperty().get().textProperty().unbind();
 			if (textFields.get(0).getText() == null || "".equals(textFields.get(0).getText())){
-				cb1.editorProperty().get().textProperty().unbind();
 				cb1.editorProperty().get().textProperty().bind(textFields.get(3).textProperty());
 				textFields.get(3).textProperty().addListener(auto_completion_listener);
-				saisie = textFields.get(3);
+				//saisie = textFields.get(3);
 			}
 
 		});
 
-		textFields.get(0).setOnMouseExited(a -> {
+		textFields.get(0).setOnKeyReleased(a -> {
 			
 			textFields.get(0).textProperty().removeListener(auto_completion_listener);
 			cb1.editorProperty().get().textProperty().unbind();
-			
-			if (textFields.get(0).getText() == null || "".equals(textFields.get(0).getText() )&& !"".equals(textFields.get(3).getText())){
-				cb1.editorProperty().get().textProperty().bind(textFields.get(3).textProperty());
-				cb1.editorProperty().get().textProperty().unbind();
 
-				// si pas de re-bind effacement en passant sur textFields.get(0).getText()
-				// si bind : bound value cannot be set quand on clique sur un élement de la liste.
-				
-				saisie = textFields.get(3);
-			}
-			else if ("".equals(textFields.get(0).getText())){
+			if (textFields.get(0).getText() == null || "".equals(textFields.get(0).getText())){
 				saisie = null;
 			}
 		});
 		
-		textFields.get(3).setOnMouseExited(a -> {
+		textFields.get(3).setOnKeyReleased(a -> {
 			
 			textFields.get(0).textProperty().removeListener(auto_completion_listener);
 			cb1.editorProperty().get().textProperty().unbind();
@@ -189,7 +207,7 @@ public class Ajout_destinataire_controller implements SuperController{
 
 		form.getChildren().add(h5);	
 		
-		//mise_a_jour_autocompletion();
+		mise_a_jour_autocompletion();
 		
 		return form;
 	}
@@ -216,10 +234,7 @@ public class Ajout_destinataire_controller implements SuperController{
     		textFields.get(3).setText(destinataire.getSociete());
 
     		ta5.setText(destinataire.getCommentaire());
-    		
-    		System.out.println("getPatronyme() : " + destinataire.getPatronyme());
-    		System.out.println("getSociete() : " + destinataire.getSociete());
-    		System.out.println("getCommentaire() : " + destinataire.getCommentaire() );  		
+    				
     	}
   	}
 	

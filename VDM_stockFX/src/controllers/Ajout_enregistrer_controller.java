@@ -30,6 +30,8 @@ public class Ajout_enregistrer_controller{
 		enregistrable.setForm(form);
 		enregistrable.save();  
 		
+		controller.reinit();
+		
 	}
 	
 	

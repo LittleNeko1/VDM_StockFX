@@ -18,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import models.Destinataire;
 import models.Enregistrable;
 import models.Expediteur;
 import utils.MongoAccess;
@@ -28,6 +29,18 @@ public class Ajout_expediteur_controller implements SuperController{
 	private Expediteur expediteur;
 	private TextArea ta5;
 	private ComboBox<String> cb1;
+	
+	@Override
+	public void reinit(){
+		expediteur = new Expediteur();
+		cb1.setItems(null);
+		cb1.getSelectionModel().select(null);
+		cb1.getEditor().setText(null);
+		
+		ta5.setText(null);
+		
+		cb1.hide();
+	}
 	
      public VBox init(VBox form){
     	 

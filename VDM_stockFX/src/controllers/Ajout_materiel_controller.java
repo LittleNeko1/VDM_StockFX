@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import models.Destinataire;
 import models.Enregistrable;
 import models.Materiel;
 import utils.MongoAccess;
@@ -33,6 +34,21 @@ public class Ajout_materiel_controller  implements SuperController{
 	private List<TextField> textFields;
 	private TextArea ta5;
 	private ComboBox<String> cb1;
+	
+	@Override
+	public void reinit(){
+		materiel = new Materiel();
+		cb1.setItems(null);
+		cb1.getSelectionModel().select(null);
+		cb1.getEditor().setText(null);
+		
+		textFields.get(0).setText(null);
+        textFields.get(1).setText(null);
+        textFields.get(2).setText(null);
+		ta5.setText(null);
+		
+		cb1.hide();
+	}
 	
 	public VBox init(VBox form){
 		

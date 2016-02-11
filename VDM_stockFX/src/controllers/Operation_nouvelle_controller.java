@@ -1,16 +1,16 @@
 package controllers;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.jongo.MongoCursor;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -18,12 +18,33 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Classes_ajout_bloc;
 import models.Commun;
 import models.Enregistrable;
+import models.Operation;
 import utils.MongoAccess;
 
 public class Operation_nouvelle_controller implements SuperController{
+
+	private TextArea ta5;
+	private Operation operation;
+	
+	private List<ComboBox<String>> list_choiceboxes;
+	
+	
+	@Override
+	public void reinit(){
+		
+		operation = new Operation();
+		
+		list_choiceboxes.get(0).getSelectionModel().select(null);
+		list_choiceboxes.get(1).getSelectionModel().select(null);
+		list_choiceboxes.get(2).getSelectionModel().select(null);
+		list_choiceboxes.get(3).getSelectionModel().select(null);
+		
+		ta5.setText(null);
+		
+
+	}
 
     public VBox init(VBox form){
 		
@@ -34,6 +55,8 @@ public class Operation_nouvelle_controller implements SuperController{
 		h1.setMaxWidth(Double.MAX_VALUE);
 		
 		Map<String, String> choiceboxes = new LinkedHashMap<String, String>();
+		list_choiceboxes = new LinkedList<ComboBox<String>>();
+		
 		
 		choiceboxes.put("expediteur", "Expéditeur : ");
 		choiceboxes.put("destinataire", "Destinataire : ");
@@ -71,6 +94,8 @@ public class Operation_nouvelle_controller implements SuperController{
 			HBox.setHgrow(cb1, Priority.ALWAYS);
 			HBox.setHgrow(l1, Priority.ALWAYS);
 			HBox.setHgrow(v1, Priority.ALWAYS);
+			
+			list_choiceboxes.add(cb1);
 		}
 		
 		form.getChildren().add(h1);	
@@ -79,19 +104,22 @@ public class Operation_nouvelle_controller implements SuperController{
 		h5.setSpacing(20);
 		h5.setPadding(new Insets(30, 0, 0, 0));
 		Label l5 = new Label("Commentaire : ");
-		TextArea ta5 = new TextArea();
+		ta5 = new TextArea();
 		h5.getChildren().add(l5);
 		h5.getChildren().add(ta5);
 
 		form.getChildren().add(h5);	
 		
+		operation = new Operation();
+		
 		return form;
 	}
+    
 
-@Override
-public Enregistrable getEnregistrable() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	public Enregistrable getEnregistrable() {
+		return operation;
+	}
+
+
 
 }

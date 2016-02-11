@@ -11,12 +11,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import models.Destinataire;
 import models.Enregistrable;
 
 public class Operation_dernieres_controller implements SuperController{
 	
+	@Override
+	public void reinit(){
+
+	}
 	
-public VBox init(VBox form){
+	
+    public VBox init(VBox form){
 		
 		form.getChildren().clear();
 		
