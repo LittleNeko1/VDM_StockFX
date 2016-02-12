@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.jongo.MongoCursor;
@@ -17,6 +18,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import models.Classes_ajout_bloc;
+import models.Commun;
 import models.Destinataire;
 import models.Enregistrable;
 import models.Operation;
@@ -33,6 +36,8 @@ public class Operation_dernieres_controller implements SuperController{
     private TableColumn<Operation, String> dateRetourCol;
     
     private ObservableList<Operation> observableOperations;
+    
+    private Map<String, ComboBox<String>> comboboxes;
 
 	
 	@Override
@@ -51,6 +56,7 @@ public class Operation_dernieres_controller implements SuperController{
 		h1.setMaxWidth(Double.MAX_VALUE);
 		
 		Map<String, String> choiceboxes = new LinkedHashMap<String, String>();
+		comboboxes = new LinkedHashMap<>();
 		
 		choiceboxes.put("expediteur", "Filtrer par expéditeur : ");
 		choiceboxes.put("destinataire", "Filtrer par destinataire : ");
@@ -75,6 +81,36 @@ public class Operation_dernieres_controller implements SuperController{
 			cb1.prefWidth(400);
 			cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
 			cb1.setEditable(true);
+
+		    comboboxes.put(s, cb1);
+			
+			ObservableList<String> liste_enregistrable = FXCollections.observableArrayList();
+			
+			System.out.println(s.toUpperCase());
+			System.out.println(Classes_ajout_bloc.valueOf(s.toUpperCase()));
+			System.out.println(Classes_ajout_bloc.valueOf(s.toUpperCase()).getClasse());
+			
+			MongoCursor<Commun> cursor_enregistrable = MongoAccess.request(s).as(Commun.class);
+			
+			cursor_enregistrable.forEach(a -> liste_enregistrable.add(a.getNom()));
+			
+			cb1.setItems(liste_enregistrable);
+			
+			cb1.setOnAction(a -> {
+				
+				if (((ComboBox<String>) a.getSource()).getValue() != null){
+					
+					MongoCursor<Operation> mongo_cursor_operations = MongoAccess.requestAll("operation", s, ((ComboBox<String>) a.getSource()).getValue()).as(Operation.class);
+					observableOperations.clear();
+					mongo_cursor_operations.forEach(b -> observableOperations.add(b));
+					
+					for (String t : choiceboxes.keySet()){
+						if (! t.equals(s)){
+							comboboxes.get(t).getSelectionModel().select(null);
+						}					
+					}			
+			    }
+			});
 			
 			
 			v1.getChildren().add(l1);

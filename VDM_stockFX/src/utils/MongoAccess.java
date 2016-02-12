@@ -120,6 +120,15 @@ public class MongoAccess {
 		return one;
 	}
 	
+    public static Find requestAll(String table, String field, String valeur) {	
+		
+		Find all = null;
+		collec = jongo.getCollection(table);
+		all = collec.find(String.format("{\"%s\" : \"%s\"}", field, valeur));
+
+		return all;
+	}
+	
 	
     public static Find request(String table, String field, String valeur, boolean regex) {	
 		
