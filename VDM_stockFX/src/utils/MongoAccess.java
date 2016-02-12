@@ -120,6 +120,15 @@ public class MongoAccess {
 		return one;
 	}
 	
+    public static FindOne requestExistPartiel(String table, String field, String value, String field1, String field2) {	
+		
+		FindOne one = null;
+		collec = jongo.getCollection(table);
+		one = collec.findOne(String.format("{\"%s\" : \"%s\", \"%s\" : { $exists: true }, \"%s\" :{ $exists: false }}", field, value, field1, field2));
+
+		return one;
+	}
+	
     public static Find requestAll(String table, String field, String valeur) {	
 		
 		Find all = null;
