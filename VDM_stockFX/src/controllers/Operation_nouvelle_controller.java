@@ -59,8 +59,8 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		
 		choiceboxes.put("expediteur", "Expéditeur : ");
-		choiceboxes.put("destinataire", "Destinataire : ");
 		choiceboxes.put("materiel", "Matériel : ");
+		choiceboxes.put("destinataire", "Destinataire : ");
 		choiceboxes.put("complement", "Complément : ");
 		
 		for (String s : choiceboxes.keySet()){

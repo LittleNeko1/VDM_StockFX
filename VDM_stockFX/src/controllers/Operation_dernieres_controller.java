@@ -3,18 +3,37 @@ package controllers;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jongo.MongoCursor;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Destinataire;
 import models.Enregistrable;
+import models.Operation;
+import utils.MongoAccess;
 
 public class Operation_dernieres_controller implements SuperController{
+	
+	private TableView<Operation> tv5 ;
+	private TableColumn<Operation, String> expediteurCol;
+    private TableColumn<Operation, String> materielCol;
+    private TableColumn<Operation, String> destinataireCol;
+    private TableColumn<Operation, String> complementCol;
+    private TableColumn<Operation, String> dateOperationCol;
+    private TableColumn<Operation, String> dateRetourCol;
+    
+    private ObservableList<Operation> observableOperations;
+
 	
 	@Override
 	public void reinit(){
@@ -22,7 +41,8 @@ public class Operation_dernieres_controller implements SuperController{
 	}
 	
 	
-    public VBox init(VBox form){
+    @SuppressWarnings("unchecked")
+	public VBox init(VBox form){
 		
 		form.getChildren().clear();
 		
@@ -67,9 +87,45 @@ public class Operation_dernieres_controller implements SuperController{
 		}
 		
 		form.getChildren().add(h1);	
-		
-		TableView<?> tv5 = new TableView();
 
+		tv5 = new TableView<Operation>();
+		
+		expediteurCol = new TableColumn<Operation, String>("Expéditeur");
+        materielCol = new TableColumn<Operation, String>("Matériel");
+        destinataireCol = new TableColumn<Operation, String>("Destinataire");
+        complementCol = new TableColumn<Operation, String>("Complement");
+        dateOperationCol = new TableColumn<Operation, String>("Date opération");
+        dateRetourCol = new TableColumn<Operation, String>("Date retour");
+        
+        
+        tv5.getColumns().addAll(expediteurCol, materielCol, destinataireCol, complementCol, dateOperationCol, dateRetourCol);
+       
+        observableOperations = FXCollections.observableArrayList();
+        
+        MongoCursor<Operation> mongo_cursor_operations = MongoAccess.request("operation").as(Operation.class);
+        mongo_cursor_operations.forEach(a -> observableOperations.add(a));
+        
+        expediteurCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("expediteur")
+        	);
+        materielCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("materiel")
+        	);
+        destinataireCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("destinataire")
+        	);
+        complementCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("complement")
+        	);
+        dateOperationCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("date_operation")
+        	);
+        dateRetourCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("dateRetour")
+        	);
+        
+        
+        tv5.setItems(observableOperations);
 
 		form.getChildren().add(tv5);	
 		

@@ -13,6 +13,7 @@ public enum Classes_ajout_bloc {
 	private Class<?> classe;
 	private Class<Enregistrable> model;
 	
+	@SuppressWarnings("unchecked")
 	Classes_ajout_bloc(String nom, Class<?> classe, Class<?> model){
 		
 		this.nom = nom;
