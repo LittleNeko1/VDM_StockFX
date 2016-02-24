@@ -15,6 +15,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -29,6 +30,31 @@ public class Ajout_expediteur_controller implements SuperController{
 	private Expediteur expediteur;
 	private TextArea ta5;
 	private ComboBox<String> cb1;
+	
+	@Override
+	public void unfreeze(){
+		
+		editable(true);
+		
+	}
+	
+    public void freeze(){
+		
+		editable(false);
+		
+	}
+	
+	
+	
+	public void editable(boolean oui){
+
+		ta5.setEditable(oui);
+		
+		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
+		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
+		
+		
+	}
 	
 	@Override
 	public void reinit(){
@@ -47,6 +73,7 @@ public class Ajout_expediteur_controller implements SuperController{
     	 liste_autocompletion = FXCollections.observableArrayList();
 		
 		form.getChildren().clear();
+		form.setPadding(new Insets(20, 0, 0, 0));
 	
 		HBox h1 = new HBox();
 		h1.setMaxWidth(Double.MAX_VALUE);
@@ -110,6 +137,8 @@ public class Ajout_expediteur_controller implements SuperController{
 
 		form.getChildren().add(h5);	
 		
+		unfreeze();
+		
 		return form;
 	}
      
@@ -117,7 +146,11 @@ public class Ajout_expediteur_controller implements SuperController{
 			expediteur = MongoAccess.request("expediteur", "nom", cb1.getSelectionModel().getSelectedItem()).as(Expediteur.class);
 
 			if (expediteur == null){
-				expediteur = new Expediteur();				
+				expediteur = new Expediteur();
+				unfreeze();
+			}
+			else {
+				freeze();
 			}
 			
 			ta5.setText(expediteur.getCommentaire());

@@ -15,6 +15,10 @@ public class Ajout_enregistrer_controller{
 	private static VBox form;
 	private static SuperController controller;
 	
+	private static Button abandon;
+	private static Button enregistrer;
+	private static Button editer;
+	
 	public static void abandon(){
 		Centre_operation_controller.init(Centre_operation_controller.getCentre());
 		
@@ -34,6 +38,11 @@ public class Ajout_enregistrer_controller{
 		
 	}
 	
+	public static void editer(){
+        
+		controller.unfreeze();
+	}
+	
 	
 	public static HBox init(Class<Enregistrable> classe_attendue_, VBox form_, SuperController controller_){
 		
@@ -45,13 +54,20 @@ public class Ajout_enregistrer_controller{
 		hb.setSpacing(50);
 		hb.setAlignment(Pos.CENTER);
 		
-		Button abandon = new Button("Abandonner");
+		abandon = new Button("Abandonner");
 		abandon.setOnAction(a -> abandon());
 		hb.getChildren().add(abandon);
 		
-		Button enregistrer = new Button("Enregistrer");
+		enregistrer = new Button("Enregistrer");
 		enregistrer.setOnAction(a -> enregistrer());
 		hb.getChildren().add(enregistrer);
+		
+		editer = new Button("Editer");
+		editer.setOnAction(a -> editer());
+		editer.setVisible(false);
+		hb.getChildren().add(editer);
+		
+		
 		
 		return hb;
 	
@@ -64,6 +80,32 @@ public class Ajout_enregistrer_controller{
 	public static void setClasse_attendue(Class<Enregistrable> classe_attendue) {
 		Ajout_enregistrer_controller.classe_attendue = classe_attendue;
 	}
+
+	public static Button getAbandon() {
+		return abandon;
+	}
+
+	public static void setAbandon(Button abandon) {
+		Ajout_enregistrer_controller.abandon = abandon;
+	}
+
+	public static Button getEnregistrer() {
+		return enregistrer;
+	}
+
+	public static void setEnregistrer(Button enregistrer) {
+		Ajout_enregistrer_controller.enregistrer = enregistrer;
+	}
+
+	public static Button getEditer() {
+		return editer;
+	}
+
+	public static void setEditer(Button editer) {
+		Ajout_enregistrer_controller.editer = editer;
+	}
+	
+	
 
 
 }

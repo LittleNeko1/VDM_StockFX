@@ -29,7 +29,7 @@ public class Centre_operation_controller{
 		
 		form = new VBox();
 		form.setSpacing(25);
-		form.setPrefWidth(800);
+		form.setPrefWidth(1350);
 		form.getStyleClass().add("centre_vbox");
 		
 		for (Classes_operation_bloc cl : Classes_operation_bloc.values()){
@@ -43,7 +43,12 @@ public class Centre_operation_controller{
 					b = cl.getClasse();
 					SuperController b_instance = (SuperController) b.newInstance();
 					form = b_instance.init(form);
-					form.getChildren().add(Ajout_enregistrer_controller.init(cl.getOperation(), form, b_instance));
+					
+					if(cl.getNom().equals("nouvelle")){
+						form.getChildren().add(Ajout_enregistrer_controller.init(cl.getOperation(), form, b_instance));
+					}
+					
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

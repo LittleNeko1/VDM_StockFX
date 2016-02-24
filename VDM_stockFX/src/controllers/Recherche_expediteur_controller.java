@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.jongo.MongoCursor;
@@ -16,51 +15,27 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import models.Complement;
 import models.Destinataire;
 import models.Enregistrable;
-import models.Materiel;
+import models.Expediteur;
 import utils.MongoAccess;
 
-public class Ajout_complement_controller implements SuperController{
-	
+public class Recherche_expediteur_controller implements SuperController{
+	 
 	private ObservableList<String> liste_autocompletion;
-	private Complement complement;
+	private Expediteur expediteur;
 	private TextArea ta5;
 	private ComboBox<String> cb1;
 	
 	@Override
-	public void unfreeze(){
-		
-		editable(true);
-		
-	}
-	
-    public void freeze(){
-		
-		editable(false);
-		
-	}
-	
-	
-	
-	public void editable(boolean oui){
-		
-		ta5.setEditable(oui);
-		
-		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
-		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
-		
-		
-	}
+	public void unfreeze(){}
 	
 	@Override
 	public void reinit(){
-		complement = new Complement();
+		expediteur = new Expediteur();
 		cb1.setItems(null);
 		cb1.getSelectionModel().select(null);
 		cb1.getEditor().setText(null);
@@ -70,23 +45,22 @@ public class Ajout_complement_controller implements SuperController{
 		cb1.hide();
 	}
 	
-    public VBox init(VBox form){
-		
-        liste_autocompletion = FXCollections.observableArrayList();
+     public VBox init(VBox form){
+    	 
+    	 liste_autocompletion = FXCollections.observableArrayList();
 		
 		form.getChildren().clear();
-		form.setPadding(new Insets(20, 0, 0, 0));
-		
+	
 		HBox h1 = new HBox();
 		h1.setMaxWidth(Double.MAX_VALUE);
 		h1.setAlignment(Pos.CENTER_LEFT);
 		h1.setSpacing(5);
 					
-		Label l1 = new Label("nom : ");
+		Label l1 = new Label("Nom : ");
 		l1.maxWidth(75);
 		l1.setMaxSize(75.0, Control.USE_PREF_SIZE);
 		HBox.setHgrow(l1, Priority.ALWAYS);
-				
+		
 		cb1 = new ComboBox<String>();
 		cb1.setEditable(true);
 		cb1.prefWidth(400);
@@ -100,13 +74,13 @@ public class Ajout_complement_controller implements SuperController{
 				
 				liste_autocompletion.clear();
 				
-				MongoCursor<Complement> complement_cursor = MongoAccess.request("complement", "nom", newValue, true).as(Complement.class);
+				MongoCursor<Expediteur> expediteur_cursor = MongoAccess.request("expediteur", "nom", newValue, true).as(Expediteur.class);
 				
-				while(complement_cursor.hasNext()){
+				while(expediteur_cursor.hasNext()){
 					
-					Complement complement = complement_cursor.next();
+					Expediteur expediteur = expediteur_cursor.next();
 					
-					liste_autocompletion.add(complement.getNom());
+					liste_autocompletion.add(expediteur.getNom());
 				}
 				
 				cb1.setItems(liste_autocompletion);
@@ -124,7 +98,8 @@ public class Ajout_complement_controller implements SuperController{
 		});
         
         cb1.setOnAction(a -> mise_a_jour());
-        h1.getChildren().add(l1);
+
+		h1.getChildren().add(l1);
 		h1.getChildren().add(cb1);
 		form.getChildren().add(h1);	
 		
@@ -138,28 +113,40 @@ public class Ajout_complement_controller implements SuperController{
 
 		form.getChildren().add(h5);	
 		
-		unfreeze();
-		
 		return form;
 	}
+     
+     public void mise_a_jour(){
+			expediteur = MongoAccess.request("expediteur", "nom", cb1.getSelectionModel().getSelectedItem()).as(Expediteur.class);
 
-    public void mise_a_jour(){
-	complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
+			if (expediteur == null){
+				expediteur = new Expediteur();				
+			}
+			
+			ta5.setText(expediteur.getCommentaire());
+	  	}
 
-	if (complement == null){
-		complement = new Complement();
-		unfreeze();
+	public ObservableList<String> getListe_autocompletion() {
+		return liste_autocompletion;
 	}
-	else {
-		freeze();
+
+	public void setListe_autocompletion(ObservableList<String> liste_autocompletion) {
+		this.liste_autocompletion = liste_autocompletion;
 	}
 
-	ta5.setText(complement.getCommentaire());
+	public Expediteur getExpediteur() {
+		return expediteur;
+	}
+
+	public void setExpediteur(Expediteur expediteur) {
+		this.expediteur = expediteur;
 	}
 
 	@Override
 	public Enregistrable getEnregistrable() {
-		return complement;
+		return expediteur;
 	}
+     
+     
 
 }

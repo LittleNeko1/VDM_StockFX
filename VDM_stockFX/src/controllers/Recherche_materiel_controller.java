@@ -27,7 +27,7 @@ import models.Enregistrable;
 import models.Materiel;
 import utils.MongoAccess;
 
-public class Ajout_materiel_controller  implements SuperController{
+public class Recherche_materiel_controller  implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
 	private Materiel materiel;
@@ -36,33 +36,7 @@ public class Ajout_materiel_controller  implements SuperController{
 	private ComboBox<String> cb1;
 	
 	@Override
-	public void unfreeze(){
-		
-		editable(true);
-		
-	}
-	
-    public void freeze(){
-		
-		editable(false);
-		
-	}
-	
-	
-	
-	public void editable(boolean oui){
-		
-		for (TextField tf : textFields){
-			tf.setEditable(oui);
-		}
-		
-		ta5.setEditable(oui);
-		
-		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
-		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
-		
-		
-	}
+	public void unfreeze(){}
 	
 	@Override
 	public void reinit(){
@@ -84,7 +58,6 @@ public class Ajout_materiel_controller  implements SuperController{
         liste_autocompletion = FXCollections.observableArrayList();
 		
 		form.getChildren().clear();
-		form.setPadding(new Insets(20, 0, 0, 0));
 		
 		HBox h1 = new HBox();
 		h1.setMaxWidth(Double.MAX_VALUE);
@@ -178,8 +151,6 @@ public class Ajout_materiel_controller  implements SuperController{
 
 		form.getChildren().add(h5);	
 		
-		unfreeze();
-		
 		return form;
 	}
 	
@@ -187,11 +158,7 @@ public class Ajout_materiel_controller  implements SuperController{
 		materiel = MongoAccess.request("materiel", "nom", cb1.getSelectionModel().getSelectedItem()).as(Materiel.class);
 
 		if (materiel == null){
-			materiel = new Materiel();
-			unfreeze();
-		}
-		else {
-			freeze();
+			materiel = new Materiel();				
 		}
 		
         textFields.get(0).setText(materiel.getMarque());

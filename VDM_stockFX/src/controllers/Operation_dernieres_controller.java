@@ -1,7 +1,6 @@
 package controllers;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.jongo.MongoCursor;
@@ -20,7 +19,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Classes_ajout_bloc;
 import models.Commun;
-import models.Destinataire;
 import models.Enregistrable;
 import models.Operation;
 import utils.MongoAccess;
@@ -41,9 +39,11 @@ public class Operation_dernieres_controller implements SuperController{
 
 	
 	@Override
-	public void reinit(){
-
-	}
+	public void reinit(){}
+	
+	@Override
+	public void unfreeze(){}
+	
 	
 	
     @SuppressWarnings("unchecked")

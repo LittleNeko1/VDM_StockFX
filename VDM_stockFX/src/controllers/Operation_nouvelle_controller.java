@@ -30,6 +30,9 @@ public class Operation_nouvelle_controller implements SuperController{
 	
 	private List<ComboBox<String>> list_choiceboxes;
 	
+	@Override
+	public void unfreeze(){}
+	
 	
 	@Override
 	public void reinit(){

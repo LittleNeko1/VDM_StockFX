@@ -25,7 +25,7 @@ import models.Destinataire;
 import models.Enregistrable;
 import utils.MongoAccess;
 
-public class Ajout_destinataire_controller implements SuperController{
+public class Recherche_destinataire_controller implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
 	private Destinataire destinataire;
@@ -38,31 +38,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	ChangeListener<String> auto_completion_listener;
 	
 	@Override
-	public void unfreeze(){
-		
-		editable(true);
-		
-	}
-	
-    public void freeze(){
-		
-		editable(false);
-		
-	}
-
-	public void editable(boolean oui){
-		
-		for (TextField tf : textFields){
-			tf.setEditable(oui);
-		}
-		
-		ta5.setEditable(oui);
-		
-		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
-		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
-		
-		
-	}
+	public void unfreeze(){}
 	
 	@Override
 	public void reinit(){
@@ -83,8 +59,6 @@ public class Ajout_destinataire_controller implements SuperController{
 		textFields.get(3).setText(null);
 		ta5.setText(null);
 		
-		unfreeze();
-		
 		cb1.hide();
 		
 	}
@@ -95,7 +69,6 @@ public class Ajout_destinataire_controller implements SuperController{
     	 liste_autocompletion = FXCollections.observableArrayList();
  		
  		form.getChildren().clear();
- 		form.setPadding(new Insets(20, 0, 0, 0));
  		
  		HBox h1 = new HBox();
  		h1.setMaxWidth(Double.MAX_VALUE);
@@ -239,8 +212,6 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		mise_a_jour_autocompletion();
 		
-		unfreeze();
-		
 		return form;
 	}
 
@@ -266,8 +237,7 @@ public class Ajout_destinataire_controller implements SuperController{
     		textFields.get(3).setText(destinataire.getSociete());
 
     		ta5.setText(destinataire.getCommentaire());
-    		
-    		freeze();
+    				
     	}
   	}
 	
@@ -281,11 +251,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		}
 		
 		if (destinataire == null){
-			destinataire = new Destinataire();	
-			unfreeze();
-		}
-		else {
-			freeze();
+			destinataire = new Destinataire();			
 		}
 		
 		if (saisie == null){

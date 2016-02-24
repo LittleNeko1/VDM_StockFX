@@ -26,7 +26,7 @@ public class Centre_ajout_controller{
 		
 		form = new VBox();
 		form.setSpacing(25);
-		form.setPrefWidth(800);
+		form.setPrefWidth(1350);
 		
 		for (Classes_ajout_bloc cl : Classes_ajout_bloc.values()){
 			ToggleButton tg1 = new ToggleButton(cl.getNom());

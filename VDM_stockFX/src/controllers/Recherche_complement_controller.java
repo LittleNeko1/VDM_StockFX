@@ -16,7 +16,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -26,7 +25,7 @@ import models.Enregistrable;
 import models.Materiel;
 import utils.MongoAccess;
 
-public class Ajout_complement_controller implements SuperController{
+public class Recherche_complement_controller implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
 	private Complement complement;
@@ -34,29 +33,7 @@ public class Ajout_complement_controller implements SuperController{
 	private ComboBox<String> cb1;
 	
 	@Override
-	public void unfreeze(){
-		
-		editable(true);
-		
-	}
-	
-    public void freeze(){
-		
-		editable(false);
-		
-	}
-	
-	
-	
-	public void editable(boolean oui){
-		
-		ta5.setEditable(oui);
-		
-		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
-		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
-		
-		
-	}
+	public void unfreeze(){}
 	
 	@Override
 	public void reinit(){
@@ -75,7 +52,6 @@ public class Ajout_complement_controller implements SuperController{
         liste_autocompletion = FXCollections.observableArrayList();
 		
 		form.getChildren().clear();
-		form.setPadding(new Insets(20, 0, 0, 0));
 		
 		HBox h1 = new HBox();
 		h1.setMaxWidth(Double.MAX_VALUE);
@@ -138,8 +114,6 @@ public class Ajout_complement_controller implements SuperController{
 
 		form.getChildren().add(h5);	
 		
-		unfreeze();
-		
 		return form;
 	}
 
@@ -147,11 +121,7 @@ public class Ajout_complement_controller implements SuperController{
 	complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
 
 	if (complement == null){
-		complement = new Complement();
-		unfreeze();
-	}
-	else {
-		freeze();
+		complement = new Complement();				
 	}
 
 	ta5.setText(complement.getCommentaire());

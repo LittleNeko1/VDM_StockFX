@@ -1,7 +1,14 @@
 package models;
 
+import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javafx.geometry.Pos;
@@ -27,7 +34,11 @@ public class Operation extends Commun implements Enregistrable {
 	private Date date_operation;
 	private Date dateRetour;
 	
+	@JsonIgnore
 	private Operation operation_temp = null;
+	
+	@JsonIgnore
+	DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, Locale.FRANCE);
 	
 	
 
@@ -164,16 +175,28 @@ public class Operation extends Commun implements Enregistrable {
 		this.complement = complement;
 	}
 
-	public Date getDate_operation() {
-		return date_operation;
+	public String getDate_operation() {
+		if (date_operation != null){
+			return df.format(date_operation);
+		}
+		else {
+			return "";
+		}
 	}
 
 	public void setDate_operation(Date date_operation) {
 		this.date_operation = date_operation;
 	}
 
-	public Date getDateRetour() {
-		return dateRetour;
+	public String getDateRetour() {
+		
+		if (dateRetour != null){
+			return df.format(dateRetour);
+		}
+		else {
+			return "";
+		}
+		
 	}
 
 	public void setDateRetour(Date dateRetour) {
