@@ -46,10 +46,14 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		ta5.setText(null);
 		
-
+		list_choiceboxes.get(0).requestFocus();
+		
+		System.out.println("reinit()");
 	}
 
     public VBox init(VBox form){
+    	
+    	System.out.println("init()");
 		
 		form.getChildren().clear();
 		
@@ -114,6 +118,9 @@ public class Operation_nouvelle_controller implements SuperController{
 		form.getChildren().add(h5);	
 		
 		operation = new Operation();
+		
+		System.out.println("list_choiceboxes.get(0) : " + list_choiceboxes.get(0).getLayoutX());
+		list_choiceboxes.get(0).requestFocus();
 		
 		return form;
 	}

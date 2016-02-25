@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.geometry.Orientation;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleButton;
@@ -9,13 +12,15 @@ import javafx.scene.layout.VBox;
 import models.Classes_ajout_bloc;
 
 public class Centre_ajout_controller{
-    
-	private static boolean aff_flag;
+
 	private static VBox form;
+	
+	private static List<ToggleButton> list_toggles;
+	
 
 	public static HBox init(HBox centre_hbox) {
 		
-		aff_flag = false;
+		list_toggles = new ArrayList<>();
 
 		centre_hbox.getChildren().clear();
 		
@@ -49,20 +54,17 @@ public class Centre_ajout_controller{
 			});
 			
 			liste.getChildren().add(tg1);
-			if (! aff_flag){
-				tg1.fire();
-				tg1.setSelected(true);
-				aff_flag = true;
-			}
-			else {
-				tg1.setSelected(false);
-			}
+			
+			list_toggles.add(tg1);
 		}
 		
 		centre_hbox.getChildren().add(liste);
 		centre_hbox.getChildren().add(new Separator(Orientation.VERTICAL));
 
 		centre_hbox.getChildren().add(form);
+		
+		list_toggles.get(0).fire();
+		list_toggles.get(0).setSelected(true);
 
 		return centre_hbox;
 	}

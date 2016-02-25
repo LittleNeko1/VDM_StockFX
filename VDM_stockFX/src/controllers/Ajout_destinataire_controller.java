@@ -23,6 +23,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Destinataire;
 import models.Enregistrable;
+import utils.AutoCompletion;
 import utils.MongoAccess;
 
 public class Ajout_destinataire_controller implements SuperController{
@@ -85,6 +86,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		unfreeze();
 		
+		cb1.requestFocus();
+		
 		cb1.hide();
 		
 	}
@@ -120,33 +123,25 @@ public class Ajout_destinataire_controller implements SuperController{
  				
  				cb1.editorProperty().get().textProperty().unbind();
  				
- 				liste_autocompletion.clear();
- 				
- 				MongoCursor<Destinataire> destinataire_cursor = MongoAccess.request("destinataire", "nom", newValue, true).as(Destinataire.class);
- 				
- 				while(destinataire_cursor.hasNext()){
- 					
- 					Destinataire destinataire = destinataire_cursor.next();
- 					
- 					liste_autocompletion.add(destinataire.getNom());
- 				}
- 				
- 				System.out.println(liste_autocompletion.toString());
+ 				cb1.getEditor().setText(newValue.toUpperCase());
+				liste_autocompletion = AutoCompletion.autocomplete("destinataire", "nom", newValue.toUpperCase());
  				
  				cb1.setItems(liste_autocompletion);
  				cb1.hide();
  				cb1.setVisibleRowCount(liste_autocompletion.size());
  				cb1.show();
- 				//mise_a_jour_autocompletion();
+ 				
+ 				//cb1.editorProperty().get().textProperty().removeListener(this);
  			}			
  		};
 
- 		cb1.setOnKeyPressed(a-> {
- 			cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
- 		});
-         cb1.setOnKeyReleased(a-> {
-         	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
- 		});
+ 		cb1.getEditor().setOnKeyPressed(a-> {
+        	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
+		});
+        cb1.getEditor().setOnKeyReleased(a-> {
+        	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
+		}); 		
+
         cb1.setOnAction(a -> mise_a_jour());
         
         h1.getChildren().add(l1);
@@ -240,6 +235,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		mise_a_jour_autocompletion();
 		
 		unfreeze();
+		
+		cb1.requestFocus();
 		
 		return form;
 	}

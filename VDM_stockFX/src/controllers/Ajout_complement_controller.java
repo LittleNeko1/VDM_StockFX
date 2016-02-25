@@ -24,6 +24,7 @@ import models.Complement;
 import models.Destinataire;
 import models.Enregistrable;
 import models.Materiel;
+import utils.AutoCompletion;
 import utils.MongoAccess;
 
 public class Ajout_complement_controller implements SuperController{
@@ -67,6 +68,8 @@ public class Ajout_complement_controller implements SuperController{
 		
 		ta5.setText(null);
 		
+		cb1.requestFocus();
+		
 		cb1.hide();
 	}
 	
@@ -97,29 +100,23 @@ public class Ajout_complement_controller implements SuperController{
 
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				
-				liste_autocompletion.clear();
-				
-				MongoCursor<Complement> complement_cursor = MongoAccess.request("complement", "nom", newValue, true).as(Complement.class);
-				
-				while(complement_cursor.hasNext()){
-					
-					Complement complement = complement_cursor.next();
-					
-					liste_autocompletion.add(complement.getNom());
-				}
+
+				cb1.getEditor().setText(newValue.toUpperCase());
+				liste_autocompletion = AutoCompletion.autocomplete("complement", "nom", newValue.toUpperCase());
 				
 				cb1.setItems(liste_autocompletion);
 				cb1.hide();
 				cb1.setVisibleRowCount(liste_autocompletion.size());
 				cb1.show();
+				
+				//cb1.editorProperty().get().textProperty().removeListener(this);
 			}			
 		};
 		
-		cb1.setOnKeyPressed(a-> {
-			cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
+		cb1.getEditor().setOnKeyPressed(a-> {
+        	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
 		});
-        cb1.setOnKeyReleased(a-> {
+        cb1.getEditor().setOnKeyReleased(a-> {
         	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
 		});
         
@@ -140,19 +137,22 @@ public class Ajout_complement_controller implements SuperController{
 		
 		unfreeze();
 		
+		cb1.requestFocus();
+		
 		return form;
 	}
 
     public void mise_a_jour(){
-	complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
+    	
+	    complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
 
-	if (complement == null){
-		complement = new Complement();
-		unfreeze();
-	}
-	else {
-		freeze();
-	}
+		if (complement == null){
+			complement = new Complement();
+			unfreeze();
+		}
+		else {
+			freeze();
+		}
 
 	ta5.setText(complement.getCommentaire());
 	}

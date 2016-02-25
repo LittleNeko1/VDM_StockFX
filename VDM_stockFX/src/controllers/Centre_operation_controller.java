@@ -1,6 +1,12 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import javafx.geometry.Orientation;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -13,12 +19,14 @@ public class Centre_operation_controller{
 	private static boolean aff_flag;
 	private static VBox form;
 	private static HBox centre;
+	
+	private static List<ToggleButton> list_toggles;
 
 	public static HBox init(HBox centre_hbox) {
 		
 		centre = centre_hbox;
 		
-		aff_flag = false;
+		list_toggles = new ArrayList<>();
 
 		centre_hbox.getChildren().clear();
 		
@@ -57,24 +65,28 @@ public class Centre_operation_controller{
 				
 			});
 			
+			list_toggles.add(tg1);
+			
 			liste.getChildren().add(tg1);
-			if (! aff_flag){
-				tg1.fire();
-				tg1.setSelected(true);
-				aff_flag = true;
-			}
 		}
 		
 		centre_hbox.getChildren().add(liste);
 		centre_hbox.getChildren().add(new Separator(Orientation.VERTICAL));
 
 		centre_hbox.getChildren().add(form);
-
+			
+		list_toggles.get(0).fire();
+		list_toggles.get(0).setSelected(true);
+		
 		return centre_hbox;
 	}
 
 	public static HBox getCentre() {
 		return centre;
+	}
+
+	public static List<ToggleButton> getList_toggles() {
+		return list_toggles;
 	}
 
 }

@@ -25,6 +25,7 @@ import javafx.scene.layout.VBox;
 import models.Destinataire;
 import models.Enregistrable;
 import models.Materiel;
+import utils.AutoCompletion;
 import utils.MongoAccess;
 
 public class Ajout_materiel_controller  implements SuperController{
@@ -76,6 +77,8 @@ public class Ajout_materiel_controller  implements SuperController{
         textFields.get(2).setText(null);
 		ta5.setText(null);
 		
+		cb1.requestFocus();
+		
 		cb1.hide();
 	}
 	
@@ -107,28 +110,22 @@ public class Ajout_materiel_controller  implements SuperController{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				
-				liste_autocompletion.clear();
-				
-				MongoCursor<Materiel> materiel_cursor = MongoAccess.request("materiel", "nom", newValue, true).as(Materiel.class);
-				
-				while(materiel_cursor.hasNext()){
-					
-					Materiel materiel = materiel_cursor.next();
-					
-					liste_autocompletion.add(materiel.getNom());
-				}
+				cb1.getEditor().setText(newValue.toUpperCase());
+				liste_autocompletion = AutoCompletion.autocomplete("materiel", "nom", newValue.toUpperCase());
 				
 				cb1.setItems(liste_autocompletion);
 				cb1.hide();
 				cb1.setVisibleRowCount(liste_autocompletion.size());
 				cb1.show();
+				
+				//cb1.editorProperty().get().textProperty().removeListener(this);
 			}			
 		};
 		
-		cb1.setOnKeyPressed(a-> {
-			cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
+		cb1.getEditor().setOnKeyPressed(a-> {
+        	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
 		});
-        cb1.setOnKeyReleased(a-> {
+        cb1.getEditor().setOnKeyReleased(a-> {
         	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
 		});
         
@@ -179,6 +176,8 @@ public class Ajout_materiel_controller  implements SuperController{
 		form.getChildren().add(h5);	
 		
 		unfreeze();
+		
+		cb1.requestFocus();
 		
 		return form;
 	}

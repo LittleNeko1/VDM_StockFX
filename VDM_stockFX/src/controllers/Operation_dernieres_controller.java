@@ -1,6 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jongo.MongoCursor;
@@ -36,10 +38,14 @@ public class Operation_dernieres_controller implements SuperController{
     private ObservableList<Operation> observableOperations;
     
     private Map<String, ComboBox<String>> comboboxes;
+    
+    private List<ComboBox<String>> list_combobox;
 
 	
 	@Override
-	public void reinit(){}
+	public void reinit(){
+		list_combobox.get(0).requestFocus();
+	}
 	
 	@Override
 	public void unfreeze(){}
@@ -50,6 +56,8 @@ public class Operation_dernieres_controller implements SuperController{
 	public VBox init(VBox form){
 		
 		form.getChildren().clear();
+		
+		list_combobox = new ArrayList<>();
 		
 		HBox h1 = new HBox();
 		h1.setSpacing(15);
@@ -120,6 +128,8 @@ public class Operation_dernieres_controller implements SuperController{
 			HBox.setHgrow(cb1, Priority.ALWAYS);
 			HBox.setHgrow(l1, Priority.ALWAYS);
 			HBox.setHgrow(v1, Priority.ALWAYS);
+			
+			list_combobox.add(cb1);
 		}
 		
 		form.getChildren().add(h1);	
@@ -164,6 +174,8 @@ public class Operation_dernieres_controller implements SuperController{
         tv5.setItems(observableOperations);
 
 		form.getChildren().add(tv5);	
+		
+		list_combobox.get(0).requestFocus();
 		
 		return form;
 	}
