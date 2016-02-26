@@ -53,7 +53,7 @@ public class Operation_nouvelle_controller implements SuperController{
 
     public VBox init(VBox form){
     	
-    	System.out.println("init()");
+    	System.out.println("operation_nouvelle.init()");
 		
 		form.getChildren().clear();
 		
@@ -120,6 +120,8 @@ public class Operation_nouvelle_controller implements SuperController{
 		operation = new Operation();
 		
 		System.out.println("list_choiceboxes.get(0) : " + list_choiceboxes.get(0).getLayoutX());
+		
+		System.out.println("operation_nouvelle.list_choiceboxes.get(0).requestFocus()");
 		list_choiceboxes.get(0).requestFocus();
 		
 		return form;

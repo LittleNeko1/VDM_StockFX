@@ -24,6 +24,8 @@ public class Centre_operation_controller{
 
 	public static HBox init(HBox centre_hbox) {
 		
+		System.out.println("centre_operation.init()");
+		
 		centre = centre_hbox;
 		
 		list_toggles = new ArrayList<>();
@@ -74,8 +76,12 @@ public class Centre_operation_controller{
 		centre_hbox.getChildren().add(new Separator(Orientation.VERTICAL));
 
 		centre_hbox.getChildren().add(form);
-			
+		
+		System.out.println("centre_operation_list_toggles.get(0).fire()");
+		
 		list_toggles.get(0).fire();
+		
+		System.out.println("centre_operation_list_toggles.get(0).fired()");
 		list_toggles.get(0).setSelected(true);
 		
 		return centre_hbox;

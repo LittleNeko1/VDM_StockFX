@@ -31,7 +31,11 @@ public class VDM_stock_GUI_controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+		System.out.println("vdm_stock_connect()");
+		
 		MongoAccess.connect();
+		
+		System.out.println("vdm_stock_initialize()");
 		
 		centre_hbox.setSpacing(10);
 		//centre_hbox.getStyleClass().add("centre");
@@ -48,13 +52,15 @@ public class VDM_stock_GUI_controller implements Initializable {
 			centre_hbox = Centre_chercher_controller.init(centre_hbox);
 		});
 		
+		System.out.println("vdm_stock_nouvelle_op_button.fire()");
+		
 		nouvelle_op_button.fire();
-		rechercher_button.fire();
-		nouvelle_op_button.fire();
 		
-		Centre_operation_controller.getList_toggles().get(0).requestFocus();
+		System.out.println("vdm_stock_nouvelle_op_button.fired()");
 		
+		//Centre_operation_controller.getList_toggles().get(0).requestFocus();
 		
+		//System.out.println("Centre_operation_controller.getList_toggles().get(0).requestFocus()");
 		
 	}
 }
