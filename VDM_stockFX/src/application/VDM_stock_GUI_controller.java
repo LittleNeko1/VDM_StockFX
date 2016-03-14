@@ -4,10 +4,20 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import controllers.*;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import utils.ComInput;
+import utils.Messages;
 import utils.MongoAccess;
 
 public class VDM_stock_GUI_controller implements Initializable {
@@ -23,10 +33,14 @@ public class VDM_stock_GUI_controller implements Initializable {
 	@FXML
 	private HBox centre_hbox;
 	
+	@FXML
+	private BorderPane borderPane;
+	
 	// OTHER DECLARATIONS
 	
 	
-	
+	StringBuffer sb = new StringBuffer();
+	boolean flush = false;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -36,6 +50,8 @@ public class VDM_stock_GUI_controller implements Initializable {
 		MongoAccess.connect();
 		
 		System.out.println("vdm_stock_initialize()");
+		
+		
 		
 		centre_hbox.setSpacing(10);
 		//centre_hbox.getStyleClass().add("centre");
@@ -62,5 +78,51 @@ public class VDM_stock_GUI_controller implements Initializable {
 		
 		//System.out.println("Centre_operation_controller.getList_toggles().get(0).requestFocus()");
 		
+		
+		
+		borderPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+
+			@Override
+			public void handle(KeyEvent event) {
+				
+				if (event.getCode().equals(KeyCode.ENTER)){
+					
+					
+					
+					System.out.println("contenu du buffer :" + sb);
+					flush = true;
+					sb = new StringBuffer();
+				}	
+			}
+		});
+		
+		borderPane.setOnKeyTyped(new EventHandler<KeyEvent>() {
+
+
+			@Override
+			public void handle(KeyEvent event) {
+				
+				if (! flush){
+					sb.append(event.getCharacter());
+				}
+				else {
+					flush = false;
+				}
+				
+			}
+		});
+        
+		Runnable com = new Runnable() {
+			
+			@Override
+			public void run() {
+				ComInput.init(Messages.getOnc());
+				
+			}
+		};
+		
+		Thread t = new Thread(com);
+		t.start();
 	}
 }

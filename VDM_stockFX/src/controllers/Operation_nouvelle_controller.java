@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import models.Commun;
 import models.Enregistrable;
 import models.Operation;
+import utils.Messages;
 import utils.MongoAccess;
 
 public class Operation_nouvelle_controller implements SuperController{
@@ -50,11 +51,29 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		System.out.println("reinit()");
 	}
+	
+	public void reinit(String s){
+		
+        operation = new Operation();
+		
+		list_choiceboxes.get(0).getSelectionModel().select(null);
+		list_choiceboxes.get(1).getSelectionModel().select(s);
+		list_choiceboxes.get(2).getSelectionModel().select(null);
+		list_choiceboxes.get(3).getSelectionModel().select(null);
+		
+		ta5.setText(null);
+		
+		//list_choiceboxes.get(0).requestFocus();
+		
+		System.out.println(String.format("reinit(%s)", s));
+	}
 
     public VBox init(VBox form){
     	
     	System.out.println("operation_nouvelle.init()");
 		
+    	Messages.setOnc(this);
+    	
 		form.getChildren().clear();
 		
 		HBox h1 = new HBox();
