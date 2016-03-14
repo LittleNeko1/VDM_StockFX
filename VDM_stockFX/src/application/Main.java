@@ -22,6 +22,7 @@ public class Main extends Application {
 			Messages.setScene(scene);
 			
 			primaryStage.setScene(scene);
+			primaryStage.setAlwaysOnTop(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

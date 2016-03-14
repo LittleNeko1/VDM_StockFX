@@ -26,6 +26,7 @@ import models.Destinataire;
 import models.Enregistrable;
 import models.Materiel;
 import utils.AutoCompletion;
+import utils.Messages;
 import utils.MongoAccess;
 
 public class Ajout_materiel_controller  implements SuperController{
@@ -82,7 +83,26 @@ public class Ajout_materiel_controller  implements SuperController{
 		cb1.hide();
 	}
 	
+	public void reinit(String s){
+		
+		materiel = new Materiel();
+		cb1.setItems(null);
+		cb1.getSelectionModel().select(s);
+		cb1.getEditor().setText(s);
+		
+		textFields.get(0).setText(null);
+        textFields.get(1).setText(null);
+        textFields.get(2).setText(null);
+		ta5.setText(null);
+		
+		textFields.get(0).requestFocus();
+		
+		cb1.hide();
+	}
+	
 	public VBox init(VBox form){
+		
+		Messages.setAmc(this);
 		
         liste_autocompletion = FXCollections.observableArrayList();
 		

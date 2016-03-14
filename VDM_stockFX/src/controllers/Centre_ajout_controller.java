@@ -10,12 +10,13 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import models.Classes_ajout_bloc;
+import utils.Messages;
 
 public class Centre_ajout_controller{
 
 	private static VBox form;
 	
-	private static List<ToggleButton> list_toggles;
+	public static List<ToggleButton> list_toggles;
 	
 
 	public static HBox init(HBox centre_hbox) {

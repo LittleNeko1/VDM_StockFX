@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import controllers.*;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.Event;
@@ -20,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import jssc.SerialPortException;
+import utils.AutoCompletion;
 import utils.ComInput;
 import utils.Messages;
 import utils.MongoAccess;
@@ -148,6 +150,16 @@ public class VDM_stock_GUI_controller implements Initializable {
 		    	
 		    	try {
 					valeur_lue = ComInput.read();
+					ObservableList<String> ol = AutoCompletion.autocomplete("materiel", "nom", valeur_lue) ;
+				    if (ol.size() == 1 && ol.get(0).equals(valeur_lue.trim())){
+				    	System.out.println("valeur connue");
+				    	Messages.setValeur_connue(true);
+				    }
+				    else {
+				    	System.out.println("valeur inconnue");
+				    	Messages.setValeur_connue(false);
+				    }
+					
 				} catch (SerialPortException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -163,8 +175,19 @@ public class VDM_stock_GUI_controller implements Initializable {
 		    	
 		    	System.out.println("task.handle()");
 		    	
-		    	nouvelle_op_button.fire();
-		    	Messages.getOnc().reinit(valeur_lue);
+		    	if (Messages.isValeur_connue()){
+		    		nouvelle_op_button.fire();
+			    	Messages.getOnc().reinit(valeur_lue.trim());
+		    	}
+		    	else {
+		    		
+		    		
+		    		ajouter_button.fire();
+		    		Centre_ajout_controller.list_toggles.get(2).fire();
+		    		Messages.getAmc().reinit(valeur_lue.trim());
+		    		
+		    	}
+		    	
 		    	
 		    	taskFactory();
 		    	
