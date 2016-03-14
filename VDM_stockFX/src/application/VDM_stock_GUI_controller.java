@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import controllers.*;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -16,6 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import jssc.SerialPortException;
 import utils.ComInput;
 import utils.Messages;
 import utils.MongoAccess;
@@ -42,6 +46,12 @@ public class VDM_stock_GUI_controller implements Initializable {
 	StringBuffer sb = new StringBuffer();
 	boolean flush = false;
 	
+	public final void fire_button(){
+		nouvelle_op_button.fire();
+	}
+	
+	private String valeur_lue;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -51,7 +61,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 		
 		System.out.println("vdm_stock_initialize()");
 		
-		
+		Messages.setVsgc(this);
 		
 		centre_hbox.setSpacing(10);
 		//centre_hbox.getStyleClass().add("centre");
@@ -112,17 +122,58 @@ public class VDM_stock_GUI_controller implements Initializable {
 				
 			}
 		});
-        
-		Runnable com = new Runnable() {
-			
-			@Override
-			public void run() {
-				ComInput.init(Messages.getOnc());
-				
-			}
-		};
 		
-		Thread t = new Thread(com);
+		
+        
+//		Runnable com = new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				ComInput.init(Messages.getOnc());
+//				
+//			}
+//		};
+		ComInput.init();
+		
+		taskFactory();
+		
+
+	}
+	
+	public void taskFactory(){
+		final Task<Void> task = new Task<Void>() {
+		    @Override
+		    public Void call() throws Exception {
+		        // do work here...
+		    	
+		    	try {
+					valeur_lue = ComInput.read();
+				} catch (SerialPortException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	
+		        return null ;
+		    }
+		};
+
+		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+		    @Override
+		    public void handle(WorkerStateEvent event) {
+		    	
+		    	System.out.println("task.handle()");
+		    	
+		    	nouvelle_op_button.fire();
+		    	Messages.getOnc().reinit(valeur_lue);
+		    	
+		    	taskFactory();
+		    	
+		        // update UI with result
+		    }
+		});
+
+		Thread t = new Thread(task);
+		t.setDaemon(true); // thread will not prevent application shutdown
 		t.start();
 	}
 }

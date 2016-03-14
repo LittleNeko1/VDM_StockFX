@@ -22,12 +22,9 @@ public class ComInput {
 	
 private static SerialPort serialPort;
 	
-	public static void init(Operation_nouvelle_controller onc) {
+	public static void init() {
 	    String[] portNames = SerialPortList.getPortNames();
-//	    for(int i = 0; i < portNames.length; i++){
-//	        System.out.println(portNames[i]);
-//	    }
-	    gui = onc;
+
 	    comPort = portNames[0];
 	    baudrate = 9600;
 	    bytesize = 8;
@@ -39,10 +36,6 @@ private static SerialPort serialPort;
 	    
 	    try {
 	       open();
-	       
-	       while (running){
-	    	   read();
-	       }
 	    }
 	    catch (SerialPortException spe){
 	    	System.out.println(spe);
@@ -58,32 +51,36 @@ private static SerialPort serialPort;
 		
 	}
 	
-	public static void read() throws SerialPortException {
-	    
-	        
-	        byte[] buffer = serialPort.readBytes(1);//Read 10 bytes from serial port
-	        
-	        String s = "";
+	public static String read() throws SerialPortException {
+		
+		System.out.println("read() en attente ...");
 
-	        for (byte b : buffer){
+		 
+        byte[] buffer = serialPort.readBytes(1);//Read 10 bytes from serial port
+        
+        String s = "";
+
+        for (byte b : buffer){
+        	s += (char)b;
+        }
+        
+        while (!s.contains("\n")){
+        	
+        	buffer = serialPort.readBytes(1);
+        	
+        	for (byte b : buffer){
 	        	s += (char)b;
 	        }
-	        
-	        while (!s.contains("\n")){
-	        	
-	        	buffer = serialPort.readBytes(1);
-	        	
-	        	for (byte b : buffer){
-		        	s += (char)b;
-		        }
-	        	
-	        }
-	        
-	        System.out.println("s finale : " + s);
-	        gui.reinit(s);
-	        //serialPort.closePort();//Close serial port
-	    
+        	
+        }
+        
+        System.out.println("s finale : " + s);
+        return s;
+        
+        //serialPort.closePort();//Close serial port
 
+    
+	       
 	}
 
 }
