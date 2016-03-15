@@ -4,18 +4,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import controllers.*;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -25,6 +20,7 @@ import utils.AutoCompletion;
 import utils.ComInput;
 import utils.Messages;
 import utils.MongoAccess;
+import utils.Retour;
 
 public class VDM_stock_GUI_controller implements Initializable {
 	
@@ -154,6 +150,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 				    if (ol.size() == 1 && ol.get(0).equals(valeur_lue.trim())){
 				    	System.out.println("valeur connue");
 				    	Messages.setValeur_connue(true);
+
 				    }
 				    else {
 				    	System.out.println("valeur inconnue");
@@ -172,12 +169,15 @@ public class VDM_stock_GUI_controller implements Initializable {
 		task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 		    @Override
 		    public void handle(WorkerStateEvent event) {
+		    	// update here ...
 		    	
 		    	System.out.println("task.handle()");
 		    	
 		    	if (Messages.isValeur_connue()){
 		    		nouvelle_op_button.fire();
 			    	Messages.getOnc().reinit(valeur_lue.trim());
+			    	Retour.retour(valeur_lue.trim());
+			    	Messages.getOnc().getList_choiceboxes().get(0).requestFocus();
 		    	}
 		    	else {
 		    		
@@ -189,9 +189,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 		    	}
 		    	
 		    	
-		    	taskFactory();
-		    	
-		        // update UI with result
+		    	taskFactory(); //loop
 		    }
 		});
 

@@ -40,14 +40,14 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		operation = new Operation();
 		
-		list_choiceboxes.get(0).getSelectionModel().select(null);
-		list_choiceboxes.get(1).getSelectionModel().select(null);
-		list_choiceboxes.get(2).getSelectionModel().select(null);
-		list_choiceboxes.get(3).getSelectionModel().select(null);
+		getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
+		getList_choiceboxes().get(1).getSelectionModel().select(null);
+		getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
+		getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
 		
 		ta5.setText(null);
 		
-		list_choiceboxes.get(0).requestFocus();
+		getList_choiceboxes().get(0).requestFocus();
 		
 		System.out.println("reinit()");
 	}
@@ -56,15 +56,13 @@ public class Operation_nouvelle_controller implements SuperController{
 		
         operation = new Operation();
 		
-		list_choiceboxes.get(0).getSelectionModel().select(null);
-		list_choiceboxes.get(1).getSelectionModel().select(s);
-		list_choiceboxes.get(2).getSelectionModel().select(null);
-		list_choiceboxes.get(3).getSelectionModel().select(null);
+		getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
+		getList_choiceboxes().get(1).getSelectionModel().select(s);
+		getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
+		getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
 		
 		ta5.setText(null);
-		
-		//list_choiceboxes.get(0).requestFocus();
-		
+
 		System.out.println(String.format("reinit(%s)", s));
 	}
 
@@ -81,7 +79,7 @@ public class Operation_nouvelle_controller implements SuperController{
 		h1.setMaxWidth(Double.MAX_VALUE);
 		
 		Map<String, String> choiceboxes = new LinkedHashMap<String, String>();
-		list_choiceboxes = new LinkedList<ComboBox<String>>();
+		setList_choiceboxes(new LinkedList<ComboBox<String>>());
 		
 		
 		choiceboxes.put("expediteur", "Expéditeur : ");
@@ -121,7 +119,7 @@ public class Operation_nouvelle_controller implements SuperController{
 			HBox.setHgrow(l1, Priority.ALWAYS);
 			HBox.setHgrow(v1, Priority.ALWAYS);
 			
-			list_choiceboxes.add(cb1);
+			getList_choiceboxes().add(cb1);
 		}
 		
 		form.getChildren().add(h1);	
@@ -138,10 +136,10 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		operation = new Operation();
 		
-		System.out.println("list_choiceboxes.get(0) : " + list_choiceboxes.get(0).getLayoutX());
+		System.out.println("list_choiceboxes.get(0) : " + getList_choiceboxes().get(0).getLayoutX());
 		
 		System.out.println("operation_nouvelle.list_choiceboxes.get(0).requestFocus()");
-		list_choiceboxes.get(0).requestFocus();
+		getList_choiceboxes().get(0).requestFocus();
 		
 		return form;
 	}
@@ -149,6 +147,16 @@ public class Operation_nouvelle_controller implements SuperController{
 
 	public Enregistrable getEnregistrable() {
 		return operation;
+	}
+
+
+	public List<ComboBox<String>> getList_choiceboxes() {
+		return list_choiceboxes;
+	}
+
+
+	public void setList_choiceboxes(List<ComboBox<String>> list_choiceboxes) {
+		this.list_choiceboxes = list_choiceboxes;
 	}
 
 

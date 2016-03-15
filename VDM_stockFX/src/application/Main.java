@@ -12,6 +12,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) {
+		
 		try {
 			
 			Messages m = new Messages();
@@ -20,6 +21,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			Messages.setScene(scene);
+			Messages.setPrimary(primaryStage);
 			
 			primaryStage.setScene(scene);
 			primaryStage.setAlwaysOnTop(true);

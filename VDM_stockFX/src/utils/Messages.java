@@ -7,9 +7,10 @@ import controllers.Centre_operation_controller;
 import controllers.Operation_nouvelle_controller;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class Messages {
-	
+	private static Stage primary;
 	private static Scene scene;
 	private static Operation_nouvelle_controller onc;
 	private static Centre_operation_controller coc;
@@ -17,9 +18,14 @@ public class Messages {
 	private static Ajout_materiel_controller amc;
 	private static VDM_stock_GUI_controller vsgc;
 	
+	private static String lastExpediteur; 
+	private static String lastDestinataire; 
+	private static String lastComplement; 
+	
 	private static boolean valeur_connue;
 	
 	public Messages(){
+		primary = new Stage();
 		scene = new Scene(new Pane());
 		onc = new Operation_nouvelle_controller();
 		coc = new Centre_operation_controller();
@@ -27,6 +33,10 @@ public class Messages {
 		amc = new Ajout_materiel_controller();
 		vsgc = new VDM_stock_GUI_controller();
 		valeur_connue = false;
+		
+		lastExpediteur = "";
+		lastDestinataire = "";
+		lastComplement = "";
 		
 		System.out.println("scene = " + scene);
 	}
@@ -85,6 +95,38 @@ public class Messages {
 
 	public static void setAmc(Ajout_materiel_controller amc) {
 		Messages.amc = amc;
+	}
+
+	public static String getLastExpediteur() {
+		return lastExpediteur;
+	}
+
+	public static void setLastExpediteur(String lastExpediteur) {
+		Messages.lastExpediteur = lastExpediteur;
+	}
+
+	public static String getLastDestinataire() {
+		return lastDestinataire;
+	}
+
+	public static void setLastDestinataire(String lastDestinataire) {
+		Messages.lastDestinataire = lastDestinataire;
+	}
+
+	public static String getLastComplement() {
+		return lastComplement;
+	}
+
+	public static void setLastComplement(String lastComplement) {
+		Messages.lastComplement = lastComplement;
+	}
+
+	public static Stage getPrimary() {
+		return primary;
+	}
+
+	public static void setPrimary(Stage primary) {
+		Messages.primary = primary;
 	}
 	
 	

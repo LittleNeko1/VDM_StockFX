@@ -1,6 +1,5 @@
 package utils;
 
-import controllers.Operation_nouvelle_controller;
 import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
@@ -12,11 +11,6 @@ public class ComInput {
 	private static int bytesize;
 	private static int parity;
 	private static int stopbits;
-	private static int timeout;
-	private static boolean xonxoff;
-	private static boolean rtscts;
-	
-	private static Operation_nouvelle_controller gui;
 	
 	// port='COM1', baudrate=19200, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0
 	
@@ -31,9 +25,6 @@ private static SerialPort serialPort;
 	    stopbits = 1;
 	    parity = 0;
 	    
-	    
-	    boolean running = true;
-	    
 	    try {
 	       open();
 	    }
@@ -45,8 +36,8 @@ private static SerialPort serialPort;
 	
 	public static void open() throws SerialPortException{
 		serialPort = new SerialPort(comPort);
-	    serialPort.openPort();//Open serial port
-	    serialPort.setParams(baudrate, bytesize, stopbits, parity);//Set params.
+	    serialPort.openPort();
+	    serialPort.setParams(baudrate, bytesize, stopbits, parity);
 	    
 		
 	}
@@ -56,7 +47,7 @@ private static SerialPort serialPort;
 		System.out.println("read() en attente ...");
 
 		 
-        byte[] buffer = serialPort.readBytes(1);//Read 10 bytes from serial port
+        byte[] buffer = serialPort.readBytes(1);
         
         String s = "";
 
