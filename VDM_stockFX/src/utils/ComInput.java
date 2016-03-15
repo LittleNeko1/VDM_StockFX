@@ -69,9 +69,16 @@ private static SerialPort serialPort;
         return s;
         
         //serialPort.closePort();//Close serial port
-
-    
-	       
+       
+	}
+	
+	public static void close(){
+		try {
+			serialPort.closePort();
+		} catch (SerialPortException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

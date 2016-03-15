@@ -1,7 +1,10 @@
 package application;
 	
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import utils.ComInput;
 import utils.Messages;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,6 +29,16 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setAlwaysOnTop(true);
 			primaryStage.show();
+			
+			primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		          public void handle(WindowEvent we) {
+		              System.out.println("Stage is closing");
+		              ComInput.close();
+		          }
+		      });        
+			//primaryStage.close();
+		        
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
