@@ -2,6 +2,7 @@ package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import controllers.Centre_ajout_controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -17,6 +18,7 @@ public class Expediteur extends Commun implements Enregistrable {
 	@Override
 	public void save() {	
 		MongoAccess.save("expediteur",this);	
+		Centre_ajout_controller.fire0();
 	}
 
 	@SuppressWarnings("unchecked")

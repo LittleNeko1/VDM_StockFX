@@ -1,12 +1,14 @@
 package utils;
 
 import application.VDM_stock_GUI_controller;
+import controllers.Ajout_destinataire_controller;
 import controllers.Ajout_materiel_controller;
 import controllers.Centre_ajout_controller;
 import controllers.Centre_operation_controller;
 import controllers.Operation_nouvelle_controller;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Messages {
@@ -17,6 +19,9 @@ public class Messages {
 	private static Centre_ajout_controller cac;
 	private static Ajout_materiel_controller amc;
 	private static VDM_stock_GUI_controller vsgc;
+	
+	private static Ajout_destinataire_controller adc;
+	private static VBox destinataire_form;
 	
 	private static String lastExpediteur; 
 	private static String lastDestinataire; 
@@ -37,6 +42,9 @@ public class Messages {
 		lastExpediteur = "";
 		lastDestinataire = "";
 		lastComplement = "";
+		
+		adc = new Ajout_destinataire_controller();
+		destinataire_form = new VBox();
 		
 		System.out.println("scene = " + scene);
 	}
@@ -127,6 +135,22 @@ public class Messages {
 
 	public static void setPrimary(Stage primary) {
 		Messages.primary = primary;
+	}
+
+	public static Ajout_destinataire_controller getAdc() {
+		return adc;
+	}
+
+	public static void setAdc(Ajout_destinataire_controller adc) {
+		Messages.adc = adc;
+	}
+
+	public static VBox getDestinataire_form() {
+		return destinataire_form;
+	}
+
+	public static void setDestinataire_form(VBox destinataire_form) {
+		Messages.destinataire_form = destinataire_form;
 	}
 	
 	

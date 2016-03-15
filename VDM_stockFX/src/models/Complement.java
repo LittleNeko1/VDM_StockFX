@@ -1,5 +1,6 @@
 package models;
 
+import controllers.Centre_ajout_controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -11,7 +12,7 @@ public class Complement extends Commun implements Enregistrable {
 	@Override
 	public void save() {
 		MongoAccess.save("complement",this);
-		
+		Centre_ajout_controller.fire3();
 	}
 
 	@SuppressWarnings("unchecked")

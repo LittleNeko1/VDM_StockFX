@@ -69,5 +69,25 @@ public class Centre_ajout_controller{
 
 		return centre_hbox;
 	}
+	
+	public static void fire0(){
+		list_toggles.get(0).fire();
+		list_toggles.get(0).setSelected(true);	
+	}
+	
+	public static void fire1(){
+		list_toggles.get(1).fire();
+		list_toggles.get(1).setSelected(true);	
+	}
+	
+	public static void fire2(){
+		list_toggles.get(2).fire();
+		list_toggles.get(2).setSelected(true);	
+	}
+	
+	public static void fire3(){
+		list_toggles.get(3).fire();
+		list_toggles.get(3).setSelected(true);	
+	}
 
 }

@@ -1,10 +1,12 @@
 package models;
 
+import controllers.Centre_ajout_controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import utils.Messages;
 import utils.MongoAccess;
 
 public class Destinataire extends Commun implements Enregistrable {
@@ -17,7 +19,7 @@ public class Destinataire extends Commun implements Enregistrable {
 	@Override
 	public void save() {
 		MongoAccess.save("destinataire",this);
-		
+		Centre_ajout_controller.fire1();	
 	}
 
 	@SuppressWarnings("unchecked")

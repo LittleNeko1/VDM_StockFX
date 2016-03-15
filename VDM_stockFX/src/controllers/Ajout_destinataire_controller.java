@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import models.Destinataire;
 import models.Enregistrable;
 import utils.AutoCompletion;
+import utils.Messages;
 import utils.MongoAccess;
 
 public class Ajout_destinataire_controller implements SuperController{
@@ -84,6 +85,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		textFields.get(3).setText(null);
 		ta5.setText(null);
 		
+		// System.out.println("reinit().unfreeze()");
 		unfreeze();
 		
 		cb1.requestFocus();
@@ -94,7 +96,9 @@ public class Ajout_destinataire_controller implements SuperController{
 	
 	
      public VBox init(VBox form){
-		
+    	 
+    	 Messages.setAdc(this);
+
     	 liste_autocompletion = FXCollections.observableArrayList();
  		
  		form.getChildren().clear();
@@ -123,6 +127,8 @@ public class Ajout_destinataire_controller implements SuperController{
  				
  				cb1.editorProperty().get().textProperty().unbind();
  				
+ 				// System.out.println("auto_completion_listener.changed() : " + newValue);
+ 				
  				cb1.getEditor().setText(newValue.toUpperCase());
 				liste_autocompletion = AutoCompletion.autocomplete("destinataire", "nom", newValue.toUpperCase());
  				
@@ -137,9 +143,11 @@ public class Ajout_destinataire_controller implements SuperController{
 
  		cb1.getEditor().setOnKeyPressed(a-> {
         	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
+        	// System.out.println("auto_completion_listener on");
 		});
         cb1.getEditor().setOnKeyReleased(a-> {
         	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
+        	// System.out.println("auto_completion_listener off");
 		}); 		
 
         cb1.setOnAction(a -> mise_a_jour());
@@ -234,9 +242,12 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		mise_a_jour_autocompletion();
 		
+		// System.out.println("init().unfreeze()");
 		unfreeze();
 		
 		cb1.requestFocus();
+		
+		Messages.setDestinataire_form(form);
 		
 		return form;
 	}
@@ -244,7 +255,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	@Override
 	public Enregistrable getEnregistrable() {
 		
-		System.out.println("destinataire retourné : " + destinataire);
+		// System.out.println("destinataire retourné : " + destinataire);
 
 		return destinataire;
 	}
@@ -264,7 +275,15 @@ public class Ajout_destinataire_controller implements SuperController{
 
     		ta5.setText(destinataire.getCommentaire());
     		
-    		freeze();
+    		if (destinataire == null){
+    			destinataire = new Destinataire();	
+    			// System.out.println("mise_a_jour().unfreeze()");
+    			unfreeze();
+    		}
+    		else {
+    			// System.out.println("mise_a_jour().freeze()");
+    			freeze();
+    		}
     	}
   	}
 	
@@ -279,9 +298,11 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		if (destinataire == null){
 			destinataire = new Destinataire();	
+			// System.out.println("mise_a_jour_autocompletion().unfreeze()");
 			unfreeze();
 		}
 		else {
+			// System.out.println("mise_a_jour_autocompletion().freeze()");
 			freeze();
 		}
 		
