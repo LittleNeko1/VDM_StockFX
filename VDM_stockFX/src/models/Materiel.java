@@ -1,12 +1,15 @@
 package models;
 
 
+import java.util.ArrayList;
+
 import controllers.Centre_ajout_controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import utils.Messages;
 import utils.MongoAccess;
 
 
@@ -15,9 +18,16 @@ public class Materiel extends Commun implements Enregistrable {
 	private String marque;
 	private String modele;
 	private String capacite;
+	
+	private ArrayList<String> tags;
 
 	@Override
 	public void save() {
+		
+		tags = Messages.getAmc().getTags();
+		
+		System.out.println(tags);
+		
 		MongoAccess.save("materiel",this);
 		Centre_ajout_controller.fire2();
 		
@@ -48,7 +58,7 @@ public class Materiel extends Commun implements Enregistrable {
                 .getText() ;
 
 		this.setCommentaire(((TextArea) 
-                             ((HBox) form.getChildren().get(4))
+                             ((HBox) form.getChildren().get(5))
                              .getChildren().get(1))
                              .getText());
 		
@@ -77,5 +87,15 @@ public class Materiel extends Commun implements Enregistrable {
 	public void setCapacite(String capacite) {
 		this.capacite = capacite;
 	}
+
+	public ArrayList<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(ArrayList<String> tags) {
+		this.tags = tags;
+	}
+	
+	
     
 }
