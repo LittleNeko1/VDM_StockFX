@@ -18,8 +18,11 @@ private static SerialPort serialPort;
 	
 	public static void init() {
 	    String[] portNames = SerialPortList.getPortNames();
-
-	    comPort = portNames[0];
+        
+	    if(portNames.length > 0){
+	    	comPort = portNames[0];
+	    }
+	    
 	    baudrate = 9600;
 	    bytesize = 8;
 	    stopbits = 1;
@@ -45,9 +48,13 @@ private static SerialPort serialPort;
 	public static String read() throws SerialPortException {
 		
 		System.out.println("read() en attente ...");
+		
+		byte[] buffer = null;
 
-		 
-        byte[] buffer = serialPort.readBytes(1);
+		if(serialPort.isOpened()){
+			buffer = serialPort.readBytes(1);
+		}
+        
         
         String s = "";
 
@@ -73,12 +80,16 @@ private static SerialPort serialPort;
 	}
 	
 	public static void close(){
-		try {
-			serialPort.closePort();
-		} catch (SerialPortException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if(serialPort.isOpened()){
+			try {
+				serialPort.closePort();
+			} catch (SerialPortException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 	}
 
 }

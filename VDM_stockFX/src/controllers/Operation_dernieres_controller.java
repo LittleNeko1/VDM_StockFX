@@ -34,6 +34,7 @@ public class Operation_dernieres_controller implements SuperController{
     private TableColumn<Operation, String> complementCol;
     private TableColumn<Operation, String> dateOperationCol;
     private TableColumn<Operation, String> dateRetourCol;
+    private TableColumn<Operation, String> commentairesCol;
     
     private ObservableList<Operation> observableOperations;
     
@@ -142,9 +143,10 @@ public class Operation_dernieres_controller implements SuperController{
         complementCol = new TableColumn<Operation, String>("Complement");
         dateOperationCol = new TableColumn<Operation, String>("Date opération");
         dateRetourCol = new TableColumn<Operation, String>("Date retour");
+        commentairesCol = new TableColumn<Operation, String>("Commentaires");
         
         
-        tv5.getColumns().addAll(expediteurCol, materielCol, destinataireCol, complementCol, dateOperationCol, dateRetourCol);
+        tv5.getColumns().addAll(expediteurCol, materielCol, destinataireCol, complementCol, dateOperationCol, dateRetourCol, commentairesCol);
        
         observableOperations = FXCollections.observableArrayList();
         
@@ -168,6 +170,9 @@ public class Operation_dernieres_controller implements SuperController{
         	);
         dateRetourCol.setCellValueFactory(
         	    new PropertyValueFactory<>("dateRetour")
+        	);
+        commentairesCol.setCellValueFactory(
+        	    new PropertyValueFactory<>("commentaire")
         	);
         
         
