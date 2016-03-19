@@ -88,38 +88,38 @@ public class VDM_stock_GUI_controller implements Initializable {
 		
 		
 		
-		borderPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-
-			@Override
-			public void handle(KeyEvent event) {
-				
-				if (event.getCode().equals(KeyCode.ENTER)){
-					
-					
-					
-					System.out.println("contenu du buffer :" + sb);
-					flush = true;
-					sb = new StringBuffer();
-				}	
-			}
-		});
-		
-		borderPane.setOnKeyTyped(new EventHandler<KeyEvent>() {
-
-
-			@Override
-			public void handle(KeyEvent event) {
-				
-				if (! flush){
-					sb.append(event.getCharacter());
-				}
-				else {
-					flush = false;
-				}
-				
-			}
-		});
+//		borderPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//
+//
+//			@Override
+//			public void handle(KeyEvent event) {
+//				
+//				if (event.getCode().equals(KeyCode.ENTER)){
+//					
+//					
+//					
+//					System.out.println("contenu du buffer :" + sb);
+//					flush = true;
+//					sb = new StringBuffer();
+//				}	
+//			}
+//		});
+//		
+//		borderPane.setOnKeyTyped(new EventHandler<KeyEvent>() {
+//
+//
+//			@Override
+//			public void handle(KeyEvent event) {
+//				
+//				if (! flush){
+//					sb.append(event.getCharacter());
+//				}
+//				else {
+//					flush = false;
+//				}
+//				
+//			}
+//		});
 		
 		
         
@@ -146,7 +146,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 		    	
 		    	try {
 					valeur_lue = ComInput.read();
-					ObservableList<String> ol = AutoCompletion.autocomplete("materiel", "nom", valeur_lue) ;
+					ObservableList<String> ol = AutoCompletion.perfectMatch("materiel", "nom", valeur_lue) ;
 				    if (ol.size() == 1 && ol.get(0).equals(valeur_lue.trim())){
 				    	System.out.println("valeur connue");
 				    	Messages.setValeur_connue(true);

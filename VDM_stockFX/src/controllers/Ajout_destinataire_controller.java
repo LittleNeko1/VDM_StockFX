@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,17 +13,25 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import models.Destinataire;
 import models.Enregistrable;
+import models.Tags;
 import utils.AutoCompletion;
 import utils.Messages;
 import utils.MongoAccess;
@@ -34,6 +43,30 @@ public class Ajout_destinataire_controller implements SuperController{
 	private List<TextField> textFields;
 	private TextArea ta5;
 	private ComboBox<String> cb1;
+	
+	private GridPane tags_grid;
+	private HBox sd_hbox;
+	private Label uhs;
+	private HBox uhs_hbox;
+	private VBox uhs_vbox;
+	private CheckBox uhs1;
+	private CheckBox uhs3;
+	private Label classe;
+	private HBox classe_hbox;
+	private VBox classe_vbox;
+	private CheckBox classe8;
+	private CheckBox classe10;
+
+	
+	private HBox cf_hbox;
+	private VBox udma7_vbox;
+	private Label udma;
+	private CheckBox udma7;
+	
+	private Label format;
+	private Label mauvais_tags;
+	private CheckBox sd_cbox;
+	private CheckBox cf_cbox;
 	
 	private static TextField saisie; 
 	
@@ -59,6 +92,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		}
 		
 		ta5.setEditable(oui);
+		tags_grid.setDisable(!oui);
 		
 		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
 		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
@@ -229,6 +263,198 @@ public class Ajout_destinataire_controller implements SuperController{
 			}
 
 		});
+		
+		format = new Label("CARTE");		
+		format.setWrapText(true);
+		format.setAlignment(Pos.CENTER);
+		format.setTextAlignment(TextAlignment.CENTER);
+		
+		mauvais_tags = new Label("ATTENTION :\nRENSEIGNER LES MAUVAIS TAGS !!!");
+		mauvais_tags.setStyle("-fx-font-weight: bold;");
+		mauvais_tags.setWrapText(true);
+		mauvais_tags.setAlignment(Pos.CENTER);
+		mauvais_tags.setTextAlignment(TextAlignment.CENTER);
+
+		sd_cbox  = new CheckBox("SD"); 
+		cf_cbox  = new CheckBox("CF");	
+		
+		uhs_vbox = new VBox();
+		uhs_vbox.setSpacing(10);
+		uhs_hbox = new HBox();
+		uhs_hbox.setSpacing(10);
+		
+		uhs = new Label("UHS",new ImageView("u3.jpg"));
+		uhs1 = new CheckBox("1");
+		uhs3 = new CheckBox("3");
+		uhs_hbox.getChildren().addAll(uhs1, uhs3);
+		uhs_vbox.getChildren().addAll(uhs, uhs_hbox);
+		
+		classe_vbox = new VBox();
+		classe_vbox.setSpacing(10);
+		classe_hbox = new HBox();
+		classe_hbox.setSpacing(10);
+		
+		classe = new Label("CLASSE",new ImageView("c10.jpg"));
+		classe8 = new CheckBox("8");
+		classe10 = new CheckBox("10");
+		classe_hbox.getChildren().addAll(classe8, classe10);
+		classe_vbox.getChildren().addAll(classe, classe_hbox);
+		
+		sd_hbox = new HBox();
+		sd_hbox.setSpacing(20);
+		sd_hbox.getChildren().addAll(uhs_vbox, new Separator(Orientation.VERTICAL), classe_vbox);
+		sd_hbox.setDisable(true);
+		
+		udma7_vbox = new VBox();
+		udma7_vbox.setSpacing(10);
+		cf_hbox = new HBox();
+		cf_hbox.setAlignment(Pos.CENTER);
+		
+		udma = new Label("UDMA", new ImageView("udma7.jpg"));
+		udma7 = new CheckBox("7");
+		udma7_vbox.getChildren().addAll(udma, udma7);
+		cf_hbox.getChildren().addAll(udma7_vbox);
+		cf_hbox.setDisable(true);
+		
+	    sd_cbox.setOnAction(a -> {
+	    	
+	    	if(sd_cbox.isSelected()){
+	    		cf_cbox.setSelected(false);
+		    	udma7.setSelected(false);
+		    	cf_hbox.setDisable(true);
+		    	sd_hbox.setDisable(false);
+		    	Tags.CF.setSelected(true);
+		    	Tags.SD.setSelected(false);
+	    		Tags.UDMA7.setSelected(false);
+	    	}
+	    	else {
+	    		uhs1.setSelected(false);
+		    	uhs3.setSelected(false);
+		    	classe8.setSelected(false);
+		    	classe10.setSelected(false);
+		    	sd_hbox.setDisable(true);
+		    	Tags.CF.setSelected(false);
+		    	Tags.UHS1.setSelected(false);
+		    	Tags.UHS3.setSelected(false);
+		    	Tags.CLASSE8.setSelected(false);
+		    	Tags.CLASSE10.setSelected(false);
+	    	}
+	    	
+	    	
+	    	
+	    });
+	    
+	    cf_cbox.setOnAction(a -> {
+	    	
+	    	if(cf_cbox.isSelected()){
+	    		sd_cbox.setSelected(false);
+		    	uhs1.setSelected(false);
+		    	uhs3.setSelected(false);
+		    	classe8.setSelected(false);
+		    	classe10.setSelected(false);
+		    	sd_hbox.setDisable(true);
+		    	cf_hbox.setDisable(false);
+		    	Tags.SD.setSelected(true);
+		    	Tags.CF.setSelected(false);
+		    	Tags.UHS1.setSelected(false);
+		    	Tags.UHS3.setSelected(false);
+		    	Tags.CLASSE8.setSelected(false);
+		    	Tags.CLASSE10.setSelected(false);
+	    	}
+	    	else {
+	    		udma7.setSelected(false);
+	    		cf_hbox.setDisable(true);
+	    		Tags.SD.setSelected(false);
+	    		Tags.UDMA7.setSelected(false);
+	    	}
+	    	
+	    });
+	    
+	    uhs1.setOnAction(a -> {
+	    	if (uhs1.isSelected()){
+	    		uhs3.setSelected(false);
+	    		Tags.UHS1.setSelected(true);
+	    		Tags.UHS3.setSelected(false);
+	    	}
+	    	else {
+	    		Tags.UHS1.setSelected(false);
+	    	}
+	    });
+		
+	    uhs3.setOnAction(a -> {
+	    	if (uhs3.isSelected()){
+	    		uhs1.setSelected(false);
+	    		Tags.UHS3.setSelected(true);
+	    		Tags.UHS1.setSelected(false);
+	    	}
+	    	else {
+	    		Tags.UHS3.setSelected(false);
+	    	}
+	    });
+	    
+	    classe10.setOnAction(a -> {
+	    	if (classe10.isSelected()){
+	    		classe8.setSelected(false);
+	    		Tags.CLASSE10.setSelected(true);
+	    		Tags.CLASSE8.setSelected(false);
+	    	}
+	    	else {
+	    		
+	    		Tags.CLASSE10.setSelected(false);
+	    	}
+	    });
+	    
+	    classe8.setOnAction(a -> {
+	    	if (classe8.isSelected()){
+	    		classe10.setSelected(false);
+	    		Tags.CLASSE8.setSelected(true);
+	    		Tags.CLASSE10.setSelected(false);
+	    	}
+	    	else {
+	    		Tags.CLASSE8.setSelected(false);
+	    	}
+	    });
+	    
+	    udma7.setOnAction(a -> {
+	    	if (udma7.isSelected()){
+	    		Tags.UDMA7.setSelected(true);
+	    	}
+	    	else {
+	    		Tags.UDMA7.setSelected(false);
+	    	}
+	    });
+	    
+		tags_grid = new GridPane();
+		tags_grid.setVgap(10);
+		tags_grid.setHgap(20);
+		//tags_grid.setStyle("-fx-background-color: #ddd");
+		
+		RowConstraints constraint = new RowConstraints();
+		constraint.setPrefHeight(35);
+		tags_grid.getRowConstraints().add(constraint);
+		
+		tags_grid.add(format, 0, 0);
+		
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 1);
+		tags_grid.add(sd_cbox, 0, 2);
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 3);
+		tags_grid.add(cf_cbox, 0, 4);
+		
+		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 0);
+		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 2);
+		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 4);
+		
+		tags_grid.add(mauvais_tags, 2, 0);
+		
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 1);
+		tags_grid.add(sd_hbox, 2, 2);
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 3);
+		tags_grid.add(cf_hbox, 2, 4);
+		
+		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 2);
+		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 4);
+		
+		form.getChildren().add(tags_grid);	
 
 		HBox h5 = new HBox();
 		h5.setSpacing(20);
@@ -240,8 +466,8 @@ public class Ajout_destinataire_controller implements SuperController{
 
 		form.getChildren().add(h5);	
 		
-		mise_a_jour_autocompletion();
-		
+		//mise_a_jour_autocompletion();
+		destinataire = new Destinataire();	
 		// System.out.println("init().unfreeze()");
 		unfreeze();
 		
@@ -255,7 +481,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	@Override
 	public Enregistrable getEnregistrable() {
 		
-		// System.out.println("destinataire retourné : " + destinataire);
+		System.out.println("destinataire retourné : " + destinataire);
 
 		return destinataire;
 	}
@@ -272,6 +498,29 @@ public class Ajout_destinataire_controller implements SuperController{
     		textFields.get(1).setText(destinataire.getPrenom());
     		textFields.get(2).setText(destinataire.getFonction());
     		textFields.get(3).setText(destinataire.getSociete());
+    		
+    		for (String s : destinataire.getTags()){
+            	
+            	switch (s){
+            	
+            	case "CF" : sd_hbox.setDisable(false);
+            	            sd_cbox.setSelected(true);
+            	            break;
+            	case "SD" : cf_hbox.setDisable(false);
+            	            cf_cbox.setSelected(true);
+                            break;
+            	case "UDMA7" : udma7.setSelected(true);
+            	            break;
+            	case "UHS1" : uhs1.setSelected(true);
+                            break;
+            	case "UHS3" : uhs3.setSelected(true);
+                            break;
+            	case "CLASSE8" : classe8.setSelected(true);
+                            break;
+            	case "CLASSE10" : classe10.setSelected(true);
+                            break;
+            	}
+            }
 
     		ta5.setText(destinataire.getCommentaire());
     		
@@ -325,9 +574,44 @@ public class Ajout_destinataire_controller implements SuperController{
 		else if(! saisie.equals(textFields.get(3))){
 			textFields.get(3).setText(destinataire.getSociete());
 		}
+		
+		for (String s : destinataire.getTags()){
+        	
+        	switch (s){
+        	
+        	case "CF" : sd_hbox.setDisable(false);
+        	            sd_cbox.setSelected(true);
+        	            break;
+        	case "SD" : cf_hbox.setDisable(false);
+        	            cf_cbox.setSelected(true);
+                        break;
+        	case "UDMA7" : udma7.setSelected(true);
+        	            break;
+        	case "UHS1" : uhs1.setSelected(true);
+                        break;
+        	case "UHS3" : uhs3.setSelected(true);
+                        break;
+        	case "CLASSE8" : classe8.setSelected(true);
+                        break;
+        	case "CLASSE10" : classe10.setSelected(true);
+                        break;
+        	}
+        }
 
 		ta5.setText(destinataire.getCommentaire());
 		
   	}
-
+	
+    public ArrayList<String> getTags(){
+		
+		ArrayList<String> a = new ArrayList<>();
+		
+		for (Tags t : Tags.values()){
+			
+			if (t.isSelected()){
+				a.add(t.name());
+			}
+		}
+		return a;
+	}
 }

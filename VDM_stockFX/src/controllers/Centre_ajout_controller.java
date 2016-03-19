@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -31,7 +32,7 @@ public class Centre_ajout_controller{
 		ToggleGroup tg = new ToggleGroup();
 		
 		form = new VBox();
-		form.setSpacing(25);
+		form.setSpacing(20);
 		form.setPrefWidth(1350);
 		
 		for (Classes_ajout_bloc cl : Classes_ajout_bloc.values()){

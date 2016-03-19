@@ -25,7 +25,6 @@ public class Materiel extends Commun implements Enregistrable {
 	public void save() {
 		
 		tags = Messages.getAmc().getTags();
-		
 		System.out.println(tags);
 		
 		MongoAccess.save("materiel",this);

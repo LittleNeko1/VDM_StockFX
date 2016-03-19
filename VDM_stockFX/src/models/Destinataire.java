@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 import controllers.Centre_ajout_controller;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -15,9 +17,15 @@ public class Destinataire extends Commun implements Enregistrable {
 	private String prenom;
 	private String fonction;
 	private String societe;
+	
+	private ArrayList<String> wrong_tags;
 
 	@Override
 	public void save() {
+		
+        wrong_tags = Messages.getAdc().getTags();
+		System.out.println(wrong_tags);
+		
 		MongoAccess.save("destinataire",this);
 		Centre_ajout_controller.fire1();	
 	}
@@ -52,7 +60,7 @@ public class Destinataire extends Commun implements Enregistrable {
               .getText();
 
 	    this.setCommentaire(((TextArea) 
-                        ((HBox) form.getChildren().get(5))
+                        ((HBox) form.getChildren().get(6))
                         .getChildren().get(1))
                       .getText());
 		
@@ -95,6 +103,14 @@ public class Destinataire extends Commun implements Enregistrable {
 		return getPatronyme() != null ? patronyme :
 				 getSociete() != null ? societe :
 				  getPrenom() != null ? prenom : "";
+	}
+	
+	public ArrayList<String> getTags() {
+		return wrong_tags;
+	}
+
+	public void setTags(ArrayList<String> tags) {
+		this.wrong_tags = tags;
 	}
 
 }
