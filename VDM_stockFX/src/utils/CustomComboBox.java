@@ -76,7 +76,7 @@ public class CustomComboBox<T> extends ComboBox<T> {
                             setText(item.toString());
 
                             if (disabledItems.contains(item)) {
-                                setTextFill(Color.LIGHTGRAY);
+                                setTextFill(Color.LIGHTCORAL);
                                 setDisable(true);
                             }
 
