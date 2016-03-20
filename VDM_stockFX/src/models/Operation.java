@@ -26,7 +26,7 @@ import utils.Messages;
 import utils.MongoAccess;
 
 /**
- * Modèle lié aux formulaires {@link controllers.Operation_nouvelle_controller} et {@link controllers.Operation_dernières_controller}
+ * Modèle lié aux formulaires {@link controllers.Operation_nouvelle_controller} et {@link controllers.Operation_dernieres_controller}
  * @see Classes_operation_bloc
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

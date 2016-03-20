@@ -4,6 +4,9 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
+/**
+ * Classe de gestion de la connexion série.
+ */
 public class ComInput {
 	
 	private static String comPort;
@@ -14,8 +17,11 @@ public class ComInput {
 	
 	// port='COM1', baudrate=19200, bytesize=8, parity='N', stopbits=1, timeout=None, xonxoff=0, rtscts=0
 	
-private static SerialPort serialPort;
+    private static SerialPort serialPort;
 	
+    /**
+     * Initialise les parametres
+     */
 	public static void init() {
 	    String[] portNames = SerialPortList.getPortNames();
         
@@ -37,6 +43,10 @@ private static SerialPort serialPort;
 	    
 	}
 	
+	/**
+	 * Initialise la connexion
+	 * @throws SerialPortException Erreur levée lors de l'ouverture du port série
+	 */
 	public static void open() throws SerialPortException{
 		serialPort = new SerialPort(comPort);
 	    serialPort.openPort();
@@ -45,6 +55,11 @@ private static SerialPort serialPort;
 		
 	}
 	
+	/**
+	 * Lit le contenu en entrée jusqu'à rencontrer la valeur '\n'
+	 * @return le contenu en entrée
+	 * @throws SerialPortException  Erreur levée lors de la lecture sur le port série
+	 */
 	public static String read() throws SerialPortException {
 		
 		System.out.println("read() en attente ...");
@@ -79,6 +94,9 @@ private static SerialPort serialPort;
        
 	}
 	
+	/**
+	 * Ferme la connexion série.
+	 */
 	public static void close(){
 		
 		if(serialPort.isOpened()){
