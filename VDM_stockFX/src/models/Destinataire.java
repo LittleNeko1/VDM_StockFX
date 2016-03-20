@@ -11,6 +11,10 @@ import javafx.scene.layout.VBox;
 import utils.Messages;
 import utils.MongoAccess;
 
+/**
+ * Modèle lié au formulaire {@link controllers.Ajout_destinataire_controller}
+ * @see Classes_ajout_bloc
+ */
 public class Destinataire extends Commun implements Enregistrable {
     
 	private String patronyme;

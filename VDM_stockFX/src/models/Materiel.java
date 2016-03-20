@@ -12,7 +12,10 @@ import javafx.scene.layout.VBox;
 import utils.Messages;
 import utils.MongoAccess;
 
-
+/**
+ * Modèle lié au formulaire {@link controllers.Ajout_materiel_controller}
+ * @see Classes_ajout_bloc
+ */
 public class Materiel extends Commun implements Enregistrable {
 
 	private String marque;
@@ -86,11 +89,19 @@ public class Materiel extends Commun implements Enregistrable {
 	public void setCapacite(String capacite) {
 		this.capacite = capacite;
 	}
-
+    /**
+     * Retourne la liste des tags concernant le matériel
+     * @see Destinataire#wrong_tags 
+     * @return La liste des tags concernant le matériel
+     */
 	public ArrayList<String> getTags() {
 		return tags;
 	}
 
+	/**
+	 * Modifie la liste des tags concernant le matériel
+	 * @param tags la liste des tags cochés dans le formulaire
+	 */
 	public void setTags(ArrayList<String> tags) {
 		this.tags = tags;
 	}

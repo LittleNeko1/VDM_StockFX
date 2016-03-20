@@ -9,6 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.MongoAccess;
 
+/**
+ * Modèle lié au formulaire {@link controllers.Ajout_expediteur_controller}
+ * @see Classes_ajout_bloc
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Expediteur extends Commun implements Enregistrable {
 

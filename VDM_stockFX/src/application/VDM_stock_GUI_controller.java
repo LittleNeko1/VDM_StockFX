@@ -22,6 +22,11 @@ import utils.Messages;
 import utils.MongoAccess;
 import utils.Retour;
 
+/**
+ * Controleur principal de l'application.
+ * Les controleurs des différentes parties graphiques sont réparties dans les controleurs du package {@link controllers}
+ * 
+ *  * */
 public class VDM_stock_GUI_controller implements Initializable {
 	
 	// FXML DECLARATIONS
@@ -44,12 +49,28 @@ public class VDM_stock_GUI_controller implements Initializable {
 	StringBuffer sb = new StringBuffer();
 	boolean flush = false;
 	
+	/**
+	 * Réalise l'initialisation (ou la réinitalisation) de {@link controllers.Operation_nouvelle_controller}.
+	 */
 	public final void fire_button(){
 		nouvelle_op_button.fire();
 	}
 	
 	private String valeur_lue;
 	
+	
+	/**
+	 * L'initialisation réalise :
+	 * <ul>
+	 * <li> la connexion à la base MongoDB</li>
+	 * <li> l'enregistrement de l'instance courante <b>this</b> dans {@link Messages}</li>
+	 * <li> la création du conteneur qui accueillera les éléments graphiques</li>
+	 * <li> la définition des actions des 3 boutons du haut (relicats du fichier fxml)</li>
+	 * <li> le lancement d'une action sur le bouton "Nouvelle opération"</li>
+	 * <li> l'initialisation du la connexion série {@link utils.ComInput}</li>
+	 * <li> l'initialisation la boucle écoutant le port série {@link #taskFactory()}</li>
+	 * </ul>
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -86,51 +107,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 		
 		//System.out.println("Centre_operation_controller.getList_toggles().get(0).requestFocus()");
 		
-		
-		
-//		borderPane.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//
-//
-//			@Override
-//			public void handle(KeyEvent event) {
-//				
-//				if (event.getCode().equals(KeyCode.ENTER)){
-//					
-//					
-//					
-//					System.out.println("contenu du buffer :" + sb);
-//					flush = true;
-//					sb = new StringBuffer();
-//				}	
-//			}
-//		});
-//		
-//		borderPane.setOnKeyTyped(new EventHandler<KeyEvent>() {
-//
-//
-//			@Override
-//			public void handle(KeyEvent event) {
-//				
-//				if (! flush){
-//					sb.append(event.getCharacter());
-//				}
-//				else {
-//					flush = false;
-//				}
-//				
-//			}
-//		});
-		
-		
-        
-//		Runnable com = new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				ComInput.init(Messages.getOnc());
-//				
-//			}
-//		};
+
 		ComInput.init();
 		
 		taskFactory();
@@ -138,12 +115,23 @@ public class VDM_stock_GUI_controller implements Initializable {
 
 	}
 	
+	/**
+	 * Fabrique la tache qui va écouter et lire ce qui arrive sur le port série (douchette).
+	 * 
+	 * Dans sa méthode OnSucceeded(), le comportement diffère si la valeur lue est connue de la base ou non :
+	 * <ul>
+	 * <li>si la valeur est connue, c'est la classe {@link controllers.Operation_nouvelle_controller} qui est appelée</li>
+	 * <li>si la valeur est inconnue, c'est la classe {@link controllers.Ajout_materiel_controller} qui est appelée</li>
+	 * </ul>
+	 * Cette méthode s'appelle récursivement pour se ré-armer en fin de lecture.
+	 * 
+	 */
 	public void taskFactory(){
+		
 		final Task<Void> task = new Task<Void>() {
 		    @Override
 		    public Void call() throws Exception {
-		        // do work here...
-		    	
+		        // do work here...	
 		    	try {
 					valeur_lue = ComInput.read();
 					ObservableList<String> ol = AutoCompletion.perfectMatch("materiel", "nom", valeur_lue) ;
@@ -160,8 +148,7 @@ public class VDM_stock_GUI_controller implements Initializable {
 				} catch (SerialPortException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-		    	
+				} 	
 		        return null ;
 		    }
 		};

@@ -7,8 +7,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import utils.MongoAccess;
 
+/**
+ * Modèle lié au formulaire {@link controllers.Ajout_complement_controller}
+ * @see Classes_ajout_bloc
+ */
 public class Complement extends Commun implements Enregistrable {
-	
+
 	@Override
 	public void save() {
 		MongoAccess.save("complement",this);

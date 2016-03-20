@@ -25,6 +25,10 @@ import javafx.stage.Stage;
 import utils.Messages;
 import utils.MongoAccess;
 
+/**
+ * Modèle lié aux formulaires {@link controllers.Operation_nouvelle_controller} et {@link controllers.Operation_dernières_controller}
+ * @see Classes_operation_bloc
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Operation extends Commun implements Enregistrable {
 	
@@ -41,8 +45,6 @@ public class Operation extends Commun implements Enregistrable {
 	@JsonIgnore
 	DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, Locale.FRANCE);
 	
-	
-
 	@Override
 	public void save() {
 		
@@ -51,53 +53,6 @@ public class Operation extends Commun implements Enregistrable {
 		Messages.setLastComplement(this.complement);
 		
 		MongoAccess.save("operation",this);
-
-//		if (materiel != null){
-//			operation_temp = MongoAccess.requestExistPartiel("operation", "materiel", materiel, "date_operation", "dateRetour").as(Operation.class);
-//		}
-//	
-//		if (operation_temp != null ){
-//
-//			final Stage dialog = new Stage();
-//            dialog.initModality(Modality.APPLICATION_MODAL);
-//            VBox dialogVbox = new VBox(20);
-//            dialogVbox.setMaxWidth(Double.MAX_VALUE);
-//            dialogVbox.setAlignment(Pos.CENTER);
-//            
-//            Button nonButton = new Button("Non");
-//            Button ouiButton = new Button("Oui");
-//            HBox hbox = new HBox();
-//            HBox.setHgrow(nonButton, Priority.ALWAYS);
-//			HBox.setHgrow(ouiButton, Priority.ALWAYS);
-//			hbox.setMaxWidth(Double.MAX_VALUE);
-//			hbox.setAlignment(Pos.CENTER);
-//            hbox.setSpacing(100);
-//            hbox.getChildren().addAll(nonButton, ouiButton);
-//            
-//            dialogVbox.getChildren().addAll(new Text("enregistrer le retour du matériel ? : " + materiel), hbox);
-//            
-//            Scene dialogScene = new Scene(dialogVbox, 500, 100);
-//            dialog.setScene(dialogScene);
-//            
-//            ouiButton.setOnAction(a-> {
-//            	operation_temp.setDateRetour(new Date());
-//            	MongoAccess.save("operation",operation_temp);
-//            	dialog.close();
-//            });
-//            nonButton.setOnAction(a-> {
-//            	dialog.close();
-//            });
-//            
-//            dialog.showAndWait();
-//            
-//            
-//            
-//            
-//		}
-//		else {
-//			MongoAccess.save("operation",this);
-//		}
-		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -195,6 +150,11 @@ public class Operation extends Commun implements Enregistrable {
 		this.date_operation = date_operation;
 	}
 
+	/**
+	 * Retourne une chaine de caractères contenant la date ou une chaine vide ("") si le matériel n'est pas encore revenu.
+	 * @return une chaine de caractères contenant la date ou une chaine vide ("") si le matériel n'est pas encore revenu.
+	 * 
+	 */
 	public String getDateRetour() {
 		
 		if (dateRetour != null){
@@ -202,8 +162,7 @@ public class Operation extends Commun implements Enregistrable {
 		}
 		else {
 			return "";
-		}
-		
+		}	
 	}
 
 	public void setDateRetour(Date dateRetour) {

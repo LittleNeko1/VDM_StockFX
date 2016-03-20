@@ -10,8 +10,19 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * Génère les listes mises à jour des ComboBox.
+ * La connexion à la base MongoDb se fait au travers d'un socket.
+ * */
 public class AutoCompletion {
 	
+	/**
+	 * Transmet une requète regex /valeur/.
+	 * @param table : String
+	 * @param champ : String
+	 * @param valeur : String
+	 * @return une liste de noms vérifiant le filtre regex : ObservableList&lt;String&gt;
+	 */
 	public static ObservableList<String> autocomplete(String table, String champ, String valeur){
 		
 		ObservableList<String> ol = FXCollections.observableArrayList();
@@ -23,9 +34,6 @@ public class AutoCompletion {
             Socket socket = new Socket( "192.168.0.201", 44800 );
 
             // Create input and output streams to read from and write to the server
-            //PrintStream out = new PrintStream( socket.getOutputStream() );
-            //BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
-
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
@@ -52,6 +60,13 @@ public class AutoCompletion {
 		return ol;
     }
 	
+	/**
+	 * Transmet une requète regex /^valeur$/.
+	 * @param table : String
+	 * @param champ : String
+	 * @param valeur : String
+	 * @return une liste de noms vérifiant le filtre regex : ObservableList&lt;String&gt;
+	 */
     public static ObservableList<String> perfectMatch(String table, String champ, String valeur){
 		
 		ObservableList<String> ol = FXCollections.observableArrayList();
@@ -63,9 +78,6 @@ public class AutoCompletion {
             Socket socket = new Socket( "192.168.0.201", 44800 );
 
             // Create input and output streams to read from and write to the server
-            //PrintStream out = new PrintStream( socket.getOutputStream() );
-            //BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
-
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
@@ -92,6 +104,12 @@ public class AutoCompletion {
 		return ol;
     }
 	
+    /**
+     * Transmet une requète pour trouver les destinataires incompatibles avec le materiel sélectionné.
+     * @param table  : String
+     * @param materiel  : String
+     * @return une liste de noms de destinataires invalides : ArrayList&lt;String&gt;
+     */
     public static ArrayList<String> wrongTag(String table, String materiel){
 		
 		ArrayList<String> ol =  new ArrayList<>();
@@ -103,9 +121,6 @@ public class AutoCompletion {
             Socket socket = new Socket( "192.168.0.201", 44800 );
 
             // Create input and output streams to read from and write to the server
-            //PrintStream out = new PrintStream( socket.getOutputStream() );
-            //BufferedReader in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
-
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             

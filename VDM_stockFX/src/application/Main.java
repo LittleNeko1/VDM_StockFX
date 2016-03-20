@@ -10,9 +10,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
-
+/**
+ * Classe principale de l'application.
+ */
 public class Main extends Application {
 	
+	/**
+	 * Méthode de lancement de l'application.
+	 * <ul>
+	 * <li>charge le fichier fxml</li>
+	 * <li>charge le fichier css</li>
+	 * <li>définit les dimensions de la fenetre</li>
+	 * <li>force le positionnement au premeir plan</li>
+	 * <li>implémente les modalités de l'arret</li>
+	 * </ul>
+	 *
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -36,14 +49,16 @@ public class Main extends Application {
 		              ComInput.close();
 		          }
 		      });        
-			//primaryStage.close();
-		        
-			
+	
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * Traditionnelle méthode main(String[] args) ...
+	 * @param args les arguments passés à l'application
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
