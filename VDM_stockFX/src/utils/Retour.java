@@ -15,12 +15,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Operation;
 
+/**
+ * Gestion du materiel considéré comme 'retourné'.
+ *  
+ */
 public class Retour {
 	
 	private static Operation operation_temp = null;
 	
 	private DateFormat df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.SHORT, Locale.FRANCE);
 	
+	/**
+	 * Ouvre une fenetre pop-up et attends la confirmation du retour.
+	 * <ul>
+	 * <li>si oui, enregitrement de la date de retour</li>
+	 * <li>si non, abandon sans traitement</li>
+	 * </ul>
+	 * @param materiel le nom du matériel identifié
+	 */
 	public static void retour(String materiel){
 		
 		operation_temp = MongoAccess.requestExistPartiel("operation", "materiel", materiel, "date_operation", "dateRetour").as(Operation.class);

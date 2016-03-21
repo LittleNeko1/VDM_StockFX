@@ -15,6 +15,10 @@ import javafx.scene.control.TabPane;
 import models.Classes_ajout_bloc;
 import models.Classes_recherche_bloc;
 
+/**
+ * Controle la zone de recherche.
+ * 
+ */
 public class Centre_chercher_controller{
     
 	private static boolean aff_flag;
@@ -22,6 +26,15 @@ public class Centre_chercher_controller{
 	static TabPane tabpane;
 	static Tab tab1, tab2, tab3;
 
+	/**
+	 * Initialise la zone graphique en complétant le conteneur passé en argument avec le contenu spécifique. 
+	 * <ul>
+	 * <li>la liste des 4 boutons à gauche</li>
+	 * <li>le conteneur du formulaire à afficher</li>
+	 * </ul>
+	 * @param centre_hbox conteneur à compléter
+	 * @return le conteneur passé en argument completé avec le contenu spécifique.
+	 */
 	public static HBox init(HBox centre_hbox) {
 		
 		aff_flag = false;

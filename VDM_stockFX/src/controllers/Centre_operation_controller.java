@@ -15,6 +15,10 @@ import javafx.scene.layout.VBox;
 import models.Classes_operation_bloc;
 import utils.Messages;
 
+/**
+ * Controle la zone de gestion des opérations.
+ * 
+ */
 public class Centre_operation_controller{
 
 	private static boolean aff_flag;
@@ -23,6 +27,16 @@ public class Centre_operation_controller{
 	
 	private static List<ToggleButton> list_toggles;
 
+	/**
+	 * Initialise la zone graphique en complétant le conteneur passé en argument avec le contenu spécifique. 
+	 * <ul>
+	 * <li>la liste des 2 boutons à gauche</li>
+	 * <li>le conteneur du formulaire à afficher</li>
+	 * <li>dans le cas de l'onglet "Nouvelle opération" : les boutons enregistrer etc ...</li>
+	 * </ul>
+	 * @param centre_hbox conteneur à compléter
+	 * @return le conteneur passé en argument completé avec le contenu spécifique.
+	 */
 	public static HBox init(HBox centre_hbox) {
 		
 		System.out.println("centre_operation.init()");
@@ -88,10 +102,18 @@ public class Centre_operation_controller{
 		return centre_hbox;
 	}
 
+	/**
+	 * Retourne l'instance du formulaire affiché
+	 * @return l'instance du formulaire affiché
+	 */
 	public static HBox getCentre() {
 		return centre;
 	}
 
+	/**
+	 * Modifie l'instance du formulaire affiché
+	 * @return l'instance du formulaire affiché
+	 */
 	public static List<ToggleButton> getList_toggles() {
 		return list_toggles;
 	}

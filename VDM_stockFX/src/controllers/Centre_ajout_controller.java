@@ -13,13 +13,26 @@ import javafx.scene.layout.VBox;
 import models.Classes_ajout_bloc;
 import utils.Messages;
 
+/**
+ * Controle la zone d'ajout.
+ * 
+ */
 public class Centre_ajout_controller{
 
 	private static VBox form;
 	
 	public static List<ToggleButton> list_toggles;
 	
-
+	/**
+	 * Initialise la zone graphique en complétant le conteneur passé en argument avec le contenu spécifique. 
+	 * <ul>
+	 * <li>la liste des 4 boutons à gauche</li>
+	 * <li>le conteneur du formulaire à afficher</li>
+	 * <li>les boutons enregistrer etc ...</li>
+	 * </ul>
+	 * @param centre_hbox conteneur à compléter
+	 * @return le conteneur passé en argument completé avec le contenu spécifique.
+	 */
 	public static HBox init(HBox centre_hbox) {
 		
 		list_toggles = new ArrayList<>();
@@ -71,21 +84,33 @@ public class Centre_ajout_controller{
 		return centre_hbox;
 	}
 	
+	/**
+	 * Action sur le bouton n°0 : expéditeur
+	 */
 	public static void fire0(){
 		list_toggles.get(0).fire();
 		list_toggles.get(0).setSelected(true);	
 	}
 	
+	/**
+	 * Action sur le bouton n°1 : destinataire
+	 */
 	public static void fire1(){
 		list_toggles.get(1).fire();
 		list_toggles.get(1).setSelected(true);	
 	}
 	
+	/**
+	 * Action sur le bouton n°2 : matériel
+	 */
 	public static void fire2(){
 		list_toggles.get(2).fire();
 		list_toggles.get(2).setSelected(true);	
 	}
 	
+	/**
+	 * Action sur le bouton n°3 : complément
+	 */
 	public static void fire3(){
 		list_toggles.get(3).fire();
 		list_toggles.get(3).setSelected(true);	
