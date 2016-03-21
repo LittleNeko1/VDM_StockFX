@@ -36,6 +36,9 @@ import utils.AutoCompletion;
 import utils.Messages;
 import utils.MongoAccess;
 
+/**
+ * Controle la zone graphique du formulaire d'ajout d'un destinataire.
+ */
 public class Ajout_destinataire_controller implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
@@ -79,12 +82,19 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 	}
 	
+	/**
+	 * Bloque l'accès en modification aux champs du formulaire
+	 */
     public void freeze(){
 		
 		editable(false);
 		
 	}
 
+    /**
+     * Détail du code appelé par {@link freeze} {@link unfreeze} 
+     * @param oui bouléen retourné par {@link freeze} / {@link unfreeze} 
+     */
 	public void editable(boolean oui){
 		
 		for (TextField tf : textFields){
@@ -124,11 +134,12 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		cb1.requestFocus();
 		
-		cb1.hide();
-		
+		cb1.hide();		
 	}
 	
-	
+	/**
+	 * Initialisation du Formulaire et des écouteurs sur les champs.
+	 */
      public VBox init(VBox form){
     	 
     	 Messages.setAdc(this);
@@ -486,6 +497,9 @@ public class Ajout_destinataire_controller implements SuperController{
 		return destinataire;
 	}
 	
+	/**
+     * Mise à jour de l'affichage du formulaire
+     */
     public void mise_a_jour(){
     	
     	cb1.editorProperty().get().textProperty().unbind();
@@ -536,6 +550,9 @@ public class Ajout_destinataire_controller implements SuperController{
     	}
   	}
 	
+    /**
+     * Mise à jour de l'affichage du formulaire dans le cass de l'autocomplétion à la saisie. 
+     */
 	public void mise_a_jour_autocompletion(){
 		
 		cb1.editorProperty().get().textProperty().unbind();
@@ -602,6 +619,11 @@ public class Ajout_destinataire_controller implements SuperController{
 		
   	}
 	
+	/**
+	 * Retourne la liste des tags <b><u>invalides</u></b> chez le destinataire
+	 * @see models.Materiel
+	 * @return la liste des tags <b><u>invalides</u></b> chez le destinataire
+	 */
     public ArrayList<String> getTags(){
 		
 		ArrayList<String> a = new ArrayList<>();

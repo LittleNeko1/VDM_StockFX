@@ -26,7 +26,7 @@ public interface SuperController {
 	public void reinit();
 	
 	/**
-	 * Réactive la modification des champs affichés.
+	 * Débloque l'accès en modification aux champs du formulaire
 	 */
 	public void unfreeze();
 

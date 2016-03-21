@@ -27,13 +27,16 @@ import models.Materiel;
 import utils.AutoCompletion;
 import utils.MongoAccess;
 
+/**
+ * Controle la zone graphique du formulaire d'ajout d'un complément.
+ */
 public class Ajout_complement_controller implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
 	private Complement complement;
 	private TextArea ta5;
 	private ComboBox<String> cb1;
-	
+
 	@Override
 	public void unfreeze(){
 		
@@ -41,14 +44,19 @@ public class Ajout_complement_controller implements SuperController{
 		
 	}
 	
+	/**
+	 * Bloque l'accès en modification aux champs du formulaire
+	 */
     public void freeze(){
 		
 		editable(false);
 		
 	}
-	
-	
-	
+
+    /**
+     * Détail du code appelé par {@link freeze} {@link unfreeze} 
+     * @param oui bouléen retourné par {@link freeze} / {@link unfreeze} 
+     */
 	public void editable(boolean oui){
 		
 		ta5.setEditable(oui);
@@ -58,7 +66,7 @@ public class Ajout_complement_controller implements SuperController{
 		
 		
 	}
-	
+
 	@Override
 	public void reinit(){
 		complement = new Complement();
@@ -73,6 +81,9 @@ public class Ajout_complement_controller implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Initialisation du Formulaire et des écouteurs sur les champs.
+	 */
     public VBox init(VBox form){
 		
         liste_autocompletion = FXCollections.observableArrayList();
@@ -142,6 +153,9 @@ public class Ajout_complement_controller implements SuperController{
 		return form;
 	}
 
+    /**
+     * Mise à jour de l'affichage du formulaire
+     */
     public void mise_a_jour(){
     	
 	    complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
