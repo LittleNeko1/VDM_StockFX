@@ -1,1 +1,1 @@
-[Javadoc](doc/index.html)
+Projet client en lien avec le serveur [VDM_Stock_socketServer](https://github.com/kaplone/VDM_Stock_socketServer) 

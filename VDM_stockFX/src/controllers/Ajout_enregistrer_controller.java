@@ -93,64 +93,64 @@ public class Ajout_enregistrer_controller{
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retourne la classe du formulaire
+	 * @return la classe du formulaire
 	 */
 	public static Class<Enregistrable> getClasse_attendue() {
 		return classe_attendue;
 	}
 
 	/**
-	 * 
-	 * @param classe_attendue
+	 * Modifie la classe du formulaire
+	 * @param classe_attendue la classe du formulaire
 	 */
 	public static void setClasse_attendue(Class<Enregistrable> classe_attendue) {
 		Ajout_enregistrer_controller.classe_attendue = classe_attendue;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retourne le bouton "Abandonner"
+	 * @return le bouton "Abandonner"
 	 */
 	public static Button getAbandon() {
 		return abandon;
 	}
 
 	/**
-	 * 
-	 * @param abandon
+	 * Modifie le bouton "Abandonner"
+	 * @param abandon le bouton "Abandonner"
 	 */
 	public static void setAbandon(Button abandon) {
 		Ajout_enregistrer_controller.abandon = abandon;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retourne le bouton "Enregistrer"
+	 * @return le bouton "Enregistrer"
 	 */
 	public static Button getEnregistrer() {
 		return enregistrer;
 	}
 
 	/**
-	 * 
-	 * @param enregistrer
+	 * Modifie le bouton "Enregistrer"
+	 * @param enregistrer le bouton "Enregistrer"
 	 */
 	public static void setEnregistrer(Button enregistrer) {
 		Ajout_enregistrer_controller.enregistrer = enregistrer;
 	}
 
 	/**
-	 * 
-	 * @return
+	 * Retourne le bouton "Editer"
+	 * @return le bouton "Editer"
 	 */
 	public static Button getEditer() {
 		return editer;
 	}
 
 	/**
-	 * 
-	 * @param editer
+	 * MModifie le bouton "Editer"
+	 * @param editer le bouton "Editer"
 	 */
 	public static void setEditer(Button editer) {
 		Ajout_enregistrer_controller.editer = editer;
