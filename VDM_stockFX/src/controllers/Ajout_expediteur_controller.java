@@ -25,6 +25,9 @@ import models.Expediteur;
 import utils.AutoCompletion;
 import utils.MongoAccess;
 
+/**
+ * Controle la zone graphique du formulaire d'ajout d'un expéditeur.
+ */
 public class Ajout_expediteur_controller implements SuperController{
 	 
 	private ObservableList<String> liste_autocompletion;
@@ -39,22 +42,25 @@ public class Ajout_expediteur_controller implements SuperController{
 		
 	}
 	
+	/**
+	 * Bloque l'accès en modification aux champs du formulaire
+	 */
     public void freeze(){
 		
 		editable(false);
 		
 	}
-	
-	
-	
+
+    /**
+     * Détail du code appelé par {@link freeze} {@link unfreeze} 
+     * @param oui bouléen retourné par {@link freeze} / {@link unfreeze} 
+     */
 	public void editable(boolean oui){
 
 		ta5.setEditable(oui);
 		
 		Ajout_enregistrer_controller.getEnregistrer().setVisible(oui);
-		Ajout_enregistrer_controller.getEditer().setVisible(!oui);
-		
-		
+		Ajout_enregistrer_controller.getEditer().setVisible(!oui);	
 	}
 	
 	@Override
@@ -70,6 +76,9 @@ public class Ajout_expediteur_controller implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Initialisation du Formulaire et des écouteurs sur les champs.
+	 */
      public VBox init(VBox form){
     	 
     	 liste_autocompletion = FXCollections.observableArrayList();
@@ -138,8 +147,11 @@ public class Ajout_expediteur_controller implements SuperController{
 		cb1.requestFocus();
 		
 		return form;
-	}
+	 }
      
+     /**
+      * Mise à jour de l'affichage du formulaire
+      */
      public void mise_a_jour(){
 			expediteur = MongoAccess.request("expediteur", "nom", cb1.getSelectionModel().getSelectedItem()).as(Expediteur.class);
 
@@ -154,18 +166,34 @@ public class Ajout_expediteur_controller implements SuperController{
 			ta5.setText(expediteur.getCommentaire());
 	  	}
 
+     /**
+      * Retourne la liste correspondant aux propositions de l'autocomplétion
+      * @return la liste correspondant aux propositions de l'autocomplétion
+      */
 	public ObservableList<String> getListe_autocompletion() {
 		return liste_autocompletion;
 	}
 
+	/**
+	 * Modifie la liste correspondant aux propositions de l'autocomplétion
+	 * @param liste_autocompletion la liste correspondant aux propositions de l'autocomplétion
+	 */
 	public void setListe_autocompletion(ObservableList<String> liste_autocompletion) {
 		this.liste_autocompletion = liste_autocompletion;
 	}
 
+	/**
+	 * Retourne l'instance de l'expéditeur
+	 * @return l'instance de l'expéditeur
+	 */
 	public Expediteur getExpediteur() {
 		return expediteur;
 	}
 
+	/**
+	 * Modifie l'instance de l'expéditeur
+	 * @param expediteur l'instance de l'expéditeur
+	 */
 	public void setExpediteur(Expediteur expediteur) {
 		this.expediteur = expediteur;
 	}

@@ -37,6 +37,9 @@ import utils.AutoCompletion;
 import utils.Messages;
 import utils.MongoAccess;
 
+/**
+ * Controle la zone graphique du formulaire d'ajout d'un matériel.
+ */
 public class Ajout_materiel_controller  implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
@@ -72,18 +75,21 @@ public class Ajout_materiel_controller  implements SuperController{
 	@Override
 	public void unfreeze(){
 		
-		editable(true);
-		
+		editable(true);	
 	}
 	
+	/**
+	 * Bloque l'accès en modification aux champs du formulaire
+	 */
     public void freeze(){
 		
-		editable(false);
-		
+		editable(false);	
 	}
 	
-	
-	
+    /**
+     * Détail du code appelé par {@link freeze} {@link unfreeze} 
+     * @param oui bouléen retourné par {@link freeze} / {@link unfreeze} 
+     */
 	public void editable(boolean oui){
 		
 		for (TextField tf : textFields){
@@ -116,6 +122,11 @@ public class Ajout_materiel_controller  implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Recharge la série des éléments graphiques affichés.
+	 * Seule la valeur de la liste déroulante n'est pas nulle. 
+	 * @param s La valeur a afficher dans la liste déroulante.
+	 */
 	public void reinit(String s){
 		
 		materiel = new Materiel();
@@ -133,6 +144,9 @@ public class Ajout_materiel_controller  implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Initialisation du Formulaire et des écouteurs sur les champs.
+	 */
 	public VBox init(VBox form){
 		
 		Messages.setAmc(this);
@@ -409,6 +423,9 @@ public class Ajout_materiel_controller  implements SuperController{
 		return form;
 	}
 	
+	/**
+     * Mise à jour de l'affichage du formulaire
+     */
 	public void mise_a_jour(){
 		materiel = MongoAccess.request("materiel", "nom", cb1.getSelectionModel().getSelectedItem()).as(Materiel.class);
 
@@ -450,6 +467,11 @@ public class Ajout_materiel_controller  implements SuperController{
 		ta5.setText(materiel.getCommentaire());
   	}
 	
+	/**
+	 * Retourne la liste des tags <b><u>valides</u></b> pour le matériel
+	 * @return la liste des tags <b><u>valides</u></b> pour le matériel
+	 * @see Ajout_destinataire_controller
+	 */
 	public ArrayList<String> getTags(){
 		
 		ArrayList<String> a = new ArrayList<>();
@@ -463,42 +485,82 @@ public class Ajout_materiel_controller  implements SuperController{
 		return a;
 	}
 
+	/**
+     * Retourne la liste correspondant aux propositions de l'autocomplétion
+     * @return la liste correspondant aux propositions de l'autocomplétion
+     */
 	public ObservableList<String> getListe_autocompletion() {
 		return liste_autocompletion;
 	}
 
+	/**
+	 * Modifie la liste correspondant aux propositions de l'autocomplétion
+	 * @param liste_autocompletion la liste correspondant aux propositions de l'autocomplétion
+	 */
 	public void setListe_autocompletion(ObservableList<String> liste_autocompletion) {
 		this.liste_autocompletion = liste_autocompletion;
 	}
 
+	/**
+	 * Retourne l'instance du matériel
+	 * @return l'instance du matériel
+	 */
 	public Materiel getMateriel() {
 		return materiel;
 	}
 
+	/**
+	 * Modifie l'instance du matériel
+	 * @param materiel l'instance du matériel
+	 */
 	public void setMateriel(Materiel materiel) {
 		this.materiel = materiel;
 	}
 
+	/**
+	 * Retourne la liste les champs de saisie de texte du formulaire
+	 * @return la liste les champs de saisie de texte du formulaire
+	 */
 	public List<TextField> getTextFields() {
 		return textFields;
 	}
 
+	/**
+	 * Modifie la liste les champs de saisie de texte du formulaire
+	 * @param textFields la liste les champs de saisie de texte du formulaire
+	 */
 	public void setTextFields(List<TextField> textFields) {
 		this.textFields = textFields;
 	}
 
+	/**
+	 * Retourne l'instance du champ de commentaire
+	 * @return l'instance du champ de commentaire
+	 */
 	public TextArea getTa5() {
 		return ta5;
 	}
 
+	/**
+	 * Modifie l'instance du champ de commentaire
+	 * @param ta5 l'instance du champ de commentaire
+	 */
 	public void setTa5(TextArea ta5) {
 		this.ta5 = ta5;
 	}
 
+	/**
+	 * Retourne l'instance de la liste déroulante.
+	 * @return l'instance de la liste déroulante.
+	 */
 	public ComboBox<String> getCb1() {
 		return cb1;
 	}
 
+	/**
+	 * Modifie l'instance de la liste déroulante.
+	 * @param cb1 l'instance de la liste déroulante.
+	 */
 	public void setCb1(ComboBox<String> cb1) {
 		this.cb1 = cb1;
 	}
