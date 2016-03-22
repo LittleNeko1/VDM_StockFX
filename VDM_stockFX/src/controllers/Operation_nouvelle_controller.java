@@ -27,6 +27,9 @@ import utils.CustomComboBox;
 import utils.Messages;
 import utils.MongoAccess;
 
+/**
+ * Controle le formulaire pour enregistrer les nouvelles opérations
+ */
 public class Operation_nouvelle_controller implements SuperController{
 
 	private TextArea ta5;
@@ -55,6 +58,10 @@ public class Operation_nouvelle_controller implements SuperController{
 		System.out.println("reinit()");
 	}
 	
+	/**
+	 * Réinitialise les champs du formulaire avec une différentiation destinataire valides/invalides.
+	 * @param s le nom de matériel selectionné et qui va fournir les tags des destinataires invalides. 
+	 */
 	public void reinit(String s){
 		
         operation = new Operation();
@@ -81,6 +88,9 @@ public class Operation_nouvelle_controller implements SuperController{
 		System.out.println(String.format("reinit(%s)", s));
 	}
 
+	/**
+	 * Initialisation des éléments et de leurs écouteurs
+	 */
     public VBox init(VBox form){
     	
     	System.out.println("operation_nouvelle.init()");
@@ -160,18 +170,24 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		return form;
 	}
-    
 
+    @Override
 	public Enregistrable getEnregistrable() {
 		return operation;
 	}
 
-
+	/**
+	 * Retourne la liste des 'choiceBox'
+	 * @return la liste des 'choiceBox'
+	 */
 	public List<CustomComboBox<String>> getList_choiceboxes() {
 		return list_choiceboxes;
 	}
 
-
+    /**
+     * Modifie la liste des 'choiceBox'
+     * @param list_choiceboxes la liste des 'choiceBox'
+     */
 	public void setList_choiceboxes(List<CustomComboBox<String>> list_choiceboxes) {
 		this.list_choiceboxes = list_choiceboxes;
 	}

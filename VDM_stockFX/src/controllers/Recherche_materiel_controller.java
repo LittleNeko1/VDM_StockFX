@@ -27,6 +27,9 @@ import models.Enregistrable;
 import models.Materiel;
 import utils.MongoAccess;
 
+/**
+ * Controleur du formulaire de recherche d'un matériel
+ */
 public class Recherche_materiel_controller  implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
@@ -53,6 +56,9 @@ public class Recherche_materiel_controller  implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Initialisation des éléments et de leurs écouteurs
+	 */
 	public VBox init(VBox form){
 		
         liste_autocompletion = FXCollections.observableArrayList();
@@ -154,6 +160,9 @@ public class Recherche_materiel_controller  implements SuperController{
 		return form;
 	}
 	
+	/**
+     * Mise à jour de l'affichage du formulaire
+     */
 	public void mise_a_jour(){
 		materiel = MongoAccess.request("materiel", "nom", cb1.getSelectionModel().getSelectedItem()).as(Materiel.class);
 
@@ -168,42 +177,82 @@ public class Recherche_materiel_controller  implements SuperController{
 		ta5.setText(materiel.getCommentaire());
   	}
 
+	/**
+	 * Retourne la liste correspondant à l'autocomplétion
+	 * @return la liste correspondant à l'autocomplétion
+	 */
 	public ObservableList<String> getListe_autocompletion() {
 		return liste_autocompletion;
 	}
 
+	/**
+	 * Modifie la liste correspondant à l'autocomplétion
+	 * @param liste_autocompletion la liste correspondant à l'autocomplétion
+	 */
 	public void setListe_autocompletion(ObservableList<String> liste_autocompletion) {
 		this.liste_autocompletion = liste_autocompletion;
 	}
 
+	/**
+	 * Retourne l'instance du matériel
+	 * @return l'instance du matériel
+	 */
 	public Materiel getMateriel() {
 		return materiel;
 	}
 
+	/**
+	 * Modifie l'instance du matériel
+	 * @param materiel l'instance du matériel
+	 */
 	public void setMateriel(Materiel materiel) {
 		this.materiel = materiel;
 	}
 
+	/**
+	 * Retourne la liste des instances des champs de saisie de texte
+	 * @return la liste des instances des champs de saisie de texte
+	 */
 	public List<TextField> getTextFields() {
 		return textFields;
 	}
 
+	/**
+	 * Modifie la liste des instances des champs de saisie de texte
+	 * @param textFields la liste des instances des champs de saisie de texte
+	 */
 	public void setTextFields(List<TextField> textFields) {
 		this.textFields = textFields;
 	}
 
+	/**
+	 * Retourne l'instance du champ de saisie du commentaire
+	 * @return l'instance du champ de saisie du commentaire
+	 */
 	public TextArea getTa5() {
 		return ta5;
 	}
 
+	/**
+	 * Modifie l'instance du champ de saisie du commentaire
+	 * @param ta5 l'instance du champ de saisie du commentaire
+	 */
 	public void setTa5(TextArea ta5) {
 		this.ta5 = ta5;
 	}
 
+	/**
+	 * Retourne l'instance de la liste de choix déroulante
+	 * @return l'instance de la liste de choix déroulante
+	 */
 	public ComboBox<String> getCb1() {
 		return cb1;
 	}
 
+	/**
+	 * Modifie l'instance de la liste de choix déroulante
+	 * @param cb1 l'instance de la liste de choix déroulante
+	 */
 	public void setCb1(ComboBox<String> cb1) {
 		this.cb1 = cb1;
 	}

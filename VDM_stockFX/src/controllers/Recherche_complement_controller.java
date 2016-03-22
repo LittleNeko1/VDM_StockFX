@@ -25,6 +25,9 @@ import models.Enregistrable;
 import models.Materiel;
 import utils.MongoAccess;
 
+/**
+ * Controleur du formulaire de recherche d'un complément
+ */
 public class Recherche_complement_controller implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
@@ -47,6 +50,9 @@ public class Recherche_complement_controller implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Initialisation des éléments et de leurs écouteurs
+	 */
     public VBox init(VBox form){
 		
         liste_autocompletion = FXCollections.observableArrayList();
@@ -117,14 +123,17 @@ public class Recherche_complement_controller implements SuperController{
 		return form;
 	}
 
+    /**
+     * Mise à jour de l'affichage du formulaire
+     */
     public void mise_a_jour(){
-	complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
-
-	if (complement == null){
-		complement = new Complement();				
-	}
-
-	ta5.setText(complement.getCommentaire());
+		complement = MongoAccess.request("complement", "nom", cb1.getSelectionModel().getSelectedItem()).as(Complement.class);
+	
+		if (complement == null){
+			complement = new Complement();				
+		}
+	
+		ta5.setText(complement.getCommentaire());
 	}
 
 	@Override

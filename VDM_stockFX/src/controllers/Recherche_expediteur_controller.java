@@ -23,6 +23,9 @@ import models.Enregistrable;
 import models.Expediteur;
 import utils.MongoAccess;
 
+/**
+ * Controleur du formulaire de recherche d'un expéditeur
+ */
 public class Recherche_expediteur_controller implements SuperController{
 	 
 	private ObservableList<String> liste_autocompletion;
@@ -45,6 +48,9 @@ public class Recherche_expediteur_controller implements SuperController{
 		cb1.hide();
 	}
 	
+	/**
+	 * Initialisation des éléments et de leurs écouteurs
+	 */
      public VBox init(VBox form){
     	 
     	 liste_autocompletion = FXCollections.observableArrayList();
@@ -116,6 +122,9 @@ public class Recherche_expediteur_controller implements SuperController{
 		return form;
 	}
      
+     /**
+      * Mise à jour de l'affichage du formulaire
+      */
      public void mise_a_jour(){
 			expediteur = MongoAccess.request("expediteur", "nom", cb1.getSelectionModel().getSelectedItem()).as(Expediteur.class);
 
@@ -126,18 +135,34 @@ public class Recherche_expediteur_controller implements SuperController{
 			ta5.setText(expediteur.getCommentaire());
 	  	}
 
+     /**
+ 	 * Retourne la liste correspondant à l'autocomplétion
+ 	 * @return la liste correspondant à l'autocomplétion
+ 	 */
 	public ObservableList<String> getListe_autocompletion() {
 		return liste_autocompletion;
 	}
 
+	/**
+	 * Modifie la liste correspondant à l'autocomplétion
+	 * @param liste_autocompletion la liste correspondant à l'autocomplétion
+	 */
 	public void setListe_autocompletion(ObservableList<String> liste_autocompletion) {
 		this.liste_autocompletion = liste_autocompletion;
 	}
 
+	/**
+	 * Retourne l'instance de l'expéditeur
+	 * @return l'instance de l'expéditeur
+	 */
 	public Expediteur getExpediteur() {
 		return expediteur;
 	}
 
+	/**
+	 * Modifie l'instance de l'expéditeur
+	 * @param expediteur l'instance de l'expéditeur
+	 */
 	public void setExpediteur(Expediteur expediteur) {
 		this.expediteur = expediteur;
 	}

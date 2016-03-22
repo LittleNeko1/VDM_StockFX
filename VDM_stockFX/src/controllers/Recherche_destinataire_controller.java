@@ -25,6 +25,9 @@ import models.Destinataire;
 import models.Enregistrable;
 import utils.MongoAccess;
 
+/**
+ * Controleur du formulaire de recherche d'un destinataire
+ */
 public class Recherche_destinataire_controller implements SuperController{
 	
 	private ObservableList<String> liste_autocompletion;
@@ -63,7 +66,9 @@ public class Recherche_destinataire_controller implements SuperController{
 		
 	}
 	
-	
+	/**
+	 * Initialisation des éléments et de leurs écouteurs
+	 */
      public VBox init(VBox form){
 		
     	 liste_autocompletion = FXCollections.observableArrayList();
@@ -223,6 +228,9 @@ public class Recherche_destinataire_controller implements SuperController{
 		return destinataire;
 	}
 	
+	/**
+     * Mise à jour de l'affichage du formulaire
+     */
     public void mise_a_jour(){
     	
     	cb1.editorProperty().get().textProperty().unbind();
@@ -241,6 +249,9 @@ public class Recherche_destinataire_controller implements SuperController{
     	}
   	}
 	
+    /**
+     * Mise à jour de l'affichage du formulaire dans le cass de l'autocomplétion à la saisie. 
+     */
 	public void mise_a_jour_autocompletion(){
 		
 		cb1.editorProperty().get().textProperty().unbind();

@@ -26,7 +26,7 @@ import models.Operation;
 import utils.MongoAccess;
 
 /**
- *
+ * 
  */
 public class Operation_dernieres_controller implements SuperController{
 	
@@ -54,8 +54,9 @@ public class Operation_dernieres_controller implements SuperController{
 	@Override
 	public void unfreeze(){}
 	
-	
-	
+	/**
+	 * Initialisation des éléments et de leurs écouteurs
+	 */
     @SuppressWarnings("unchecked")
 	public VBox init(VBox form){
 		
@@ -188,10 +189,10 @@ public class Operation_dernieres_controller implements SuperController{
 		return form;
 	}
 
-@Override
-public Enregistrable getEnregistrable() {
-	// TODO Auto-generated method stub
-	return null;
-}
+	@Override
+	public Enregistrable getEnregistrable() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
