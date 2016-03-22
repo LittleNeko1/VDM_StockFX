@@ -1,6 +1,7 @@
 package utils;
 
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
@@ -79,6 +80,24 @@ public class MongoAccess {
 		Find find = null;
 		collec = jongo.getCollection(table);
 		find = collec.find("{_id :  #}", id);
+
+		return find;
+	}
+    
+    /**
+     * Retourne une liste des éléments d'une table dont la liste du champs "wrong_tags" contient au moins un élément de la liste "tags".
+     * @param table table interrogée
+     * @param tags liste des tags dont on vérifie la présence
+     * @return une liste des éléments d'une table dont la liste du champs "wrong_tags" contient au moins un élément de la liste "tags".
+     */
+    public static Find requestIn(String table, List<String> tags) {	
+    	
+    	System.out.println("tags : " + tags.toString());
+    	System.out.println("tags.size() : " + tags.size());
+		
+		Find find = null;
+		collec = jongo.getCollection(table);
+		find = collec.find("{wrong_tags : {$in :  #}}", tags);
 
 		return find;
 	}
