@@ -134,7 +134,7 @@ public class Operation_nouvelle_controller implements SuperController{
 			VBox v1 = new VBox();
 			VBox v2 = new VBox();
 			v1.setMaxWidth(Double.MAX_VALUE);
-			v1.setAlignment(Pos.CENTER);
+			v1.setAlignment(Pos.TOP_CENTER);
 			v1.setSpacing(5);
 			
 			Label l1 = new Label(choiceboxes.get(s));
@@ -221,35 +221,38 @@ public class Operation_nouvelle_controller implements SuperController{
     	
     	case "expediteur" : Expediteur e = MongoAccess.request(element, "nom", selection).as(Expediteur.class);
     	                    v = Messages.getResumes().get(element);
+    	                    v.getChildren().clear();
     	                    l1 = new Label(String.format("Commentaire : %s", e.getCommentaire() != null ? e.getCommentaire() : ""));
 					        v.getChildren().addAll(l1);
     	                    break;
     	case "materiel" :   Materiel m = MongoAccess.request(element, "nom", selection).as(Materiel.class);
 					        v = Messages.getResumes().get(element);
+					        v.getChildren().clear();
 					        l1 = new Label(String.format("Marque : %s", m.getMarque() != null ? m.getMarque() : ""));
-					        l2 = new Label(String.format("Marque : %s", m.getModele() != null ? m.getModele() : ""));
-					        l3 = new Label(String.format("Marque : %s", m.getCapacite() != null ? m.getCapacite() : ""));
+					        l2 = new Label(String.format("Modèle : %s", m.getModele() != null ? m.getModele() : ""));
+					        l3 = new Label(String.format("Capacité : %s", m.getCapacite() != null ? m.getCapacite() : ""));
 					        l4 = new Label(String.format("TAGS : %s", m.getTags().stream().collect(Collectors.joining(", "))));
-					        //l4.setStyle("-fx-font-weight: bold;");
+					        l4.setStyle("-fx-font-weight: bold;");
 					        //l4.setWrapText(true);
 					        l5 = new Label(String.format("Commentaire : %s", m.getCommentaire()!= null ? m.getCommentaire() : ""));
 					        v.getChildren().addAll(l1, l2, l3, l4, l5);
 					        break;
     	case "destinataire" :  Destinataire d = MongoAccess.request(element, "nom", selection).as(Destinataire.class);
 					        v = Messages.getResumes().get(element);
+					        v.getChildren().clear();
 					        l1 = new Label(String.format("Nom : %s", d.getPatronyme() != null ? d.getPatronyme() : ""));
 					        l2 = new Label(String.format("Prénom : %s", d.getPrenom() != null ? d.getPrenom() : ""));
 					        l3 = new Label(String.format("Fonction : %s", d.getFonction() != null ? d.getFonction() : ""));
 					        l4 = new Label(String.format("Société : %s", d.getSociete() != null ? d.getSociete() : ""));
-					        l5 = new Label(String.format("MAUVAIS TAGS : \n%s", d.getTags().stream().collect(Collectors.joining(", "))));
-					        //l5.setStyle("-fx-font-weight: bold;");
+					        l5 = new Label(String.format("MAUVAIS TAGS : %s", d.getTags().stream().collect(Collectors.joining(", "))));
+					        l5.setStyle("-fx-font-weight: bold;");
 					        //l5.setWrapText(true);
 					        l6 = new Label(String.format("Commentaire : %s", d.getCommentaire() != null ? d.getCommentaire() : ""));
 					        v.getChildren().addAll(l1, l2, l3, l4, l5, l6);
-
 					        break;
     	case "complement" : Complement c = MongoAccess.request(element, "nom", selection).as(Complement.class);
 					        v = Messages.getResumes().get(element);
+					        v.getChildren().clear();
 					        l1 = new Label(String.format("Commentaire : %s", c.getCommentaire() != null ? c.getCommentaire() : ""));
 					        v.getChildren().addAll(l1);
 					        break;
