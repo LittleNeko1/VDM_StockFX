@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.jongo.MongoCursor;
 
@@ -23,8 +24,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Commun;
+import models.Complement;
+import models.Destinataire;
 import models.Enregistrable;
 import models.Expediteur;
+import models.Materiel;
 import models.Operation;
 import utils.AutoCompletion;
 import utils.CustomComboBox;
@@ -40,7 +44,8 @@ public class Operation_nouvelle_controller implements SuperController{
 	private Operation operation;
 		
 	private List<CustomComboBox<String>> list_choiceboxes;
-	private List<Map<String, VBox>> list_resumes;
+	private Map<String, VBox> resumes;
+	
 		
 	@Override
 	public void unfreeze(){}
@@ -111,8 +116,7 @@ public class Operation_nouvelle_controller implements SuperController{
 		Map<String, String> choiceboxes = new LinkedHashMap<String, String>();
 		setList_choiceboxes(new LinkedList<CustomComboBox<String>>());
 		
-		list_resumes = new ArrayList<>();
-		
+		resumes = new HashMap<>();
 		
 		choiceboxes.put("expediteur", "Expéditeur : ");
 		choiceboxes.put("materiel", "Matériel : ");
@@ -148,10 +152,8 @@ public class Operation_nouvelle_controller implements SuperController{
 			
 			v1.getChildren().addAll(l1, cb1, v2);
 			h1.getChildren().add(v1);	
-			
-			Map<String, VBox> hm = new HashMap<>();
-			hm.put(s, v2);
-			list_resumes.add(hm);
+	
+			resumes.put(s, v2);
 			
 			ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
 
@@ -187,7 +189,9 @@ public class Operation_nouvelle_controller implements SuperController{
 //			HBox.setHgrow(v1, Priority.ALWAYS);
 			
 			getList_choiceboxes().add(cb1);
-		}		
+		}	
+		
+		Messages.setResumes(resumes);
 		
 		form.getChildren().add(h1);	
 		
@@ -210,9 +214,46 @@ public class Operation_nouvelle_controller implements SuperController{
     
     public void mise_a_jour(String element, String selection){
     	
+    	VBox v;
+    	Label l1, l2, l3, l4, l5, l6, l7;
+    	
     	switch (element){
     	
-    	///case "expediteur" : Expediteur e = MongoAccess.request(s, "nom", selection).
+    	case "expediteur" : Expediteur e = MongoAccess.request(element, "nom", selection).as(Expediteur.class);
+    	                    v = Messages.getResumes().get(element);
+    	                    l1 = new Label(String.format("Commentaire : %s", e.getCommentaire() != null ? e.getCommentaire() : ""));
+					        v.getChildren().addAll(l1);
+    	                    break;
+    	case "materiel" :   Materiel m = MongoAccess.request(element, "nom", selection).as(Materiel.class);
+					        v = Messages.getResumes().get(element);
+					        l1 = new Label(String.format("Marque : %s", m.getMarque() != null ? m.getMarque() : ""));
+					        l2 = new Label(String.format("Marque : %s", m.getModele() != null ? m.getModele() : ""));
+					        l3 = new Label(String.format("Marque : %s", m.getCapacite() != null ? m.getCapacite() : ""));
+					        l4 = new Label(String.format("TAGS : %s", m.getTags().stream().collect(Collectors.joining(", "))));
+					        //l4.setStyle("-fx-font-weight: bold;");
+					        //l4.setWrapText(true);
+					        l5 = new Label(String.format("Commentaire : %s", m.getCommentaire()!= null ? m.getCommentaire() : ""));
+					        v.getChildren().addAll(l1, l2, l3, l4, l5);
+					        break;
+    	case "destinataire" :  Destinataire d = MongoAccess.request(element, "nom", selection).as(Destinataire.class);
+					        v = Messages.getResumes().get(element);
+					        l1 = new Label(String.format("Nom : %s", d.getPatronyme() != null ? d.getPatronyme() : ""));
+					        l2 = new Label(String.format("Prénom : %s", d.getPrenom() != null ? d.getPrenom() : ""));
+					        l3 = new Label(String.format("Fonction : %s", d.getFonction() != null ? d.getFonction() : ""));
+					        l4 = new Label(String.format("Société : %s", d.getSociete() != null ? d.getSociete() : ""));
+					        l5 = new Label(String.format("MAUVAIS TAGS : \n%s", d.getTags().stream().collect(Collectors.joining(", "))));
+					        //l5.setStyle("-fx-font-weight: bold;");
+					        //l5.setWrapText(true);
+					        l6 = new Label(String.format("Commentaire : %s", d.getCommentaire() != null ? d.getCommentaire() : ""));
+					        v.getChildren().addAll(l1, l2, l3, l4, l5, l6);
+
+					        break;
+    	case "complement" : Complement c = MongoAccess.request(element, "nom", selection).as(Complement.class);
+					        v = Messages.getResumes().get(element);
+					        l1 = new Label(String.format("Commentaire : %s", c.getCommentaire() != null ? c.getCommentaire() : ""));
+					        v.getChildren().addAll(l1);
+					        break;
+    	                    
     	
     	}
     	
