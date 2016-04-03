@@ -65,6 +65,9 @@ public class Retour {
             ouiButton.setOnAction(a-> {
             	operation_temp.setDateRetour(new Date());
             	MongoAccess.save("operation",operation_temp);
+            	//TODO : MongoAccess.update("materiel", "en_stock", true);
+            	//TODO : sortie matériel dans operation.nouvelle.controller
+            	
             	dialog.close();
             	Messages.getPrimary().setAlwaysOnTop(true);
             });

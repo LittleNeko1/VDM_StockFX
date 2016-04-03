@@ -16,7 +16,10 @@ public enum Tags {
 	UHS3(false),
 	CLASSE8(false),
 	CLASSE10(false),
-	UDMA7(false);
+	SDHC(false),
+	SDXC(false),
+	UDMA7(false),
+	USB3(false);
 
 	private boolean selected;
 	

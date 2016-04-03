@@ -49,7 +49,7 @@ public class Centre_chercher_controller{
 		tabpane = new TabPane();
 		
 		form = new VBox();
-		form.setSpacing(25);
+		form.setSpacing(20);
 		form.setPrefWidth(1350);
 
 		for (Classes_recherche_bloc cl : Classes_recherche_bloc.values()){

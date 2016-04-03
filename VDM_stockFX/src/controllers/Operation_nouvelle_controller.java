@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Map;
 
 import org.jongo.MongoCursor;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -21,6 +24,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import models.Commun;
 import models.Enregistrable;
+import models.Expediteur;
 import models.Operation;
 import utils.AutoCompletion;
 import utils.CustomComboBox;
@@ -34,9 +38,10 @@ public class Operation_nouvelle_controller implements SuperController{
 
 	private TextArea ta5;
 	private Operation operation;
-	
+		
 	private List<CustomComboBox<String>> list_choiceboxes;
-	
+	private List<Map<String, VBox>> list_resumes;
+		
 	@Override
 	public void unfreeze(){}
 	
@@ -106,6 +111,8 @@ public class Operation_nouvelle_controller implements SuperController{
 		Map<String, String> choiceboxes = new LinkedHashMap<String, String>();
 		setList_choiceboxes(new LinkedList<CustomComboBox<String>>());
 		
+		list_resumes = new ArrayList<>();
+		
 		
 		choiceboxes.put("expediteur", "Expéditeur : ");
 		choiceboxes.put("materiel", "Matériel : ");
@@ -119,8 +126,9 @@ public class Operation_nouvelle_controller implements SuperController{
 			MongoCursor<Commun> enregistrable_cursor = MongoAccess.request(s).as(Commun.class);
 			
 			enregistrable_cursor.forEach(a -> liste.add(a.getNom()));
- 			
+
 			VBox v1 = new VBox();
+			VBox v2 = new VBox();
 			v1.setMaxWidth(Double.MAX_VALUE);
 			v1.setAlignment(Pos.CENTER);
 			v1.setSpacing(5);
@@ -138,16 +146,48 @@ public class Operation_nouvelle_controller implements SuperController{
 			//cb1.setDisabledItems(liste.get(0));
 			//cb1.
 			
-			v1.getChildren().add(l1);
-			v1.getChildren().add(cb1);
+			v1.getChildren().addAll(l1, cb1, v2);
 			h1.getChildren().add(v1);	
 			
-			HBox.setHgrow(cb1, Priority.ALWAYS);
-			HBox.setHgrow(l1, Priority.ALWAYS);
-			HBox.setHgrow(v1, Priority.ALWAYS);
+			Map<String, VBox> hm = new HashMap<>();
+			hm.put(s, v2);
+			list_resumes.add(hm);
+			
+			ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
+
+	 			@Override
+	 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+	 				
+	 				cb1.editorProperty().get().textProperty().unbind();
+	 				
+	 				cb1.getEditor().setText(newValue.toUpperCase());
+	 				ObservableList<String> liste_autocompletion = FXCollections.observableArrayList();
+					liste_autocompletion = AutoCompletion.autocomplete(s, "nom", newValue.toUpperCase());
+	 				
+	 				cb1.setItems(liste_autocompletion);
+	 				cb1.hide();
+	 				cb1.setVisibleRowCount(liste_autocompletion.size());
+	 				cb1.show();
+	 			}			
+	 		};
+	 		
+	 		cb1.getEditor().setOnKeyPressed(a-> {
+	        	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
+	        	// System.out.println("auto_completion_listener on");
+			});
+	        cb1.getEditor().setOnKeyReleased(a-> {
+	        	cb1.editorProperty().get().textProperty().removeListener(auto_completion_listener);
+	        	// System.out.println("auto_completion_listener off");
+			}); 		
+
+	        cb1.setOnAction(a -> mise_a_jour(s, cb1.getValue()));
+//			
+//			HBox.setHgrow(cb1, Priority.ALWAYS);
+//			HBox.setHgrow(l1, Priority.ALWAYS);
+//			HBox.setHgrow(v1, Priority.ALWAYS);
 			
 			getList_choiceboxes().add(cb1);
-		}
+		}		
 		
 		form.getChildren().add(h1);	
 		
@@ -162,13 +202,21 @@ public class Operation_nouvelle_controller implements SuperController{
 		form.getChildren().add(h5);	
 		
 		operation = new Operation();
-		
-		System.out.println("list_choiceboxes.get(0) : " + getList_choiceboxes().get(0).getLayoutX());
-		
-		System.out.println("operation_nouvelle.list_choiceboxes.get(0).requestFocus()");
+
 		getList_choiceboxes().get(0).requestFocus();
 		
 		return form;
+	}
+    
+    public void mise_a_jour(String element, String selection){
+    	
+    	switch (element){
+    	
+    	///case "expediteur" : Expediteur e = MongoAccess.request(s, "nom", selection).
+    	
+    	}
+    	
+		
 	}
 
     @Override

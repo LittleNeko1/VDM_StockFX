@@ -21,6 +21,10 @@ public class Materiel extends Commun implements Enregistrable {
 	private String marque;
 	private String modele;
 	private String capacite;
+	private boolean sdxc;
+	private boolean usb3;
+	private boolean en_stock;
+	private boolean hors_service;
 	
 	private ArrayList<String> tags;
 
@@ -104,6 +108,38 @@ public class Materiel extends Commun implements Enregistrable {
 	 */
 	public void setTags(ArrayList<String> tags) {
 		this.tags = tags;
+	}
+
+	/**
+	 * Retourne true si le matériel est présent, false s'il est sorti.
+	 * @return true si le matériel est présent, false s'il est sorti.
+	 */
+	public boolean isEn_stock() {
+		return en_stock;
+	}
+
+	/**
+	 * Modifie true si le matériel est présent, false s'il est sorti.
+	 * @param en_stock true si le matériel est présent, false s'il est sorti.
+	 */
+	public void setEn_stock(boolean en_stock) {
+		this.en_stock = en_stock;
+	}
+
+	/**
+	 * Retourne true si le matériel est définitivement hors-service, false s'il est fonctionnel.
+	 * @return true si le matériel est définitivement hors-service, false s'il est fonctionnel.
+	 */
+	public boolean isHors_service() {
+		return hors_service;
+	}
+
+	/**
+	 * Modifie le statut du materiel.
+	 * @param hors_service le statut du materiel.
+	 */
+	public void setHors_service(boolean hors_service) {
+		this.hors_service = hors_service;
 	}
 	
 	

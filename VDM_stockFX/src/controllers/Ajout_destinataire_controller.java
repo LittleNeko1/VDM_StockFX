@@ -59,7 +59,14 @@ public class Ajout_destinataire_controller implements SuperController{
 	private VBox classe_vbox;
 	private CheckBox classe8;
 	private CheckBox classe10;
-
+	
+	private VBox capacity_vbox;
+	private HBox capacity_hbox;
+	private HBox c_hbox;
+	private Label hc;
+	private Label xc;
+	private CheckBox sdhc;
+	private CheckBox sdxc;
 	
 	private HBox cf_hbox;
 	private VBox udma7_vbox;
@@ -71,9 +78,12 @@ public class Ajout_destinataire_controller implements SuperController{
 	private CheckBox sd_cbox;
 	private CheckBox cf_cbox;
 	
+	private Label ssd;
+	private CheckBox usb3_cbox;
+	
 	private static TextField saisie; 
 	
-	ChangeListener<String> auto_completion_listener;
+	private ChangeListener<String> auto_completion_listener;
 	
 	@Override
 	public void unfreeze(){
@@ -277,8 +287,13 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		format = new Label("CARTE");		
 		format.setWrapText(true);
+		format.setStyle("-fx-font-weight: bold;");
 		format.setAlignment(Pos.CENTER);
 		format.setTextAlignment(TextAlignment.CENTER);
+		
+		ssd = new Label("SSD");
+		ssd.setStyle("-fx-font-weight: bold;");
+		usb3_cbox  = new CheckBox("USB3");
 		
 		mauvais_tags = new Label("ATTENTION :\nRENSEIGNER LES MAUVAIS TAGS !!!");
 		mauvais_tags.setStyle("-fx-font-weight: bold;");
@@ -311,9 +326,24 @@ public class Ajout_destinataire_controller implements SuperController{
 		classe_hbox.getChildren().addAll(classe8, classe10);
 		classe_vbox.getChildren().addAll(classe, classe_hbox);
 		
+		capacity_vbox = new VBox();
+		capacity_vbox.setSpacing(10);
+		capacity_hbox = new HBox();
+		capacity_hbox.setSpacing(10);
+		c_hbox = new HBox();
+		c_hbox.setSpacing(30);
+		
+		hc = new Label("", new ImageView("sdhc.jpg"));
+		xc = new Label("", new ImageView("sdxc.jpg"));
+		sdhc = new CheckBox("SDHC");
+		sdxc = new CheckBox("SDXC");
+		c_hbox.getChildren().addAll(hc, xc);
+		capacity_hbox.getChildren().addAll(sdhc, sdxc);
+		capacity_vbox.getChildren().addAll(c_hbox, capacity_hbox);
+		
 		sd_hbox = new HBox();
 		sd_hbox.setSpacing(20);
-		sd_hbox.getChildren().addAll(uhs_vbox, new Separator(Orientation.VERTICAL), classe_vbox);
+		sd_hbox.getChildren().addAll(uhs_vbox, new Separator(Orientation.VERTICAL), classe_vbox, new Separator(Orientation.VERTICAL), capacity_vbox);
 		sd_hbox.setDisable(true);
 		
 		udma7_vbox = new VBox();
@@ -343,12 +373,16 @@ public class Ajout_destinataire_controller implements SuperController{
 		    	uhs3.setSelected(false);
 		    	classe8.setSelected(false);
 		    	classe10.setSelected(false);
+		    	sdhc.setSelected(false);
+		    	sdxc.setSelected(false);
 		    	sd_hbox.setDisable(true);
 		    	Tags.CF.setSelected(false);
 		    	Tags.UHS1.setSelected(false);
 		    	Tags.UHS3.setSelected(false);
 		    	Tags.CLASSE8.setSelected(false);
 		    	Tags.CLASSE10.setSelected(false);
+		    	Tags.SDHC.setSelected(false);
+		    	Tags.SDXC.setSelected(false);
 	    	}
 	    	
 	    	
@@ -363,6 +397,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		    	uhs3.setSelected(false);
 		    	classe8.setSelected(false);
 		    	classe10.setSelected(false);
+		    	sdhc.setSelected(false);
+		    	sdxc.setSelected(false);
 		    	sd_hbox.setDisable(true);
 		    	cf_hbox.setDisable(false);
 		    	Tags.SD.setSelected(true);
@@ -371,6 +407,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		    	Tags.UHS3.setSelected(false);
 		    	Tags.CLASSE8.setSelected(false);
 		    	Tags.CLASSE10.setSelected(false);
+		    	Tags.SDHC.setSelected(false);
+		    	Tags.SDXC.setSelected(false);
 	    	}
 	    	else {
 	    		udma7.setSelected(false);
@@ -426,6 +464,39 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	}
 	    });
 	    
+	    sdxc.setOnAction(a -> {
+	    	if (sdxc.isSelected()){
+	    		sdhc.setSelected(false);
+	    		Tags.SDXC.setSelected(true);
+	    		Tags.SDHC.setSelected(false);
+	    	}
+	    	else {
+	    		
+	    		Tags.SDXC.setSelected(false);
+	    	}
+	    });
+	    
+	    sdhc.setOnAction(a -> {
+	    	if (sdhc.isSelected()){
+	    		sdxc.setSelected(false);
+	    		Tags.SDHC.setSelected(true);
+	    		Tags.SDXC.setSelected(false);
+	    	}
+	    	else {
+	    		Tags.SDHC.setSelected(false);
+	    	}
+	    });
+	    
+	    usb3_cbox.setOnAction(a -> {
+	    	if (usb3_cbox.isSelected()){
+	    		Tags.USB3.setSelected(true);
+
+	    	}
+	    	else {
+	    		Tags.USB3.setSelected(false);
+	    	}
+	    });
+	    
 	    udma7.setOnAction(a -> {
 	    	if (udma7.isSelected()){
 	    		Tags.UDMA7.setSelected(true);
@@ -450,10 +521,13 @@ public class Ajout_destinataire_controller implements SuperController{
 		tags_grid.add(sd_cbox, 0, 2);
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 3);
 		tags_grid.add(cf_cbox, 0, 4);
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 5);
+		tags_grid.add(ssd, 0, 6);
 		
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 0);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 2);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 4);
+		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 6);
 		
 		tags_grid.add(mauvais_tags, 2, 0);
 		
@@ -461,6 +535,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		tags_grid.add(sd_hbox, 2, 2);
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 3);
 		tags_grid.add(cf_hbox, 2, 4);
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 5);
+		tags_grid.add(usb3_cbox, 2, 6);
 		
 		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 2);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 4);
@@ -468,8 +544,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		form.getChildren().add(tags_grid);	
 
 		HBox h5 = new HBox();
-		h5.setSpacing(20);
-		h5.setPadding(new Insets(30, 0, 0, 0));
+		h5.setSpacing(10);
+		h5.setPadding(new Insets(10, 0, 0, 0));
 		Label l5 = new Label("Commentaire : ");
 		ta5 = new TextArea();
 		h5.getChildren().add(l5);
@@ -532,6 +608,12 @@ public class Ajout_destinataire_controller implements SuperController{
             	case "CLASSE8" : classe8.setSelected(true);
                             break;
             	case "CLASSE10" : classe10.setSelected(true);
+                            break;
+            	case "SDHC" : sdhc.setSelected(true);
+                            break;
+                case "SDXC" : sdxc.setSelected(true);
+                            break;
+            	case "USB3" : usb3_cbox.setSelected(true);
                             break;
             	}
             }
@@ -611,6 +693,12 @@ public class Ajout_destinataire_controller implements SuperController{
         	case "CLASSE8" : classe8.setSelected(true);
                         break;
         	case "CLASSE10" : classe10.setSelected(true);
+                        break;
+        	case "SDHC" : sdhc.setSelected(true);
+                        break;
+            case "SDXC" : sdxc.setSelected(true);
+                        break;
+        	case "USB3" : usb3_cbox.setSelected(true);
                         break;
         	}
         }

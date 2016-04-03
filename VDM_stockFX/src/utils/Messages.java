@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.List;
+import java.util.Map;
+
 import application.VDM_stock_GUI_controller;
 import controllers.Ajout_destinataire_controller;
 import controllers.Ajout_materiel_controller;
@@ -31,6 +34,8 @@ public class Messages {
 	private static String lastComplement; 
 	
 	private static boolean valeur_connue;
+	
+	private static List<Map<String, VBox>> resumes;
 	
 	/**
 	 * Constructeur qui initialise les valeurs.
@@ -262,4 +267,22 @@ public class Messages {
 	public static void setDestinataire_form(VBox destinataire_form) {
 		Messages.destinataire_form = destinataire_form;
 	}
+
+	/**
+	 * Retourne la liste des conteneurs pour les résumés
+	 * @return la liste des conteneurs pour les résumés
+	 */
+	public static List<Map<String, VBox>> getResumes() {
+		return resumes;
+	}
+
+	/**
+	 * Modifie la liste des conteneurs pour les résumés
+	 * @param resumes la liste des conteneurs pour les résumés
+	 */
+	public static void setResumes(List<Map<String, VBox>> resumes) {
+		Messages.resumes = resumes;
+	}
+	
+	
 }

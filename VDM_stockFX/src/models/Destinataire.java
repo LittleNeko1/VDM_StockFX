@@ -21,6 +21,7 @@ public class Destinataire extends Commun implements Enregistrable {
 	private String prenom;
 	private String fonction;
 	private String societe;
+	private boolean usb3;
 	
 	private ArrayList<String> wrong_tags;
 
@@ -117,4 +118,11 @@ public class Destinataire extends Commun implements Enregistrable {
 		this.wrong_tags = tags;
 	}
 
+	public boolean isUsb3() {
+		return usb3;
+	}
+
+	public void setUsb3(boolean usb3) {
+		this.usb3 = usb3;
+	}
 }
