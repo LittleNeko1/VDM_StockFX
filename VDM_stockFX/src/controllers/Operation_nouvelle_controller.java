@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -54,18 +55,27 @@ public class Operation_nouvelle_controller implements SuperController{
 	@Override
 	public void reinit(){
 		
+		System.out.println("reinit()");
+		
 		operation = new Operation();
 		
-		getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
+		if (! "".equals(Messages.getLastExpediteur())){
+			getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
+		}
+		
 		getList_choiceboxes().get(1).getSelectionModel().select(null);
 		//getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
-		getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
+		
+		if(! "".equals(Messages.getLastComplement())){
+			getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
+		}
+		
 		
 		ta5.setText(null);
 		
 		getList_choiceboxes().get(0).requestFocus();
 		
-		System.out.println("reinit()");
+		
 	}
 	
 	/**
@@ -74,28 +84,40 @@ public class Operation_nouvelle_controller implements SuperController{
 	 */
 	public void reinit(String s){
 		
+		System.out.println(String.format("reinit(%s)", s));
+		
         operation = new Operation();
 		
-		getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
+        if (! "".equals(Messages.getLastExpediteur())){
+        	System.out.println("select expediteur *" + Messages.getLastExpediteur() + "*");
+        	getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
+        }
+        System.out.println("select materiel");
 		getList_choiceboxes().get(1).getSelectionModel().select(s);
+
+		
 		// ici nouvelle liste des destinataires
 		ArrayList<String> wrongTags = AutoCompletion.wrongTag("destinataire", s);
-		System.out.println(wrongTags);
+		System.out.println("Wrongtags à traiter : " + wrongTags);
 		
-		// getList_choiceboxes().get(2).setDisabledItems(<liste avec les tags>); // ajouter un popup d'aide
+		getList_choiceboxes().get(2).setDisabledItems(wrongTags);
+
 		for (String x : wrongTags){
 			System.out.println("x : " + x);
-			getList_choiceboxes().get(2).setDisabledItems(x);
+			getList_choiceboxes().get(2).setDisabledItem(x);
 		}
-		//getList_choiceboxes().get(2).setDisabledItems(wrongTags.toArray(new String [0]));
-		
-		
+
 		//getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
-		getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
+		
+		if(! "".equals(Messages.getLastComplement())){
+			System.out.println("select complement");
+			getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
+		}
+		
 		
 		ta5.setText(null);
-
-		System.out.println(String.format("reinit(%s)", s));
+		
+		mise_a_jour("materiel", getList_choiceboxes().get(1).getValue());
 	}
 
 	/**
@@ -147,8 +169,6 @@ public class Operation_nouvelle_controller implements SuperController{
 			cb1.setEditable(true);
 			
 			cb1.setItems(liste);	
-			//cb1.setDisabledItems(liste.get(0));
-			//cb1.
 			
 			v1.getChildren().addAll(l1, cb1, v2);
 			h1.getChildren().add(v1);	
@@ -182,14 +202,20 @@ public class Operation_nouvelle_controller implements SuperController{
 	        	// System.out.println("auto_completion_listener off");
 			}); 		
 
-	        cb1.setOnAction(a -> mise_a_jour(s, cb1.getValue()));
+	        cb1.setOnAction(a -> {
+	        	mise_a_jour(s, cb1.getValue());
+	        });
 //			
 //			HBox.setHgrow(cb1, Priority.ALWAYS);
 //			HBox.setHgrow(l1, Priority.ALWAYS);
 //			HBox.setHgrow(v1, Priority.ALWAYS);
 			
 			getList_choiceboxes().add(cb1);
-		}	
+		}
+		
+		getList_choiceboxes().get(1).setOnAction(a -> {
+			reinit(getList_choiceboxes().get(1).getValue());
+		});
 		
 		Messages.setResumes(resumes);
 		

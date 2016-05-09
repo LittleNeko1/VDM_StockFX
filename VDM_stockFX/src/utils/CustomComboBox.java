@@ -71,7 +71,15 @@ public class CustomComboBox<T> extends ComboBox<T> {
 
             @Override
             protected T getModelItem(int index) {
-                return getItems().get(index);
+            	
+            	if (index >= 0){
+            		return getItems().get(index);
+            	}
+            	else {
+            		return null;
+            	}
+            	
+                
             }
 
         };
@@ -87,7 +95,7 @@ public class CustomComboBox<T> extends ComboBox<T> {
                 	 * Ici, l'élément est coloré en rouge et n'est plus sélectionnable.
                 	 */
                     @Override
-                    public void updateItem(T item, boolean empty) {
+                    public void updateItem(T item, boolean empty) {                    	
 
                         super.updateItem(item, empty);
 
@@ -96,8 +104,14 @@ public class CustomComboBox<T> extends ComboBox<T> {
                             setText(item.toString());
 
                             if (disabledItems.contains(item)) {
+                            	System.out.println("updateItem [wrong] : " + item.toString());
                                 setTextFill(Color.LIGHTCORAL);
-                                setDisable(true);
+                                setDisabled(true);
+                            }
+                            else {
+                            	System.out.println("updateItem [good!] : " + item.toString());
+                                setTextFill(Color.BLACK);
+                                setDisabled(false);
                             }
 
                         } else {
@@ -123,10 +137,27 @@ public class CustomComboBox<T> extends ComboBox<T> {
      * Dans cette implémentation, le nom est coloré en rouge et ne peut pas etre sélectionné.
      * @param items Les éléments à invalider.
      */
-    public void setDisabledItems(T... items) {
-        for (int i = 0; i < items.length; i++) {
-            disabledItems.add(items[i]);
+    public void setDisabledItems(ArrayList<T> items) {
+    	
+    	disabledItems = new ArrayList<>();
+    	
+        for (int i = 0; i < items.size(); i++) {
+            disabledItems.add(items.get(i));
         }
+        
+        System.out.println("disabledItems : " + disabledItems);
+    }
+    
+    /**
+     * Invalide les entrées passées en parametre.
+     * Dans cette implémentation, le nom est coloré en rouge et ne peut pas etre sélectionné.
+     * @param items Les éléments à invalider.
+     */
+    public void setDisabledItem(T item) {
+
+        disabledItems.add(item);
+        
+        System.out.println("disabledItems : " + disabledItems);
     }
 
 }

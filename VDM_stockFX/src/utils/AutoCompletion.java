@@ -1,7 +1,10 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -15,6 +18,8 @@ import javafx.collections.ObservableList;
  * La connexion à la base MongoDb se fait au travers d'un socket.
  * */
 public class AutoCompletion {
+	
+	private static Socket socket ;
 	
 	/**
 	 * Transmet une requète regex /valeur/.
@@ -31,13 +36,14 @@ public class AutoCompletion {
 		try
         {
             // Connect to the server
-            Socket socket = new Socket( "192.168.0.201", 44800 );
+            socket = new Socket( "192.168.0.201", 44800 );
 
             // Create input and output streams to read from and write to the server
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
-            out.println(String.format("0=%s&%s&%s", table, champ, valeur));
+            out.write(String.format("0=%s&%s&%s", table, champ, valeur));
+            out.newLine();
             out.flush();
 
 
@@ -57,6 +63,17 @@ public class AutoCompletion {
         {
             e.printStackTrace();
         }
+		finally {		
+			if (socket != null){
+				try {
+					socket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return ol;
     }
 	
@@ -75,13 +92,14 @@ public class AutoCompletion {
 		try
         {
             // Connect to the server
-            Socket socket = new Socket( "192.168.0.201", 44800 );
+            socket = new Socket( "192.168.0.201", 44800 );
 
             // Create input and output streams to read from and write to the server
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
-            out.println(String.format("00=%s&%s&%s", table, champ, valeur));
+            out.write(String.format("00=%s&%s&%s", table, champ, valeur));
+            out.newLine();
             out.flush();
 
 
@@ -101,6 +119,17 @@ public class AutoCompletion {
         {
             e.printStackTrace();
         }
+		
+		finally {		
+			if (socket != null){
+				try {
+					socket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 		return ol;
     }
 	
@@ -118,13 +147,14 @@ public class AutoCompletion {
 		try
         {
             // Connect to the server
-            Socket socket = new Socket( "192.168.0.201", 44800 );
+            socket = new Socket( "192.168.0.201", 44800 );
 
             // Create input and output streams to read from and write to the server
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             
-            out.println(String.format("1=%s", materiel));
+            out.write(String.format("1=%s", materiel));
+            out.newLine();
             out.flush();
 
 
@@ -144,6 +174,17 @@ public class AutoCompletion {
         {
             e.printStackTrace();
         }
+		finally {		
+			if (socket != null){
+				try {
+					socket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return ol;
     }
 
