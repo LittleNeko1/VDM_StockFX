@@ -58,7 +58,7 @@ public class Operation_nouvelle_controller implements SuperController{
 		
 		getList_choiceboxes().get(0).getSelectionModel().select(Messages.getLastExpediteur());
 		getList_choiceboxes().get(1).getSelectionModel().select(null);
-		getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
+		//getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
 		getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
 		
 		ta5.setText(null);
@@ -90,7 +90,7 @@ public class Operation_nouvelle_controller implements SuperController{
 		//getList_choiceboxes().get(2).setDisabledItems(wrongTags.toArray(new String [0]));
 		
 		
-		getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
+		//getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
 		getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
 		
 		ta5.setText(null);
