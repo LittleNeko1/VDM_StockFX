@@ -17,6 +17,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -105,6 +106,7 @@ public class Ajout_complement_controller implements SuperController{
 		cb1.setEditable(true);
 		cb1.prefWidth(400);
 		cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
+		cb1.setVisibleRowCount(10);
 		HBox.setHgrow(cb1, Priority.ALWAYS);
 		
 		ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
@@ -117,7 +119,7 @@ public class Ajout_complement_controller implements SuperController{
 				
 				cb1.setItems(liste_autocompletion);
 				cb1.hide();
-				cb1.setVisibleRowCount(liste_autocompletion.size());
+				//cb1.setVisibleRowCount(liste_autocompletion.size());
 				cb1.show();
 				
 				//cb1.editorProperty().get().textProperty().removeListener(this);
@@ -125,6 +127,12 @@ public class Ajout_complement_controller implements SuperController{
 		};
 		
 		cb1.getEditor().setOnKeyPressed(a-> {
+			System.out.println("[code] : " + a.getCode());
+			if (a.getCode().equals(KeyCode.BACK_SPACE)){
+				cb1.getEditor().setText("");
+				cb1.getItems().clear();
+				reinit();
+			}
         	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
 		});
         cb1.getEditor().setOnKeyReleased(a-> {

@@ -23,6 +23,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -139,6 +140,32 @@ public class Ajout_destinataire_controller implements SuperController{
 		textFields.get(3).setText(null);
 		ta5.setText(null);
 		
+		cf_cbox.setSelected(false);
+    	udma7.setSelected(false);
+    	sd_cbox.setSelected(false);
+    	uhs1.setSelected(false);
+    	uhs3.setSelected(false);
+    	classe8.setSelected(false);
+    	classe10.setSelected(false);
+    	sdhc.setSelected(false);
+    	sdxc.setSelected(false);
+    	usb3_cbox.setSelected(false);
+    	
+    	
+    	cf_hbox.setDisable(false);
+    	sd_hbox.setDisable(false);
+
+    	Tags.CF.setSelected(false);
+		Tags.UDMA7.setSelected(false);
+    	Tags.SD.setSelected(false);
+    	Tags.UHS1.setSelected(false);
+    	Tags.UHS3.setSelected(false);
+    	Tags.CLASSE8.setSelected(false);
+    	Tags.CLASSE10.setSelected(false);
+    	Tags.SDHC.setSelected(false);
+    	Tags.SDXC.setSelected(false);
+    	Tags.USB3.setSelected(false);
+		
 		// System.out.println("reinit().unfreeze()");
 		unfreeze();
 		
@@ -172,6 +199,7 @@ public class Ajout_destinataire_controller implements SuperController{
  		cb1 = new ComboBox<String>();
  		cb1.setEditable(true);
  		cb1.prefWidth(400);
+ 		cb1.setVisibleRowCount(10);
  		cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
  		HBox.setHgrow(cb1, Priority.ALWAYS);
 	
@@ -189,7 +217,7 @@ public class Ajout_destinataire_controller implements SuperController{
  				
  				cb1.setItems(liste_autocompletion);
  				cb1.hide();
- 				cb1.setVisibleRowCount(liste_autocompletion.size());
+ 				//cb1.setVisibleRowCount(liste_autocompletion.size());
  				cb1.show();
  				
  				//cb1.editorProperty().get().textProperty().removeListener(this);
@@ -197,6 +225,12 @@ public class Ajout_destinataire_controller implements SuperController{
  		};
 
  		cb1.getEditor().setOnKeyPressed(a-> {
+ 			System.out.println("[code] : " + a.getCode());
+			if (a.getCode().equals(KeyCode.BACK_SPACE)){
+				cb1.getEditor().setText("");
+				cb1.getItems().clear();
+				reinit();
+			}
         	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
         	// System.out.println("auto_completion_listener on");
 		});
@@ -362,10 +396,16 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	if(sd_cbox.isSelected()){
 	    		cf_cbox.setSelected(false);
 		    	udma7.setSelected(false);
-		    	cf_hbox.setDisable(true);
 		    	sd_hbox.setDisable(false);
+		    	cf_hbox.setDisable(true);
 		    	Tags.CF.setSelected(true);
 		    	Tags.SD.setSelected(false);
+		    	Tags.UHS1.setSelected(false);
+		    	Tags.UHS3.setSelected(false);
+		    	Tags.CLASSE8.setSelected(false);
+		    	Tags.CLASSE10.setSelected(false);
+		    	Tags.SDHC.setSelected(false);
+		    	Tags.SDXC.setSelected(false);
 	    		Tags.UDMA7.setSelected(false);
 	    	}
 	    	else {
@@ -376,7 +416,9 @@ public class Ajout_destinataire_controller implements SuperController{
 		    	sdhc.setSelected(false);
 		    	sdxc.setSelected(false);
 		    	sd_hbox.setDisable(true);
+		    	Tags.SD.setSelected(true);
 		    	Tags.CF.setSelected(false);
+		    	Tags.UDMA7.setSelected(false);
 		    	Tags.UHS1.setSelected(false);
 		    	Tags.UHS3.setSelected(false);
 		    	Tags.CLASSE8.setSelected(false);
@@ -399,10 +441,11 @@ public class Ajout_destinataire_controller implements SuperController{
 		    	classe10.setSelected(false);
 		    	sdhc.setSelected(false);
 		    	sdxc.setSelected(false);
-		    	sd_hbox.setDisable(true);
 		    	cf_hbox.setDisable(false);
+		    	sd_hbox.setDisable(true);
 		    	Tags.SD.setSelected(true);
 		    	Tags.CF.setSelected(false);
+		    	Tags.UDMA7.setSelected(false);
 		    	Tags.UHS1.setSelected(false);
 		    	Tags.UHS3.setSelected(false);
 		    	Tags.CLASSE8.setSelected(false);
@@ -413,8 +456,16 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	else {
 	    		udma7.setSelected(false);
 	    		cf_hbox.setDisable(true);
-	    		Tags.SD.setSelected(false);
+	    		Tags.CF.setSelected(true);
 	    		Tags.UDMA7.setSelected(false);
+	    		Tags.SD.setSelected(false);
+		    	Tags.UHS1.setSelected(false);
+		    	Tags.UHS3.setSelected(false);
+		    	Tags.CLASSE8.setSelected(false);
+		    	Tags.CLASSE10.setSelected(false);
+		    	Tags.SDHC.setSelected(false);
+		    	Tags.SDXC.setSelected(false);
+		    	
 	    	}
 	    	
 	    });
@@ -552,10 +603,9 @@ public class Ajout_destinataire_controller implements SuperController{
 		h5.getChildren().add(ta5);
 
 		form.getChildren().add(h5);	
-		
-		//mise_a_jour_autocompletion();
+
 		destinataire = new Destinataire();	
-		// System.out.println("init().unfreeze()");
+
 		unfreeze();
 		
 		cb1.requestFocus();
@@ -568,7 +618,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	@Override
 	public Enregistrable getEnregistrable() {
 		
-		System.out.println("destinataire retourné : " + destinataire);
+		System.out.println("destinataire retourné : " + destinataire.getNom());
 
 		return destinataire;
 	}

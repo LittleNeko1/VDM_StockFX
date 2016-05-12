@@ -24,6 +24,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -128,6 +129,32 @@ public class Ajout_materiel_controller  implements SuperController{
         textFields.get(2).setText(null);
 		ta5.setText(null);
 		
+		cf_cbox.setSelected(false);
+    	udma7.setSelected(false);
+    	sd_cbox.setSelected(false);
+    	uhs1.setSelected(false);
+    	uhs3.setSelected(false);
+    	classe8.setSelected(false);
+    	classe10.setSelected(false);
+    	sdhc.setSelected(false);
+    	sdxc.setSelected(false);
+    	usb3_cbox.setSelected(false);
+    	
+    	
+    	cf_hbox.setDisable(false);
+    	sd_hbox.setDisable(false);
+
+    	Tags.CF.setSelected(false);
+		Tags.UDMA7.setSelected(false);
+    	Tags.SD.setSelected(false);
+    	Tags.UHS1.setSelected(false);
+    	Tags.UHS3.setSelected(false);
+    	Tags.CLASSE8.setSelected(false);
+    	Tags.CLASSE10.setSelected(false);
+    	Tags.SDHC.setSelected(false);
+    	Tags.SDXC.setSelected(false);
+    	Tags.USB3.setSelected(false);
+    	
 		cb1.requestFocus();
 		
 		cb1.hide();
@@ -183,7 +210,8 @@ public class Ajout_materiel_controller  implements SuperController{
 		cb1 = new ComboBox<String>();
 		cb1.setEditable(true);
 		cb1.prefWidth(400);
-		cb1.setMaxSize(400.0, Control.USE_PREF_SIZE);
+		cb1.setVisibleRowCount(10);
+		cb1.setMaxSize(400.0, 600.0);
 		HBox.setHgrow(cb1, Priority.ALWAYS);
 		
 		ChangeListener<String> auto_completion_listener = new ChangeListener<String>(){
@@ -196,7 +224,7 @@ public class Ajout_materiel_controller  implements SuperController{
 				
 				cb1.setItems(liste_autocompletion);
 				cb1.hide();
-				cb1.setVisibleRowCount(liste_autocompletion.size());
+				//cb1.setVisibleRowCount(liste_autocompletion.size());
 				cb1.show();
 				
 				//cb1.editorProperty().get().textProperty().removeListener(this);
@@ -204,6 +232,13 @@ public class Ajout_materiel_controller  implements SuperController{
 		};
 		
 		cb1.getEditor().setOnKeyPressed(a-> {
+			
+			System.out.println("[code] : " + a.getCode());
+			if (a.getCode().equals(KeyCode.BACK_SPACE)){
+				cb1.getEditor().setText("");
+				cb1.getItems().clear();
+				reinit();
+			}
         	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
 		});
         cb1.getEditor().setOnKeyReleased(a-> {
@@ -308,15 +343,21 @@ public class Ajout_materiel_controller  implements SuperController{
 		cf_hbox.getChildren().addAll(udma7_vbox);
 		cf_hbox.setDisable(true);
 		
-	    sd_cbox.setOnAction(a -> {
+sd_cbox.setOnAction(a -> {
 	    	
 	    	if(sd_cbox.isSelected()){
 	    		cf_cbox.setSelected(false);
 		    	udma7.setSelected(false);
-		    	cf_hbox.setDisable(true);
 		    	sd_hbox.setDisable(false);
-		    	Tags.SD.setSelected(true);
-		    	Tags.CF.setSelected(false);
+		    	cf_hbox.setDisable(true);
+		    	Tags.CF.setSelected(true);
+		    	Tags.SD.setSelected(false);
+		    	Tags.UHS1.setSelected(false);
+		    	Tags.UHS3.setSelected(false);
+		    	Tags.CLASSE8.setSelected(false);
+		    	Tags.CLASSE10.setSelected(false);
+		    	Tags.SDHC.setSelected(false);
+		    	Tags.SDXC.setSelected(false);
 	    		Tags.UDMA7.setSelected(false);
 	    	}
 	    	else {
@@ -327,7 +368,9 @@ public class Ajout_materiel_controller  implements SuperController{
 		    	sdhc.setSelected(false);
 		    	sdxc.setSelected(false);
 		    	sd_hbox.setDisable(true);
-		    	Tags.SD.setSelected(false);
+		    	Tags.SD.setSelected(true);
+		    	Tags.CF.setSelected(false);
+		    	Tags.UDMA7.setSelected(false);
 		    	Tags.UHS1.setSelected(false);
 		    	Tags.UHS3.setSelected(false);
 		    	Tags.CLASSE8.setSelected(false);
@@ -350,10 +393,11 @@ public class Ajout_materiel_controller  implements SuperController{
 		    	classe10.setSelected(false);
 		    	sdhc.setSelected(false);
 		    	sdxc.setSelected(false);
-		    	sd_hbox.setDisable(true);
 		    	cf_hbox.setDisable(false);
-		    	Tags.CF.setSelected(true);
-		    	Tags.SD.setSelected(false);
+		    	sd_hbox.setDisable(true);
+		    	Tags.SD.setSelected(true);
+		    	Tags.CF.setSelected(false);
+		    	Tags.UDMA7.setSelected(false);
 		    	Tags.UHS1.setSelected(false);
 		    	Tags.UHS3.setSelected(false);
 		    	Tags.CLASSE8.setSelected(false);
@@ -364,8 +408,15 @@ public class Ajout_materiel_controller  implements SuperController{
 	    	else {
 	    		udma7.setSelected(false);
 	    		cf_hbox.setDisable(true);
-	    		Tags.CF.setSelected(false);
+	    		Tags.CF.setSelected(true);
 	    		Tags.UDMA7.setSelected(false);
+	    		Tags.SD.setSelected(false);
+		    	Tags.UHS1.setSelected(false);
+		    	Tags.UHS3.setSelected(false);
+		    	Tags.CLASSE8.setSelected(false);
+		    	Tags.CLASSE10.setSelected(false);
+		    	Tags.SDHC.setSelected(false);
+		    	Tags.SDXC.setSelected(false);
 	    	}
 	    	
 	    });
@@ -518,42 +569,44 @@ public class Ajout_materiel_controller  implements SuperController{
 		}
 		else {
 			freeze();
-		}
 		
-        textFields.get(0).setText(materiel.getMarque());
-        textFields.get(1).setText(materiel.getModele());
-        textFields.get(2).setText(materiel.getCapacite());
-        
-        for (String s : materiel.getTags()){
-        	
-        	switch (s){
-        	
-        	case "SD" : sd_hbox.setDisable(false);
-        	            sd_cbox.setSelected(true);
-        	            break;
-        	case "CF" : cf_hbox.setDisable(false);
-        	            cf_cbox.setSelected(true);
-                        break;
-        	case "UDMA7" : udma7.setSelected(true);
-        	            break;
-        	case "UHS1" : uhs1.setSelected(true);
-                        break;
-        	case "UHS3" : uhs3.setSelected(true);
-                        break;
-        	case "CLASSE8" : classe8.setSelected(true);
-                        break;
-        	case "CLASSE10" : classe10.setSelected(true);
-                        break;
-        	case "SDHC" : sdhc.setSelected(true);
-                        break;
-            case "SDXC" : sdxc.setSelected(true);
-                        break;
-        	case "USB3" : usb3_cbox.setSelected(true);
-                        break;
-        	}
-        }
+            textFields.get(0).setText(materiel.getMarque());
+            textFields.get(1).setText(materiel.getModele());
+            textFields.get(2).setText(materiel.getCapacite());
 
-		ta5.setText(materiel.getCommentaire());
+        	for (String s : materiel.getTags()){
+            	
+            	switch (s){
+            	
+            	case "SD" : sd_hbox.setDisable(false);
+            	            sd_cbox.setSelected(true);
+            	            break;
+            	case "CF" : cf_hbox.setDisable(false);
+            	            cf_cbox.setSelected(true);
+                            break;
+            	case "UDMA7" : udma7.setSelected(true);
+            	            break;
+            	case "UHS1" : uhs1.setSelected(true);
+                            break;
+            	case "UHS3" : uhs3.setSelected(true);
+                            break;
+            	case "CLASSE8" : classe8.setSelected(true);
+                            break;
+            	case "CLASSE10" : classe10.setSelected(true);
+                            break;
+            	case "SDHC" : sdhc.setSelected(true);
+                            break;
+                case "SDXC" : sdxc.setSelected(true);
+                            break;
+            	case "USB3" : usb3_cbox.setSelected(true);
+                            break;
+            	}
+            }
+            
+        	ta5.setText(materiel.getCommentaire());
+        }
+        
+		
   	}
 	
 	/**
@@ -656,6 +709,8 @@ public class Ajout_materiel_controller  implements SuperController{
 
 	@Override
 	public Enregistrable getEnregistrable() {
+		
+		System.out.println("Enregistrable : " +  materiel.getNom());
 		return materiel;
 	}
 

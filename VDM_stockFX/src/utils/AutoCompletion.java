@@ -49,10 +49,12 @@ public class AutoCompletion {
 
             // Read data from the server until we finish reading the document
             String line = in.readLine();
-            for (String s : line.split("&")){
-        		ol.add(s);
-        	}
             
+            if (line != null){
+            	for (String s : line.split("&")){
+            		ol.add(s);
+            	}
+            }
 
             // Close our streams
             in.close();
