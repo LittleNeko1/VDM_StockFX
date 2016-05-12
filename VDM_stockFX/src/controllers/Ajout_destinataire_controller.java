@@ -80,7 +80,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	private CheckBox cf_cbox;
 	
 	private Label ssd;
-	private CheckBox usb3_cbox;
+	private CheckBox usb2_cbox;
 	
 	private static TextField saisie; 
 	
@@ -149,7 +149,7 @@ public class Ajout_destinataire_controller implements SuperController{
     	classe10.setSelected(false);
     	sdhc.setSelected(false);
     	sdxc.setSelected(false);
-    	usb3_cbox.setSelected(false);
+    	usb2_cbox.setSelected(false);
     	
     	
     	cf_hbox.setDisable(false);
@@ -164,7 +164,7 @@ public class Ajout_destinataire_controller implements SuperController{
     	Tags.CLASSE10.setSelected(false);
     	Tags.SDHC.setSelected(false);
     	Tags.SDXC.setSelected(false);
-    	Tags.USB3.setSelected(false);
+    	Tags.USB2.setSelected(false);
 		
 		// System.out.println("reinit().unfreeze()");
 		unfreeze();
@@ -327,7 +327,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		
 		ssd = new Label("SSD");
 		ssd.setStyle("-fx-font-weight: bold;");
-		usb3_cbox  = new CheckBox("USB3");
+		usb2_cbox  = new CheckBox("USB2");
 		
 		mauvais_tags = new Label("ATTENTION :\nRENSEIGNER LES MAUVAIS TAGS !!!");
 		mauvais_tags.setStyle("-fx-font-weight: bold;");
@@ -538,13 +538,13 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	}
 	    });
 	    
-	    usb3_cbox.setOnAction(a -> {
-	    	if (usb3_cbox.isSelected()){
-	    		Tags.USB3.setSelected(true);
+	    usb2_cbox.setOnAction(a -> {
+	    	if (usb2_cbox.isSelected()){
+	    		Tags.USB2.setSelected(true);
 
 	    	}
 	    	else {
-	    		Tags.USB3.setSelected(false);
+	    		Tags.USB2.setSelected(false);
 	    	}
 	    });
 	    
@@ -587,7 +587,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 3);
 		tags_grid.add(cf_hbox, 2, 4);
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 5);
-		tags_grid.add(usb3_cbox, 2, 6);
+		tags_grid.add(usb2_cbox, 2, 6);
 		
 		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 2);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 4);
@@ -663,7 +663,7 @@ public class Ajout_destinataire_controller implements SuperController{
                             break;
                 case "SDXC" : sdxc.setSelected(true);
                             break;
-            	case "USB3" : usb3_cbox.setSelected(true);
+            	case "USB2" : usb2_cbox.setSelected(true);
                             break;
             	}
             }
@@ -748,7 +748,7 @@ public class Ajout_destinataire_controller implements SuperController{
                         break;
             case "SDXC" : sdxc.setSelected(true);
                         break;
-        	case "USB3" : usb3_cbox.setSelected(true);
+        	case "USB2" : usb2_cbox.setSelected(true);
                         break;
         	}
         }

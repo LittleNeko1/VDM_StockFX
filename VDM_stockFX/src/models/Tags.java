@@ -19,7 +19,7 @@ public enum Tags {
 	SDHC(false),
 	SDXC(false),
 	UDMA7(false),
-	USB3(false);
+	USB2(false);
 
 	private boolean selected;
 	
