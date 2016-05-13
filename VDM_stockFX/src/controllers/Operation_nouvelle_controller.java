@@ -21,6 +21,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -66,6 +67,7 @@ public class Operation_nouvelle_controller implements SuperController{
 		getList_choiceboxes().get(1).getSelectionModel().select(null);
 		//getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
 		
+		
 		if(! "".equals(Messages.getLastComplement())){
 			getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
 		}
@@ -100,21 +102,18 @@ public class Operation_nouvelle_controller implements SuperController{
 		ArrayList<String> wrongTags = AutoCompletion.wrongTag("destinataire", s);
 		System.out.println("Wrongtags à traiter : " + wrongTags);
 		
+		getList_choiceboxes().get(2).getSelectionModel().select(null);
+		getList_choiceboxes().get(2).setItems(AutoCompletion.autocomplete("destinataire", "nom", ""));
 		getList_choiceboxes().get(2).setDisabledItems(wrongTags);
-
-		for (String x : wrongTags){
-			System.out.println("x : " + x);
-			getList_choiceboxes().get(2).setDisabledItem(x);
-		}
-
-		//getList_choiceboxes().get(2).getSelectionModel().select(Messages.getLastDestinataire());
+		
+    	VBox v = Messages.getResumes().get("destinataire");
+        v.getChildren().clear();		
 		
 		if(! "".equals(Messages.getLastComplement())){
 			System.out.println("select complement");
 			getList_choiceboxes().get(3).getSelectionModel().select(Messages.getLastComplement());
 		}
-		
-		
+
 		ta5.setText(null);
 		
 		mise_a_jour("materiel", getList_choiceboxes().get(1).getValue());
@@ -188,12 +187,19 @@ public class Operation_nouvelle_controller implements SuperController{
 	 				
 	 				cb1.setItems(liste_autocompletion);
 	 				cb1.hide();
-	 				cb1.setVisibleRowCount(liste_autocompletion.size());
+	 				cb1.setVisibleRowCount(10);
 	 				cb1.show();
 	 			}			
 	 		};
 	 		
 	 		cb1.getEditor().setOnKeyPressed(a-> {
+	 			System.out.println("[code] : " + a.getCode());
+				if (a.getCode().equals(KeyCode.BACK_SPACE)){
+					cb1.getEditor().setText("");
+					cb1.getItems().clear();
+					reinit();
+				}
+	        	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
 	        	cb1.editorProperty().get().textProperty().addListener(auto_completion_listener);
 	        	// System.out.println("auto_completion_listener on");
 			});
@@ -203,8 +209,15 @@ public class Operation_nouvelle_controller implements SuperController{
 			}); 		
 
 	        cb1.setOnAction(a -> {
-	        	mise_a_jour(s, cb1.getValue());
+	        	if (cb1.getValue() != null){
+	        		mise_a_jour(s, cb1.getValue());
+		        	if (s.equals("materiel")){
+		        		reinit(cb1.getValue());
+		        	}
+	        	}
+	        	
 	        });
+
 //			
 //			HBox.setHgrow(cb1, Priority.ALWAYS);
 //			HBox.setHgrow(l1, Priority.ALWAYS);

@@ -394,38 +394,38 @@ public class Ajout_destinataire_controller implements SuperController{
 	    sd_cbox.setOnAction(a -> {
 	    	
 	    	if(sd_cbox.isSelected()){
-	    		cf_cbox.setSelected(false);
-		    	udma7.setSelected(false);
+	    		
+		    	
 		    	sd_hbox.setDisable(false);
-		    	cf_hbox.setDisable(true);
-		    	Tags.CF.setSelected(true);
-		    	Tags.SD.setSelected(false);
-		    	Tags.UHS1.setSelected(false);
-		    	Tags.UHS3.setSelected(false);
-		    	Tags.CLASSE8.setSelected(false);
-		    	Tags.CLASSE10.setSelected(false);
-		    	Tags.SDHC.setSelected(false);
-		    	Tags.SDXC.setSelected(false);
-	    		Tags.UDMA7.setSelected(false);
+		    	Tags.SD.setSelected(true);
 	    	}
 	    	else {
-	    		uhs1.setSelected(false);
-		    	uhs3.setSelected(false);
-		    	classe8.setSelected(false);
-		    	classe10.setSelected(false);
-		    	sdhc.setSelected(false);
-		    	sdxc.setSelected(false);
+	    		
 		    	sd_hbox.setDisable(true);
-		    	Tags.SD.setSelected(true);
-		    	Tags.CF.setSelected(false);
-		    	Tags.UDMA7.setSelected(false);
-		    	Tags.UHS1.setSelected(false);
-		    	Tags.UHS3.setSelected(false);
-		    	Tags.CLASSE8.setSelected(false);
-		    	Tags.CLASSE10.setSelected(false);
-		    	Tags.SDHC.setSelected(false);
-		    	Tags.SDXC.setSelected(false);
+		    	Tags.SD.setSelected(false);
+		    	
+		    	
 	    	}
+	    	
+	    	cf_hbox.setDisable(true);
+	    	
+	    	cf_cbox.setSelected(false);
+	    	udma7.setSelected(false);
+	    	uhs1.setSelected(false);
+	    	uhs3.setSelected(false);
+	    	classe8.setSelected(false);
+	    	classe10.setSelected(false);
+	    	sdhc.setSelected(false);
+	    	sdxc.setSelected(false);
+	    	
+	    	Tags.CF.setSelected(false);
+	    	Tags.UDMA7.setSelected(false);
+	    	Tags.UHS1.setSelected(false);
+	    	Tags.UHS3.setSelected(false);
+	    	Tags.CLASSE8.setSelected(false);
+	    	Tags.CLASSE10.setSelected(false);
+	    	Tags.SDHC.setSelected(false);
+	    	Tags.SDXC.setSelected(false);
 	    	
 	    	
 	    	
@@ -434,39 +434,38 @@ public class Ajout_destinataire_controller implements SuperController{
 	    cf_cbox.setOnAction(a -> {
 	    	
 	    	if(cf_cbox.isSelected()){
-	    		sd_cbox.setSelected(false);
-		    	uhs1.setSelected(false);
-		    	uhs3.setSelected(false);
-		    	classe8.setSelected(false);
-		    	classe10.setSelected(false);
-		    	sdhc.setSelected(false);
-		    	sdxc.setSelected(false);
+	    		
 		    	cf_hbox.setDisable(false);
-		    	sd_hbox.setDisable(true);
-		    	Tags.SD.setSelected(true);
-		    	Tags.CF.setSelected(false);
-		    	Tags.UDMA7.setSelected(false);
-		    	Tags.UHS1.setSelected(false);
-		    	Tags.UHS3.setSelected(false);
-		    	Tags.CLASSE8.setSelected(false);
-		    	Tags.CLASSE10.setSelected(false);
-		    	Tags.SDHC.setSelected(false);
-		    	Tags.SDXC.setSelected(false);
+		    	Tags.CF.setSelected(true);
+
 	    	}
 	    	else {
-	    		udma7.setSelected(false);
+	    		
 	    		cf_hbox.setDisable(true);
-	    		Tags.CF.setSelected(true);
-	    		Tags.UDMA7.setSelected(false);
-	    		Tags.SD.setSelected(false);
-		    	Tags.UHS1.setSelected(false);
-		    	Tags.UHS3.setSelected(false);
-		    	Tags.CLASSE8.setSelected(false);
-		    	Tags.CLASSE10.setSelected(false);
-		    	Tags.SDHC.setSelected(false);
-		    	Tags.SDXC.setSelected(false);
+	    		Tags.CF.setSelected(false);
+	    		
 		    	
 	    	}
+	    	
+	    	sd_hbox.setDisable(true);
+	    	
+	    	udma7.setSelected(false);
+	    	sd_cbox.setSelected(false);
+	    	uhs1.setSelected(false);
+	    	uhs3.setSelected(false);
+	    	classe8.setSelected(false);
+	    	classe10.setSelected(false);
+	    	sdhc.setSelected(false);
+	    	sdxc.setSelected(false);
+	    	
+	    	Tags.UDMA7.setSelected(false);
+    		Tags.SD.setSelected(false);
+	    	Tags.UHS1.setSelected(false);
+	    	Tags.UHS3.setSelected(false);
+	    	Tags.CLASSE8.setSelected(false);
+	    	Tags.CLASSE10.setSelected(false);
+	    	Tags.SDHC.setSelected(false);
+	    	Tags.SDXC.setSelected(false);
 	    	
 	    });
 	    

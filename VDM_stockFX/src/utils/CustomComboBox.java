@@ -1,6 +1,8 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -17,7 +19,7 @@ import javafx.util.Callback;
  */
 public class CustomComboBox<T> extends ComboBox<T> {
 
-    private ArrayList<T> disabledItems = new ArrayList<T>();
+    private Set<T> disabledItems = new HashSet<T>();
 
     /**
      * Constructeur vide
@@ -139,7 +141,7 @@ public class CustomComboBox<T> extends ComboBox<T> {
      */
     public void setDisabledItems(ArrayList<T> items) {
     	
-    	disabledItems = new ArrayList<>();
+    	disabledItems = new HashSet<>();
     	
         for (int i = 0; i < items.size(); i++) {
             disabledItems.add(items.get(i));
@@ -151,7 +153,7 @@ public class CustomComboBox<T> extends ComboBox<T> {
     /**
      * Invalide les entrées passées en parametre.
      * Dans cette implémentation, le nom est coloré en rouge et ne peut pas etre sélectionné.
-     * @param items Les éléments à invalider.
+     * @param item L'élément à invalider.
      */
     public void setDisabledItem(T item) {
 
