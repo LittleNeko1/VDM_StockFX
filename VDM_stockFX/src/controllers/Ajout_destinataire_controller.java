@@ -398,11 +398,13 @@ public class Ajout_destinataire_controller implements SuperController{
 		    	
 		    	sd_hbox.setDisable(false);
 		    	Tags.SD.setSelected(false);
+		    	Tags.CF.setSelected(true);
 	    	}
 	    	else {
 	    		
 		    	sd_hbox.setDisable(true);
 		    	Tags.SD.setSelected(true);
+		    	Tags.CF.setSelected(false);
 		    	
 		    	
 	    	}
@@ -418,7 +420,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	sdhc.setSelected(false);
 	    	sdxc.setSelected(false);
 	    	
-	    	Tags.CF.setSelected(false);
+	    	
 	    	Tags.UDMA7.setSelected(false);
 	    	Tags.UHS1.setSelected(false);
 	    	Tags.UHS3.setSelected(false);
@@ -437,12 +439,14 @@ public class Ajout_destinataire_controller implements SuperController{
 	    		
 		    	cf_hbox.setDisable(false);
 		    	Tags.CF.setSelected(false);
+		    	Tags.SD.setSelected(true);
 
 	    	}
 	    	else {
 	    		
 	    		cf_hbox.setDisable(true);
 	    		Tags.CF.setSelected(true);
+	    		Tags.SD.setSelected(false);
 	    		
 		    	
 	    	}
@@ -459,7 +463,6 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	sdxc.setSelected(false);
 	    	
 	    	Tags.UDMA7.setSelected(false);
-    		Tags.SD.setSelected(false);
 	    	Tags.UHS1.setSelected(false);
 	    	Tags.UHS3.setSelected(false);
 	    	Tags.CLASSE8.setSelected(false);
