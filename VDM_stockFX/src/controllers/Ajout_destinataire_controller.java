@@ -397,12 +397,12 @@ public class Ajout_destinataire_controller implements SuperController{
 	    		
 		    	
 		    	sd_hbox.setDisable(false);
-		    	Tags.SD.setSelected(true);
+		    	Tags.SD.setSelected(false);
 	    	}
 	    	else {
 	    		
 		    	sd_hbox.setDisable(true);
-		    	Tags.SD.setSelected(false);
+		    	Tags.SD.setSelected(true);
 		    	
 		    	
 	    	}
@@ -436,13 +436,13 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	if(cf_cbox.isSelected()){
 	    		
 		    	cf_hbox.setDisable(false);
-		    	Tags.CF.setSelected(true);
+		    	Tags.CF.setSelected(false);
 
 	    	}
 	    	else {
 	    		
 	    		cf_hbox.setDisable(true);
-	    		Tags.CF.setSelected(false);
+	    		Tags.CF.setSelected(true);
 	    		
 		    	
 	    	}
