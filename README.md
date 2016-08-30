@@ -22,7 +22,7 @@
 ![retour de matériel](vdm_stocks_06.png)
 
 ####affichage des derniers mouvements
-![mouvements du matériel](vdm_stocks02.png)
+![mouvements du matériel](vdm_stock02.png)
 
 ####mise à jour fiche matériel
-![mise a jour fiche matériel](vdm_stocks05.png)
+![mise a jour fiche matériel](vdm_stock05.png)
