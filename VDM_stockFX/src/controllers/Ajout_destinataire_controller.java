@@ -78,6 +78,7 @@ public class Ajout_destinataire_controller implements SuperController{
 	private Label mauvais_tags;
 	private CheckBox sd_cbox;
 	private CheckBox cf_cbox;
+	private CheckBox P2_cbox;
 	
 	private Label ssd;
 	private CheckBox usb2_cbox;
@@ -319,7 +320,7 @@ public class Ajout_destinataire_controller implements SuperController{
 
 		});
 		
-		format = new Label("CARTE");		
+		format = new Label("CARTE\nACCEPTEE");		
 		format.setWrapText(true);
 		format.setStyle("-fx-font-weight: bold;");
 		format.setAlignment(Pos.CENTER);
@@ -337,6 +338,7 @@ public class Ajout_destinataire_controller implements SuperController{
 
 		sd_cbox  = new CheckBox("SD"); 
 		cf_cbox  = new CheckBox("CF");	
+		P2_cbox  = new CheckBox("P2");
 		
 		uhs_vbox = new VBox();
 		uhs_vbox.setSpacing(10);
@@ -472,6 +474,37 @@ public class Ajout_destinataire_controller implements SuperController{
 	    	
 	    });
 	    
+        P2_cbox.setOnAction(a -> {
+	    	
+
+		    Tags.SD.setSelected(P2_cbox.isSelected());
+		    Tags.CF.setSelected(P2_cbox.isSelected());
+
+	    	cf_hbox.setDisable(true);
+	    	sd_hbox.setDisable(true);
+	    	
+	    	cf_cbox.setSelected(false);
+	    	sd_cbox.setSelected(false);
+	    	udma7.setSelected(false);
+	    	uhs1.setSelected(false);
+	    	uhs3.setSelected(false);
+	    	classe8.setSelected(false);
+	    	classe10.setSelected(false);
+	    	sdhc.setSelected(false);
+	    	sdxc.setSelected(false);
+	    	
+	    	Tags.UDMA7.setSelected(false);
+	    	Tags.UHS1.setSelected(false);
+	    	Tags.UHS3.setSelected(false);
+	    	Tags.CLASSE8.setSelected(false);
+	    	Tags.CLASSE10.setSelected(false);
+	    	Tags.SDHC.setSelected(false);
+	    	Tags.SDXC.setSelected(false);
+	    	
+	    	
+	    	
+	    });
+	    
 	    uhs1.setOnAction(a -> {
 	    	if (uhs1.isSelected()){
 	    		uhs3.setSelected(false);
@@ -575,12 +608,15 @@ public class Ajout_destinataire_controller implements SuperController{
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 3);
 		tags_grid.add(cf_cbox, 0, 4);
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 5);
-		tags_grid.add(ssd, 0, 6);
+		tags_grid.add(P2_cbox, 0, 6);
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 0, 7);
+		tags_grid.add(ssd, 0, 8);
 		
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 0);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 2);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 4);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 6);
+		tags_grid.add(new Separator(Orientation.VERTICAL), 1, 8);
 		
 		tags_grid.add(mauvais_tags, 2, 0);
 		
@@ -589,7 +625,8 @@ public class Ajout_destinataire_controller implements SuperController{
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 3);
 		tags_grid.add(cf_hbox, 2, 4);
 		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 5);
-		tags_grid.add(usb2_cbox, 2, 6);
+		tags_grid.add(new Separator(Orientation.HORIZONTAL), 2, 7);
+		tags_grid.add(usb2_cbox, 2, 8);
 		
 		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 2);
 		tags_grid.add(new Separator(Orientation.VERTICAL), 3, 4);
@@ -601,6 +638,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		h5.setPadding(new Insets(10, 0, 0, 0));
 		Label l5 = new Label("Commentaire : ");
 		ta5 = new TextArea();
+		ta5.setMaxHeight(80);
 		h5.getChildren().add(l5);
 		h5.getChildren().add(ta5);
 
@@ -641,16 +679,24 @@ public class Ajout_destinataire_controller implements SuperController{
     		textFields.get(2).setText(destinataire.getFonction());
     		textFields.get(3).setText(destinataire.getSociete());
     		
+    		boolean P2_potentiel = false;
+    		
     		for (String s : destinataire.getTags()){
             	
             	switch (s){
             	
-            	case "CF" : sd_hbox.setDisable(false);
-            	            sd_cbox.setSelected(true);
-            	            break;
             	case "SD" : cf_hbox.setDisable(false);
             	            cf_cbox.setSelected(true);
+            	            sd_hbox.setDisable(true);
+            	            sd_cbox.setSelected(false);
+            	            P2_potentiel = true;
                             break;
+            	case "CF" : sd_hbox.setDisable(false || P2_potentiel);
+	            			sd_cbox.setSelected(true && ! P2_potentiel);
+	            			cf_hbox.setDisable(true);
+	            			cf_cbox.setSelected(false);
+	            			P2_cbox.setSelected(P2_potentiel);
+	            			break;
             	case "UDMA7" : udma7.setSelected(true);
             	            break;
             	case "UHS1" : uhs1.setSelected(true);
@@ -726,16 +772,22 @@ public class Ajout_destinataire_controller implements SuperController{
 			textFields.get(3).setText(destinataire.getSociete());
 		}
 		
+		boolean P2_potentiel = false;
+		
 		for (String s : destinataire.getTags()){
         	
         	switch (s){
         	
-        	case "CF" : sd_hbox.setDisable(false);
-        	            sd_cbox.setSelected(true);
-        	            break;
         	case "SD" : cf_hbox.setDisable(false);
         	            cf_cbox.setSelected(true);
+        	            P2_potentiel = true;
                         break;
+        	case "CF" : sd_hbox.setDisable(false || P2_potentiel);
+            			sd_cbox.setSelected(true && ! P2_potentiel);
+            			cf_hbox.setDisable(true);
+            			cf_cbox.setSelected(false);
+            			P2_cbox.setSelected(P2_potentiel);
+            			break;
         	case "UDMA7" : udma7.setSelected(true);
         	            break;
         	case "UHS1" : uhs1.setSelected(true);
