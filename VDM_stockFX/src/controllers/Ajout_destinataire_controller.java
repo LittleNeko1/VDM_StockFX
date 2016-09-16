@@ -680,6 +680,7 @@ public class Ajout_destinataire_controller implements SuperController{
     		textFields.get(3).setText(destinataire.getSociete());
     		
     		boolean P2_potentiel = false;
+    		P2_cbox.setSelected(P2_potentiel);
     		
     		for (String s : destinataire.getTags()){
             	
@@ -773,6 +774,7 @@ public class Ajout_destinataire_controller implements SuperController{
 		}
 		
 		boolean P2_potentiel = false;
+		P2_cbox.setSelected(P2_potentiel);
 		
 		for (String s : destinataire.getTags()){
         	
